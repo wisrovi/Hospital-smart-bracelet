@@ -1,0 +1,31 @@
+
+#######################################
+# Syntax Coloring SENSOR CAIDA FCV
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+SensorCaidaFCV	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+LoopSCaida	KEYWORD2
+StartSCaida	KEYWORD2
+ValorCaida	KEYWORD2
+ResetCaida	KEYWORD2
+SetupSCaida	KEYWORD2
+StopSCaida	KEYWORD2
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+

@@ -1,0 +1,30 @@
+
+#######################################
+# Syntax Coloring PULSO CARDIACO FCV
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+PulsoCardiacoFCV	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+ValorSPPM	KEYWORD2
+StartSensorPPM	KEYWORD2
+LoopSensorPPM	KEYWORD2
+isBanderaPrimerPulso	KEYWORD2
+StopSensorPPM	KEYWORD2
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+

@@ -1,0 +1,29 @@
+
+#######################################
+# Syntax Coloring Sensor Temperatura FCV 18B20
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+SensorTemperaturaFCV18B20	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+ValorTemperatura1820	KEYWORD2
+LoopSTemperatura1820	KEYWORD2
+StartSTemperatura1820	KEYWORD2
+StopSTemperatura1820	KEYWORD2
+SetupSTemperatura1820	KEYWORD2
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
