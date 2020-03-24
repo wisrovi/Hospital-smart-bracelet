@@ -1,0 +1,156 @@
+button.calser{
+    text-decoration: none;
+    text-transform: initial;   
+    text-shadow: none;
+    font-size: 23px;  
+    font-weight: 800;      
+    font-family: fcv;   
+
+    padding-top: 35px;
+    color: black;
+    height: 200px;
+    width: 140px;
+    border-radius: 15px;
+    display: initial;
+    position: relative;
+    background-color: #A4A4A4;
+    border: none;      
+
+    color: white;
+}
+
+
+button.calser:hover{
+    background: none;
+    background-color: #f2f2f2;
+    text-decoration: none;
+    border: none;
+    box-shadow: none;
+}
+
+button.calificacion span.ui-button-text.ui-c{
+    padding-bottom: 0em ;
+    padding-left: 0em ;
+    padding-right: 0em ;
+    padding-top: 0em;
+}
+
+
+
+
+
+div.calserLine{
+    position: absolute;
+    display: block;
+    top: 100px;
+    color: black;
+}
+
+
+div.calserLine-mal{
+    left: 656px;
+}
+
+div.calserLine-reg{
+    left: 258px;
+}
+
+div.calserLine-bue{
+    left: 258px;
+}
+
+div.calserLine-mbue{
+    left: 258px;
+}
+
+div.calserLine-exe{
+    left: 258px;
+}
+
+
+
+
+
+
+
+
+
+
+.jqplot-table-legendx{
+    display: none;
+}
+
+.jqplot-axis.jqplot-yaxis{
+    width: 65px;
+}
+
+.jqplot-axis.jqplot-xaxis{
+    height: 23px;
+}
+
+span.ui-button-icon-left.ui-icon.ui-c.calser{
+    background-size: 54px;
+    width: 54px;
+    height: 90px;
+    position: absolute;
+    top: 21px;
+    left: 4px;    
+    margin: 6px;
+    margin-left: 40px;
+}
+
+
+
+
+
+
+span.ui-button-icon-left.ui-icon.ui-c.calser-exe{
+    background-image: url('image/excellentFace.png');
+}
+
+span.ui-button-icon-left.ui-icon.ui-c.calser-bue{
+    background-image: url('image/goodFace.png');
+}
+
+span.ui-button-icon-left.ui-icon.ui-c.calser-reg{
+    background-image: url('image/regularFace.png');
+}
+
+span.ui-button-icon-left.ui-icon.ui-c.calser-mal{
+    background-image: url('image/badFace.png');
+}
+
+span.ui-button-icon-left.ui-icon.ui-c.calser-mbue{
+    background-image: url('image/MuyBienFace.png');
+}
+
+/*    color boton     */
+
+button.calser-exe{ 
+    background: #26acef
+}
+
+button.calser-mbue{    
+    background: #11cc61
+}
+
+button.calser-bue{
+    background: #ddcd0a
+}
+
+button.calser-reg{
+    background: #f15a24
+}
+
+button.calser-mal{
+    background: #ef2626
+}     /*     */
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,2 @@
+Added Pin To Net: NetName=A4 Pin=CONN3-4
+Added Member To Class: ClassName=Atmega328P Member=Component CONN2 Connector

@@ -1,0 +1,73 @@
+Change Component Designator: OldDesignator=U? NewDesignator=U1
+Added Component: Designator=C1(C1206-1.00)
+Added Component: Designator=C1(C1206-1.25)
+Added Component: Designator=C2(C1206-1.00)
+Added Component: Designator=C2(C1206-1.25)
+Added Component: Designator=C3(C1206-1.00)
+Added Component: Designator=P?(HDR2X3)
+Added Component: Designator=PB1(Tack Switch 6x6 1mm TH)
+Added Component: Designator=R1(R1206-0.55)
+Added Component: Designator=R1(R1206-0.55)
+Added Component: Designator=U?(Z03A)
+Added Component: Designator=U?(ADI-CP-16-5a_N)
+Added Component: Designator=X1(2-SMD)
+Added Pin To Net: NetName=3.3V Pin=U1-4
+Added Pin To Net: NetName=3.3V Pin=U1-6
+Added Pin To Net: NetName=3.3V Pin=U1-28
+Added Pin To Net: NetName=3.3V Pin=U?-1
+Added Pin To Net: NetName=3.3V Pin=U?-14
+Added Pin To Net: NetName=3.3V Pin=U?-15
+Added Net: Name=3.3V
+Added Pin To Net: NetName=5V Pin=P?-2
+Added Pin To Net: NetName=5V Pin=R1-1
+Added Net: Name=5V
+Added Pin To Net: NetName=GND Pin=C2-1
+Added Pin To Net: NetName=GND Pin=C2-2
+Added Pin To Net: NetName=GND Pin=C3-2
+Added Pin To Net: NetName=GND Pin=P?-6
+Added Pin To Net: NetName=GND Pin=PB1-2
+Added Pin To Net: NetName=GND Pin=PB1-2
+Added Pin To Net: NetName=GND Pin=U?-3
+Added Pin To Net: NetName=GND Pin=U?-3
+Added Pin To Net: NetName=GND Pin=U?-5
+Added Pin To Net: NetName=GND Pin=U?-6
+Added Pin To Net: NetName=GND Pin=U?-7
+Added Net: Name=GND
+Added Pin To Net: NetName=MISO Pin=P?-1
+Added Net: Name=MISO
+Added Pin To Net: NetName=MOSI Pin=P?-4
+Added Net: Name=MOSI
+Added Pin To Net: NetName=NET-X1 Pin=C1-2
+Added Pin To Net: NetName=NET-X1 Pin=U1-7
+Added Pin To Net: NetName=NET-X1 Pin=X1-2
+Added Net: Name=NET-X1
+Added Pin To Net: NetName=NET-X2 Pin=C2-2
+Added Pin To Net: NetName=NET-X2 Pin=U1-8
+Added Pin To Net: NetName=NET-X2 Pin=X1-1
+Added Net: Name=NET-X2
+Added Pin To Net: NetName=NetC1_1 Pin=C1-1
+Added Pin To Net: NetName=NetC1_1 Pin=U?-8
+Added Net: Name=NetC1_1
+Added Pin To Net: NetName=NetC2_1 Pin=C2-1
+Added Pin To Net: NetName=NetC2_1 Pin=U?-10
+Added Net: Name=NetC2_1
+Added Pin To Net: NetName=NetC3_1 Pin=C3-1
+Added Pin To Net: NetName=NetC3_1 Pin=U?-12
+Added Net: Name=NetC3_1
+Added Pin To Net: NetName=PINRESET Pin=R1-1
+Added Net: Name=PINRESET
+Added Pin To Net: NetName=RST_PROG Pin=P?-5
+Added Pin To Net: NetName=RST_PROG Pin=PB1-1
+Added Pin To Net: NetName=RST_PROG Pin=PB1-1
+Added Pin To Net: NetName=RST_PROG Pin=R1-2
+Added Net: Name=RST_PROG
+Added Pin To Net: NetName=SCK Pin=P?-3
+Added Net: Name=SCK
+Added Pin To Net: NetName=VALUETEMP Pin=U1-24
+Added Pin To Net: NetName=VALUETEMP Pin=U?-2
+Added Net: Name=VALUETEMP
+Change Class Name : Old Net Name=Atmega328P New Net Name=Temperatura
+Added Class: Name=Atmega328P
+Added Class: Name=SensorCaida
+Added Room: Name=SensorCaida
+Added Room: Name=Temperatura

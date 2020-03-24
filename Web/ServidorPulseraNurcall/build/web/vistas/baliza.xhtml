@@ -1,0 +1,343 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="/templates/AdminTemplate.xhtml">
+
+            <ui:define name="content">
+                <script type="text/javascript">
+                    function exportChart() {
+                        //export image
+                        $('#output').empty().append(PF('graficoExportable').exportAsImage());
+
+                        //show the dialog
+                        PF('dlg2').show();
+                    }
+                </script>
+
+                <p:tabView id="pestanas"> 
+                    <p:tab title="Ver mapa Calor Balizas">
+                        <p:fieldset legend="Mapa Calor" 
+                                    style="margin-bottom:20px" 
+                                    toggleable="true" 
+                                    toggleSpeed="500"                                        
+                                    collapsed="true">
+
+                            <h:panelGrid columns="2" >
+
+                                <h:panelGrid columns="1" >
+                                    <h:panelGrid columns="2">
+                                        <p:outputLabel value="Sede: " for="@next" />
+                                        <p:selectOneMenu value="#{balizaFormBean.baliza_DB_Dto.sede}" 
+                                                         style="width:125px"
+                                                         filter="true">
+                                            <f:selectItem itemLabel="Seleccione una" itemValue="" />
+                                            <f:selectItems value="#{balizaFormBean.sedesInstaladas}" 
+                                                           var="man" itemLabel="#{man}" 
+                                                           itemValue="#{man}" />
+                                            <p:ajax 
+                                                event="change"
+                                                listener="#{balizaFormBean.refreshPiso}"
+                                                update="menuPisoAll" />
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                    <br/>
+
+                                    <h:panelGrid columns="2" id="menuPisoAll">
+                                        <p:outputLabel value="Piso: " for="@next" />
+                                        <p:selectOneMenu value="#{balizaFormBean.baliza_DB_Dto.piso}" 
+                                                         style="width:125px"
+                                                         filter="true">
+                                            <f:selectItem itemLabel="Seleccione uno" itemValue="" />
+                                            <f:selectItems value="#{balizaFormBean.pisosInstaladadosPorSede}" 
+                                                           var="man" itemLabel="#{man}" 
+                                                           itemValue="#{man}" />
+                                            <p:ajax 
+                                                listener="#{balizaFormBean.refreshArea()}"
+                                                update="menuAreaAll" />
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                    <br/>
+                                    <h:panelGrid columns="2" id="menuAreaAll">
+                                        <p:outputLabel value="Area: " for="@next" />
+                                        <p:selectOneMenu value="#{balizaFormBean.baliza_DB_Dto.area}" 
+                                                         style="width:125px"
+                                                         filter="true">
+                                            <f:selectItem itemLabel="Seleccione una" itemValue="" />
+                                            <f:selectItems value="#{balizaFormBean.areasInstaladadssPorPiso}" 
+                                                           var="man" itemLabel="#{man}" 
+                                                           itemValue="#{man}" />
+                                            <p:ajax 
+                                                listener="#{balizaFormBean.refreshGraficaElegirUbicacion()}"
+                                                update="menuGraficaElegirUbicacionAll" />
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                </h:panelGrid>
+
+                                <p:chart 
+                                    id="menuGraficaElegirUbicacionAll"
+                                    rendered="true"
+                                    style="width: 800px;"
+                                    type="bubble" 
+                                    widgetVar="graficoExportable"
+                                    model="#{balizaFormBean.allBubbles}" />
+
+                                <p:spacer height="0"/>
+                                <p:commandButton type="button" value="Export" icon="pi pi-home" onclick="exportChart()"/>
+                            </h:panelGrid>
+                        </p:fieldset>
+                    </p:tab>                   
+
+                    <p:tab title="Crear" rendered="#{balizaFormBean.mostrarCrearBaliza}">
+                        <p:fieldset legend="Nueva Baliza" 
+                                    style="margin-bottom:20px" 
+                                    toggleable="true" 
+                                    toggleSpeed="500"                                        
+                                    collapsed="true">
+                            <h:panelGrid columns="5" >
+
+                                <h:panelGrid columns="2">
+                                    <h:outputText value="Mac: " />
+                                    <h:inputText value="#{balizaFormBean.baliza_DB_Dto.macBaliza}" />     
+                                </h:panelGrid>
+
+                                <h:panelGrid columns="1" >                                        
+
+                                    <h:panelGrid columns="2">
+                                        <p:outputLabel value="Sede: " for="@next" />
+                                        <p:selectOneMenu value="#{balizaFormBean.baliza_DB_Dto.sede}" 
+                                                         style="width:125px"
+                                                         filter="true">
+                                            <f:selectItem itemLabel="Seleccione una" itemValue="" />
+                                            <f:selectItems value="#{balizaFormBean.sedesInstaladas}" 
+                                                           var="man" itemLabel="#{man}" 
+                                                           itemValue="#{man}" />
+                                            <p:ajax 
+                                                event="change"
+                                                listener="#{balizaFormBean.refreshPiso}"
+                                                update="menuPiso" />
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                    <br/>
+
+                                    <h:panelGrid columns="2" id="menuPiso">
+                                        <p:outputLabel value="Piso: " for="@next" />
+                                        <p:selectOneMenu value="#{balizaFormBean.baliza_DB_Dto.piso}" 
+                                                         style="width:125px"
+                                                         filter="true">
+                                            <f:selectItem itemLabel="Seleccione uno" itemValue="" />
+                                            <f:selectItems value="#{balizaFormBean.pisosInstaladadosPorSede}" 
+                                                           var="man" itemLabel="#{man}" 
+                                                           itemValue="#{man}" />
+                                            <p:ajax 
+                                                listener="#{balizaFormBean.refreshArea()}"
+                                                update="menuArea" />
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                    <br/>
+                                    <h:panelGrid columns="2" id="menuArea">
+                                        <p:outputLabel value="Area: " for="@next" />
+                                        <p:selectOneMenu value="#{balizaFormBean.baliza_DB_Dto.area}" 
+                                                         style="width:125px"
+                                                         filter="true">
+                                            <f:selectItem itemLabel="Seleccione una" itemValue="" />
+                                            <f:selectItems value="#{balizaFormBean.areasInstaladadssPorPiso}" 
+                                                           var="man" itemLabel="#{man}" 
+                                                           itemValue="#{man}" />
+                                            <p:ajax 
+                                                listener="#{balizaFormBean.refreshGraficaElegirUbicacion()}"
+                                                update="menuGraficaElegirUbicacion" />
+                                        </p:selectOneMenu>
+                                    </h:panelGrid>
+                                </h:panelGrid>
+
+                                <h:panelGrid columns="2" id="menuGraficaElegirUbicacion">
+                                    <h:panelGrid columns="1" >
+                                        <p:inputText id="txt1"         
+                                                     style="width: 20px;"
+                                                     value="#{balizaFormBean.baliza_DB_Dto.yplano}" />
+                                        <p:slider for="txt1" type="vertical" 
+                                                  maxValue="#{balizaFormBean.areaElegida.yFinal}" 
+                                                  minValue="#{balizaFormBean.areaElegida.yInicial}">
+                                            <p:ajax
+                                                event="slideEnd" 
+                                                listener="#{balizaFormBean.onSlideEndY}" 
+                                                update="graficaPonerPuntoCrear"/>
+                                        </p:slider>
+                                    </h:panelGrid>
+
+                                    <p:chart 
+                                        id="graficaPonerPuntoCrear"
+                                        rendered="true"
+                                        style="width: 550px;"
+                                        type="bubble" 
+                                        model="#{balizaFormBean.bubbleByArea}" />
+
+                                    <p:spacer height="0"/>
+                                    <h:panelGrid columns="2" style="width: 600%">                                        
+                                        <p:slider for="txt2"                                      
+                                                  maxValue="#{balizaFormBean.areaElegida.xFinal}" 
+                                                  minValue="#{balizaFormBean.areaElegida.xInicial}">
+                                            <p:ajax
+                                                event="slideEnd" 
+                                                listener="#{balizaFormBean.onSlideEndX}" 
+                                                update="graficaPonerPuntoCrear"/>
+                                        </p:slider>
+                                        <p:inputText id="txt2" 
+                                                     value="#{balizaFormBean.baliza_DB_Dto.xplano}" 
+                                                     style="width: 20px;"/>
+                                    </h:panelGrid>
+                                </h:panelGrid>
+
+
+                                <h:panelGrid columns="1">                                    
+                                    <p:commandButton 
+                                        value="Validar" 
+                                        update=":msgs,cmdGuardar"
+                                        action="#{balizaFormBean.buttonValidar()}" 
+                                        onclick="PF('dlg1').show();"
+                                        style="margin-right:20px; padding: 10px;"  />
+
+                                    <br/>
+
+                                    <p:commandButton 
+                                        id="cmdGuardar"
+                                        value="Guardar" 
+                                        update=":msgs" 
+                                        disabled="#{balizaFormBean.botonGuardarDeshabilitado}"
+                                        action="#{balizaFormBean.buttonGuardar()}" 
+                                        style="margin-right:20px; padding: 10px;"  />   
+                                </h:panelGrid>
+
+                            </h:panelGrid>
+                        </p:fieldset>
+                    </p:tab>                       
+                </p:tabView>
+
+                <p:dataTable 
+                    id="tablaBalizasRegistradas"
+                    var="baliza" 
+                    value="#{balizaFormBean.baliza_DB_Dtos}" 
+                    widgetVar="prueba"
+                    editable="true" 
+                    paginator="true"
+                    rows="35"
+                    style="margin-bottom:20px" >
+
+                    <f:facet name="header">
+                        <br/>
+                        Balizas Instaladas                                    
+                        <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="pi pi-align-justify" />
+                        <p:columnToggler datasource="tablaBalizasRegistradas" trigger="toggler" />
+                        <br/>
+                        <br/>
+                    </f:facet>
+
+                    <p:ajax id="ajaxEdit" event="rowEdit" listener="#{balizaFormBean.onRowEdit}" update=":msgs" />
+                    <p:ajax id="ajaxCancel" event="rowEditCancel" listener="#{balizaFormBean.onRowCancel}" update=":msgs" />
+
+                    <p:column headerText="Id">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{baliza.idBaliza}" /></f:facet>
+                            <f:facet name="input"><p:inputText disabled="true" id="modelInput" value="#{baliza.idBaliza}" style="width:100%"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Mac" filterBy="#{baliza.macBaliza}">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{baliza.macBaliza}" /></f:facet>
+                            <f:facet name="input"><p:inputText disabled="true" value="#{baliza.macBaliza}" style="width:100%"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Ip" filterBy="#{baliza.ipBaliza}">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{baliza.ipBaliza}" /></f:facet>
+                            <f:facet name="input"><p:inputText disabled="true" value="#{baliza.ipBaliza}" style="width:100%"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Sede" filterBy="#{baliza.sede}">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{baliza.sede}" /></f:facet>
+                            <f:facet name="input"><p:inputText disabled="true" value="#{baliza.sede}" style="width:100%"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Piso" filterBy="#{baliza.piso}">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{baliza.piso}" /></f:facet>
+                            <f:facet name="input"><p:inputText disabled="true" value="#{baliza.piso}" style="width:100%"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Area" filterBy="#{baliza.area}">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{baliza.area}" /></f:facet>
+                            <f:facet name="input"><p:inputText disabled="true" value="#{baliza.area}" style="width:100%"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="X plano" filterBy="#{baliza.xplano}">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{baliza.xplano}" /></f:facet>
+                            <f:facet name="input"><p:inputText disabled="false" value="#{baliza.xplano}" style="width:100%"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Y plano" filterBy="#{baliza.yplano}">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{baliza.yplano}" /></f:facet>
+                            <f:facet name="input"><p:inputText disabled="false" value="#{baliza.yplano}" style="width:100%"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Habilitado"  filterBy="#{baliza.indHabilitado}">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{baliza.indHabilitado}" /></f:facet>
+                            <f:facet name="input">
+                                <h:selectOneMenu value="#{baliza.indHabilitado}" style="width:100%">
+                                    <f:selectItems value="#{balizaFormBean.opcionesBooleanas}" 
+                                                   var="man" itemLabel="#{man}" 
+                                                   itemValue="#{man}" />
+                                </h:selectOneMenu>
+                            </f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Usuario" filterBy="#{baliza.usuario}">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{baliza.usuario}" /></f:facet>
+                            <f:facet name="input"><p:inputText disabled="true" value="#{baliza.usuario}" style="width:100%"/></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column headerText="Fecha Registro">
+                        <p:cellEditor>
+                            <f:facet name="output"><h:outputText value="#{baliza.fechaRegistro}" /></f:facet>
+                            <f:facet name="input" ><p:inputText disabled="true" value="#{baliza.fechaRegistro}" style="width:100%" /></f:facet>
+                        </p:cellEditor>
+                    </p:column>
+
+                    <p:column style="width:35px" rendered="#{balizaFormBean.mostrarEditarBaliza}" >
+                        <p:rowEditor />
+                    </p:column>
+                </p:dataTable>
+
+                <p:dialog header="Effects" widgetVar="dlg1" showEffect="explode" hideEffect="bounce" height="100">
+                    <h:outputText value="Recuerde que cada baliza debe estar separada de otra baliza en un maximo de 9 metros" />
+                </p:dialog>
+
+                <p:dialog widgetVar="dlg2" showEffect="fade" modal="true" header="Mapa calor Area" resizable="true">
+                    <p:outputPanel id="output" layout="block" style="width:900px;height:500px"/>
+                </p:dialog>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

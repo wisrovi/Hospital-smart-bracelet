@@ -1,0 +1,10 @@
+Removed Member From Class: ClassName=Atmega328P Member=C1
+Removed Member From Class: ClassName=Atmega328P Member=C2
+Removed Member From Class: ClassName=SensorCaida Member=U1
+Removed Member From Class: ClassName=Temperatura Member=U1
+Change Component Designator: OldDesignator=C1 NewDesignator=C4
+Change Component Designator: OldDesignator=C2 NewDesignator=C5
+Added Member To Class: ClassName=Atmega328P Member=Component C4 C1
+Added Member To Class: ClassName=Atmega328P Member=Component C5 C2
+Added Member To Class: ClassName=SensorCaida Member=Component U? ADXL325BCPZ-RL
+Added Member To Class: ClassName=Temperatura Member=Component U? LM35CAZ/NOPB

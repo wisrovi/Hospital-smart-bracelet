@@ -1,0 +1,8 @@
+Added Pin To Net: NetName=3.3V Pin=P1-2
+Added Pin To Net: NetName=3.3V Pin=R1-1
+Added Pin To Net: NetName=D8 Pin=U1-12
+Added Net: Name=D8
+Added Pin To Net: NetName=D9 Pin=U1-13
+Added Net: Name=D9
+Added Pin To Net: NetName=D10 Pin=U1-14
+Added Net: Name=D10

@@ -1,0 +1,402 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <body>         
+        <ui:composition template="/templates/AdminTemplate.xhtml">
+            <ui:define name="content">
+                <p:tabView widgetVar="prueba2" id="pestanas" dynamic="true">
+                    <p:tab title="Sede">
+                        <p:fieldset legend="Nueva Sede" 
+                                    style="margin-bottom:20px" 
+                                    toggleable="true" 
+                                    toggleSpeed="500"
+                                    rendered="#{ubicacionFormBean.mostrarCrearSede}"
+                                    collapsed="true">
+                            <h:panelGrid columns="3">
+                                <h:outputText value="Sede: " />
+                                <h:inputText value="#{ubicacionFormBean.sede_DB_Dto.nomSede}" />    
+                                <p:commandButton 
+                                    value="Guardar" 
+                                    update=":msgs; formulario;" 
+                                    ajax="False"
+                                    action="#{ubicacionFormBean.buttonGuardarSede()}" 
+                                    style="margin-right:20px; padding: 10px;"  />   
+                            </h:panelGrid>
+                        </p:fieldset>
+                        <br/>
+                        <p:dataTable 
+                            id="tablaSedesRegistradas"
+                            var="sede" 
+                            value="#{ubicacionFormBean.listSedes}" 
+                            widgetVar="prueba"
+                            editable="true" 
+                            paginator="true"
+                            rows="35"
+                            style="margin-bottom:20px" >
+                            <f:facet name="header">
+                                <br/>
+                                Sedes Instaladas                                    
+                                <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="pi pi-align-justify" />
+                                <p:columnToggler datasource="tablaSedesRegistradas" trigger="toggler" />
+                                <br/>
+                                <br/>
+                            </f:facet>
+
+                            <p:ajax id="ajaxEdit" event="rowEdit" listener="#{ubicacionFormBean.onRowEditSede}" update=":msgs" />
+                            <p:ajax id="ajaxCancel" event="rowEditCancel" listener="#{ubicacionFormBean.onRowCancel}" update=":msgs" />
+
+                            <p:column headerText="Id">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{sede.idSede}" /></f:facet>
+                                    <f:facet name="input"><p:inputText disabled="true" id="modelInput" value="#{sede.idSede}" style="width:100%"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Sede" filterBy="#{sede.nomSede}">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{sede.nomSede}" /></f:facet>
+                                    <f:facet name="input"><p:inputText disabled="false" value="#{sede.nomSede}" style="width:100%"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Habilitado"  filterBy="#{sede.indHabilitado}">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{sede.indHabilitado}" /></f:facet>
+                                    <f:facet name="input">
+                                        <h:selectOneMenu value="#{sede.indHabilitado}" style="width:100%">
+                                            <f:selectItems value="#{ubicacionFormBean.opcionesBooleanas}" 
+                                                           var="man" itemLabel="#{man}" 
+                                                           itemValue="#{man}" />
+                                        </h:selectOneMenu>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Usuario" filterBy="#{sede.usuario}">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{sede.usuario}" /></f:facet>
+                                    <f:facet name="input"><p:inputText disabled="true" value="#{sede.usuario}" style="width:100%"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Fecha Registro">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{sede.fechaRegistro}" /></f:facet>
+                                    <f:facet name="input" ><p:inputText disabled="true" value="#{sede.fechaRegistro}" style="width:100%" /></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column style="width:35px" rendered="#{ubicacionFormBean.mostrarEditarSede}" >
+                                <p:rowEditor />
+                            </p:column>
+                        </p:dataTable>
+
+                    </p:tab>
+
+                    <p:tab title="Piso" id="pestanaPiso">
+                        <p:fieldset legend="Nuevo Piso" 
+                                    style="margin-bottom:20px" 
+                                    toggleable="true" 
+                                    toggleSpeed="500"
+                                    rendered="#{ubicacionFormBean.mostrarCrearUbicacion}"
+                                    collapsed="true">
+                            <h:panelGrid columns="3">
+                                <h:panelGrid columns="2">
+                                    <p:outputLabel value="Sede: " for="@next" />
+                                    <p:selectOneMenu value="#{ubicacionFormBean.piso_DB_Dto.sede}" 
+                                                     style="width:125px"
+                                                     filter="true">
+                                        <f:selectItems value="#{ubicacionFormBean.sedesInstaladas}" 
+                                                       var="man" itemLabel="#{man}" 
+                                                       itemValue="#{man}" />
+                                        <f:facet name="footer">
+                                            <p:separator />
+                                            <h:outputText value="Elije una" style="font-weight:bold;"/>
+                                        </f:facet>
+                                    </p:selectOneMenu>
+
+                                </h:panelGrid>
+
+                                <h:panelGrid columns="2">
+                                    <h:outputText value="Piso " />
+                                    <h:inputText value="#{ubicacionFormBean.piso_DB_Dto.piso}" /> 
+                                </h:panelGrid>
+
+                                <p:commandButton 
+                                    value="Guardar" 
+                                    update=":msgs; formulario;" 
+                                    ajax="False"
+                                    action="#{ubicacionFormBean.buttonGuardarUbicacion()}" 
+                                    style="margin-right:20px; padding: 10px;"  />   
+                            </h:panelGrid>
+                        </p:fieldset>
+                        <br/>
+
+                        <p:dataTable 
+                            id="tablaPisosRegistradas"
+                            var="piso" 
+                            value="#{ubicacionFormBean.pisosDisponibles}" 
+                            widgetVar="prueba"
+                            editable="true" 
+                            paginator="true"
+                            rows="35"
+                            style="margin-bottom:20px" >
+                            <f:facet name="header">
+                                <br/>
+                                Pisos Instalados                                    
+                                <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="pi pi-align-justify" />
+                                <p:columnToggler datasource="tablaPisosRegistradas" trigger="toggler" />
+                                <br/>
+                                <br/>
+                            </f:facet>
+
+                            <p:ajax id="ajaxEdit" event="rowEdit" listener="#{ubicacionFormBean.onRowEditUbicacion}" update=":msgs" />
+                            <p:ajax id="ajaxCancel" event="rowEditCancel" listener="#{ubicacionFormBean.onRowCancel}" update=":msgs" />
+
+                            <p:column headerText="Id">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{piso.idZ}" /></f:facet>
+                                    <f:facet name="input"><p:inputText disabled="true" id="modelInput" value="#{piso.idZ}" style="width:100%"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Sede" filterBy="#{piso.sede}">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{piso.sede}" /></f:facet>
+                                    <f:facet name="input">
+                                        <h:selectOneMenu value="#{piso.sede}" 
+                                                         style="width:100%"
+                                                         disabled="false">
+                                            <f:selectItems value="#{ubicacionFormBean.sedesInstaladas}" 
+                                                           var="man" itemLabel="#{man}" 
+                                                           itemValue="#{man}" />
+                                        </h:selectOneMenu>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Piso" filterBy="#{piso.piso}">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{piso.piso}" /></f:facet>
+                                    <f:facet name="input"><p:inputText disabled="false" value="#{piso.piso}" style="width:100%"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Usuario" filterBy="#{piso.usuario}">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{piso.usuario}" /></f:facet>
+                                    <f:facet name="input"><p:inputText disabled="true" value="#{piso.usuario}" style="width:100%"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Habilitado"  filterBy="#{piso.indHabilitado}">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{piso.indHabilitado}" /></f:facet>
+                                    <f:facet name="input">
+                                        <h:selectOneMenu value="#{piso.indHabilitado}" style="width:100%">
+                                            <f:selectItems value="#{ubicacionFormBean.opcionesBooleanas}" 
+                                                           var="man" itemLabel="#{man}" 
+                                                           itemValue="#{man}" />
+                                        </h:selectOneMenu>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Fecha Registro">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{piso.fecharegistro}" /></f:facet>
+                                    <f:facet name="input" ><p:inputText disabled="true" value="#{piso.fecharegistro}" style="width:100%" /></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column style="width:35px" rendered="#{ubicacionFormBean.mostrarEditarUbicacion}" >
+                                <p:rowEditor />
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab> 
+
+                    <p:tab title="Area" id="pestanaArea">
+                        <p:fieldset legend="Nuevo Area" 
+                                    style="margin-bottom:20px" 
+                                    toggleable="true" 
+                                    toggleSpeed="500"
+                                    rendered="#{ubicacionFormBean.mostrarCrearArea}"
+                                    collapsed="true">
+                            <h:panelGrid columns="4" id="menuNuevaArea">
+                                <h:panelGrid columns="2">
+                                    <p:outputLabel value="Sede: " for="@next" />
+                                    <p:selectOneMenu value="#{ubicacionFormBean.area_DB_Dto.sede}" 
+                                                     style="width:125px"
+                                                     filter="true">
+                                        <f:selectItem itemLabel="Seleccione uno" itemValue="" />
+                                        <f:selectItems value="#{ubicacionFormBean.sedesInstaladas}" 
+                                                       var="man" itemLabel="#{man}" 
+                                                       itemValue="#{man}" />
+                                        <f:facet name="footer">
+                                            <p:separator />
+                                            <h:outputText value="Elije una" style="font-weight:bold;"/>
+                                        </f:facet>
+                                        <p:ajax 
+                                            listener="#{ubicacionFormBean.refreshPiso()}"
+                                            update="menuNuevaArea" />
+                                    </p:selectOneMenu>
+                                </h:panelGrid>
+                                <h:panelGrid columns="2">
+                                    <p:outputLabel value="Piso " for="@next" />
+                                    <p:selectOneMenu value="#{ubicacionFormBean.area_DB_Dto.piso}" 
+                                                     style="width:125px"
+                                                     filter="true">
+                                        <f:selectItem itemLabel="Seleccione uno" itemValue="" />
+                                        <f:selectItems value="#{ubicacionFormBean.pisosInstaladadosPorSede}" 
+                                                       var="man" itemLabel="#{man}" 
+                                                       itemValue="#{man}" />
+                                        <f:facet name="footer">
+                                            <p:separator />
+                                            <h:outputText value="Elije una" style="font-weight:bold;"/>
+                                        </f:facet>
+                                    </p:selectOneMenu>
+                                </h:panelGrid>
+                                <p:panelGrid columns="3" style="border: 0">
+                                    <f:facet name="header">
+                                        <h:panelGrid columns="2" cellpadding="5">
+                                            <h:outputText value="Area: " />
+                                            <h:inputText value="#{ubicacionFormBean.area_DB_Dto.area}" />  
+                                        </h:panelGrid>
+                                    </f:facet>
+
+                                    <p:spacer height="0"/>
+                                    <h:outputText value="Inicial" />
+                                    <h:outputText value="Final" />
+
+                                    <h:outputText value="X: " />
+                                    <h:inputText value="#{ubicacionFormBean.area_DB_Dto.xInicial}" />
+                                    <h:inputText value="#{ubicacionFormBean.area_DB_Dto.xFinal}" />
+
+                                    <h:outputText value="Y:" />
+                                    <h:inputText value="#{ubicacionFormBean.area_DB_Dto.yInicial}" />
+                                    <h:inputText value="#{ubicacionFormBean.area_DB_Dto.yFinal}" />
+                                </p:panelGrid>       
+                                <p:commandButton 
+                                    value="Guardar" 
+                                    update=":msgs; formulario;" 
+                                    ajax="False"
+                                    action="#{ubicacionFormBean.buttonGuardarArea()}" 
+                                    style="margin-right:20px; padding: 10px;"  />   
+                            </h:panelGrid>
+                        </p:fieldset>
+                        <br/>
+                        <p:dataTable 
+                            id="tablaAreasRegistradas"
+                            var="area" 
+                            value="#{ubicacionFormBean.areasDisponibles}" 
+                            widgetVar="prueba"
+                            editable="true" 
+                            paginator="true"
+                            rows="35"
+                            style="margin-bottom:20px" >
+                            <f:facet name="header">
+                                <br/>
+                                Pisos Instalados                                    
+                                <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="pi pi-align-justify" />
+                                <p:columnToggler datasource="tablaAreasRegistradas" trigger="toggler" />
+                                <br/>
+                                <br/>
+                            </f:facet>
+
+                            <p:ajax id="ajaxEdit" event="rowEdit" listener="#{ubicacionFormBean.onRowEditArea}" update=":msgs" />
+                            <p:ajax id="ajaxCancel" event="rowEditCancel" listener="#{ubicacionFormBean.onRowCancel}" update=":msgs" />
+
+                            <p:column headerText="Id">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{area.idArea}" /></f:facet>
+                                    <f:facet name="input"><p:inputText disabled="true" value="#{area.idArea}" style="width:100%"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Sede" filterBy="#{area.sede}">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{area.sede}" /></f:facet>
+                                    <f:facet name="input"><p:inputText disabled="true" value="#{area.sede}" style="width:100%"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Piso" filterBy="#{area.piso}">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{area.piso}" /></f:facet>
+                                    <f:facet name="input"><p:inputText disabled="true" value="#{area.piso}" style="width:100%"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Area" filterBy="#{area.area}">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{area.area}" /></f:facet>
+                                    <f:facet name="input"><p:inputText disabled="false" value="#{area.area}" style="width:100%"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="X inicial" filterBy="#{area.xInicial}">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{area.xInicial}" /></f:facet>
+                                    <f:facet name="input"><p:inputText disabled="false" value="#{area.xInicial}" style="width:100%"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column headerText="X final" filterBy="#{area.xFinal}">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{area.xFinal}" /></f:facet>
+                                    <f:facet name="input"><p:inputText disabled="false" value="#{area.xFinal}" style="width:100%"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column headerText="Y inicial" filterBy="#{area.yInicial}">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{area.yInicial}" /></f:facet>
+                                    <f:facet name="input"><p:inputText disabled="false" value="#{area.yInicial}" style="width:100%"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+                            <p:column headerText="Y final" filterBy="#{area.yFinal}">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{area.yFinal}" /></f:facet>
+                                    <f:facet name="input"><p:inputText disabled="false" value="#{area.yFinal}" style="width:100%"/></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Habilitado"  filterBy="#{area.indHabilitado}">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{area.indHabilitado}" /></f:facet>
+                                    <f:facet name="input">
+                                        <h:selectOneMenu value="#{area.indHabilitado}" style="width:100%">
+                                            <f:selectItems value="#{ubicacionFormBean.opcionesBooleanas}" 
+                                                           var="man" itemLabel="#{man}" 
+                                                           itemValue="#{man}" />
+                                        </h:selectOneMenu>
+                                    </f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Usuario" filterBy="#{area.usuario}"> 
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{area.usuario}" /></f:facet>
+                                    <f:facet name="input" ><p:inputText disabled="true" value="#{area.usuario}" style="width:100%" /></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column headerText="Fecha Registro">
+                                <p:cellEditor>
+                                    <f:facet name="output"><h:outputText value="#{area.fechaRegistro}" /></f:facet>
+                                    <f:facet name="input" ><p:inputText disabled="true" value="#{area.fechaRegistro}" style="width:100%" /></f:facet>
+                                </p:cellEditor>
+                            </p:column>
+
+                            <p:column style="width:35px" rendered="#{ubicacionFormBean.mostrarEditarArea}" >
+                                <p:rowEditor />
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab> 
+                </p:tabView>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>

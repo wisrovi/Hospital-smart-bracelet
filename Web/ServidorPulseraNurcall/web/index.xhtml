@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"          
+      xmlns:p="http://primefaces.org/ui"       
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      >
+    <h:head>
+        <title>login</title>
+        <h:outputStylesheet library="css" name="estilocontenedordiv.css"/>        
+        <h:outputStylesheet library="css" name="estilobutton.css"/>
+        <h:outputStylesheet library="css" name="estiloLogin.css"/>
+        <link href='./resources/image/ic_brain.png' rel='shortcut icon' type='image/x-icon'/> 
+    </h:head>
+    <h:body>
+        <h:form >     
+            <div class="tipoLetraFCV contenedor centrar" style=" display: inline-block;" >
+                <table>
+                    <tr>
+                        <td>
+                            <p:column>               
+                                <section class="contenedorlogin">
+                                    <p:growl id="grl" showDetail="true" life="3000"  />
+                                    <table class="formulario">
+                                        <tr>
+                                            <td>
+                                                <p:graphicImage 
+                                                    height="30%"
+                                                    library="image/"
+                                                    name="ic_brain.png"                                        
+                                                    /> 
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <h2>Acceso de Usuario</h2>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <p>Ingrese los siguientes datos en el formulario para 
+                                                    <span id="IL_AD11" 
+                                                          class="IL_AD">ingresar</span> 
+                                                    al sistema</p>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td >
+                                                <p:inputText pt:placeholder
+                                                             ="Usuario" 
+                                                             id="txtUsuario" 
+                                                             label="Usuario" 
+                                                             required="true" 
+                                                             value="#{indexFormBean.user.usuario}" 
+                                                             autocomplete="off"
+                                                             class="estiloCuadro"/>
+                                                <h:messages infoStyle="color: blue;
+                                                            list-style:none;" 
+                                                            errorStyle="color:red;
+                                                            list-style:none;" 
+                                                            for="txtUsuario"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td >
+                                                <p>
+                                                    <h:inputSecret pt:placeholder="Password"  
+                                                                   id="txtPassword" 
+                                                                   label="Password" 
+                                                                   required="true" 
+                                                                   value="#{indexFormBean.user.docUsuario}"
+                                                                   class="estiloCuadro"/>
+                                                </p>
+                                                <h:messages infoStyle="color: blue;list-style:none;" 
+                                                            errorStyle="color:red;
+                                                            list-style:none;" 
+                                                            for="txtPassword"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>
+                                                <section >                   
+                                                    <h:commandButton 
+                                                        value="Ingresar"                                                                     
+                                                        class="estiloBoton"
+                                                        action="#{indexFormBean.startSesion()}"/>
+                                                </section>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </section>
+                            </p:column>
+                        </td>
+                    </tr>
+                </table> 
+            </div>
+            <p:growl id="growl" sticky="true" showDetail="true" life="3000" />
+
+        </h:form>
+    </h:body> 
+</html>
+
+

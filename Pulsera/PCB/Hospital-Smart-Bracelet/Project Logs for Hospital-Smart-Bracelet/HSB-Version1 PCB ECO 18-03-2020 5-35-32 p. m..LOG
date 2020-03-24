@@ -1,0 +1,4 @@
+Added Component: Designator=CONN7(1x2x2.54 Pin Header TH V)
+Added Pin To Net: NetName=3.3V Pin=CONN7-1
+Added Class: Name=CargaInalambrica
+Added Room: Name=CargaInalambrica

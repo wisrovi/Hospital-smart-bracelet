@@ -1,0 +1,65 @@
+<?xml version='1.0' encoding='UTF-8' ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <!--<h:outputStylesheet name="./css/default.css"/>-->
+        <h:outputStylesheet library="css" name="estilocontenedordiv.css"/>        
+        <h:outputStylesheet library="css" name="estilobutton.css"/>
+        <h:outputStylesheet library="css" name="estiloLogin.css"/>
+
+        <title>#{templateFormbean.titulo}</title>
+        <link href='./resources/image/ic_brain.png' rel='shortcut icon' type='image/x-icon'/> 
+    </h:head>
+
+    <h:body>
+
+        <header id="top">
+            <ui:insert name="top">
+                <style type="text/css">
+                    .value {
+                        font-weight: bold;
+                    }
+                </style>
+                <h:form>                    
+                    <p:menubar model="#{templateFormbean.menuModel}" >
+                        <f:facet name="options">
+                            <p:outputLabel value="#{templateFormbean.nombreUsuario}    "/>
+                            <p:commandButton                                 
+                                icon = "ui-icon-power"
+                                title="Cerrar Sesión"
+                                class="estiloBoton"
+                                actionListener="#{templateFormbean.cerrarSesion}"
+                                action="/faces/login.xhtml?faces-redirect=true"/>
+                        </f:facet>
+                    </p:menubar>
+                </h:form>
+            </ui:insert>
+        </header>
+
+        <div id="content" class="center_content">
+            <style type="text/css">
+                .ui-row-editor .ui-row-editor-pencil {
+                    margin-left:8px;
+                }
+            </style>
+            <h:form prependId="false">
+                <p:growl id="msgs" showDetail="true"/>
+                <br/>
+                <ui:insert name="content">Content</ui:insert>     
+                <br/>
+            </h:form>                 
+        </div>
+
+        <footer id="bottom" style="bottom: 0; position: fixed; text-align: center; width: 100%;">
+            <ui:insert name="bottom">FCV   @  2019</ui:insert>
+        </footer>
+
+    </h:body>
+
+</html>

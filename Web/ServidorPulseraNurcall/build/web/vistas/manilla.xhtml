@@ -1,0 +1,225 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <body>
+
+        <ui:composition template="/templates/AdminTemplate.xhtml">
+
+            <ui:define name="content">
+                <h:form prependId="false">
+                    <p:tabView id="pestanas">
+                        <p:tab title="Ver">
+                            <p:dataTable id="tablaManillasRegistradas" var="manilla" 
+                                         value="#{manillaFormBean.listManillas}" 
+                                         editable="true" 
+                                         paginator="true"
+                                         rows="35"
+                                         style="margin-bottom:20px" 
+                                         reflow="true" >
+                                <f:facet name="header">
+                                    <br/>
+                                    Manillas Instaladas                                    
+                                    <p:commandButton id="toggler" type="button" value="Columns" style="float:right" icon="pi pi-align-justify" />
+                                    <p:columnToggler datasource="tablaManillasRegistradas" trigger="toggler" />
+                                    <br/>
+                                    <br/>
+                                </f:facet>
+
+                                <p:ajax id="ajaxEdit" event="rowEdit" listener="#{manillaFormBean.onRowEdit}" update=":msgs" />
+                                <p:ajax id="ajaxCancel" event="rowEditCancel" listener="#{manillaFormBean.onRowCancel}" update=":msgs" />
+
+                                <p:column headerText="Id">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{manilla.idManilla}" /></f:facet>
+                                        <f:facet name="input"><p:inputText disabled="true" id="modelInput" value="#{manilla.idManilla}" style="width:100%"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <p:column headerText="Beacon" filterBy="#{manilla.beacon}">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{manilla.beacon}" /></f:facet>
+                                        <f:facet name="input"><p:inputText disabled="true" value="#{manilla.beacon}" style="width:100%" label="Year"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <p:column headerText="TxPower"  filterBy="#{manilla.txPower}">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{manilla.txPower}" /></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{manilla.txPower}" style="width:100%" label="Year"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <p:column headerText="Major" filterBy="#{manilla.major}">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{manilla.major}" /></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{manilla.major}" style="width:100%" label="Year"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <p:column headerText="Minor" filterBy="#{manilla.minor}">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{manilla.minor}" /></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{manilla.minor}" style="width:100%" label="Year"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <p:column headerText="Eddystone" filterBy="#{manilla.eddystone}">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{manilla.eddystone}" /></f:facet>
+                                        <f:facet name="input"><p:inputText disabled="true" value="#{manilla.eddystone}" style="width:100%" label="Year"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>    
+
+                                <p:column headerText="Temp (min)"  filterBy="#{manilla.minTemp}">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{manilla.minTemp}" /></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{manilla.minTemp}" style="width:100%" label="Year"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <p:column headerText="Temp (max)" filterBy="#{manilla.maxTemp}">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{manilla.maxTemp}" /></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{manilla.maxTemp}" style="width:100%" label="Year"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <p:column headerText="Cardio (min)" filterBy="#{manilla.minCardio}">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{manilla.minCardio}" /></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{manilla.minCardio}" style="width:100%" label="Year"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <p:column headerText="Cardio (max)" filterBy="#{manilla.maxCardio}">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{manilla.maxCardio}" /></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{manilla.maxCardio}" style="width:100%" label="Year"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+
+                                <p:column headerText="Habilitado" filterBy="#{manilla.habilitadoManilla}">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{manilla.habilitadoManilla}" /></f:facet>
+                                        <f:facet name="input"><p:inputText value="#{manilla.habilitadoManilla}" style="width:100%" label="Year"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <p:column headerText="Usuario" filterBy="#{manilla.usuario}">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{manilla.usuario}" /></f:facet>
+                                        <f:facet name="input"><p:inputText disabled="true" value="#{manilla.usuario}" style="width:100%" label="Year"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <p:column headerText="Fecha Registro">
+                                    <p:cellEditor>
+                                        <f:facet name="output"><h:outputText value="#{manilla.fechaRegistro}" /></f:facet>
+                                        <f:facet name="input" ><p:inputText disabled="true" value="#{manilla.fechaRegistro}" style="width:100%" label="Year"/></f:facet>
+                                    </p:cellEditor>
+                                </p:column>
+
+                                <p:column style="width:35px">
+                                    <p:rowEditor />
+                                </p:column>
+                            </p:dataTable>
+                        </p:tab>
+
+                        <p:tab title="Crear" id="pestanaCrear">
+                            <h:panelGrid columns="3" cellpadding="5">
+                                <p:fieldset legend="Beacon" style="margin-bottom:20px" toggleable="true" toggleSpeed="500">
+                                    <p:panelGrid columns="1">
+                                        <f:facet name="header">
+                                            <p:graphicImage library="image/" height="30%" name="iBeacon.jpg" />
+                                            <h:panelGrid columns="2" cellpadding="5">
+                                                <h:outputText value="Mac:" />
+                                                <h:inputText value="#{manillaFormBean.datosCrearManilla.beacon}" 
+                                                             required="true"
+                                                             requiredMessage="Se requiere la MAC iBeacon"/>
+                                            </h:panelGrid>
+                                        </f:facet>                                        
+
+                                        <h:panelGrid columns="2"  cellpadding="5">
+                                            <h:outputText value="Major" />
+                                            <h:inputText value="#{manillaFormBean.datosCrearManilla.major}" 
+                                                         required="true"
+                                                         requiredMessage="Se requiere valor MAJOR"/>
+
+                                            <h:outputText value="Minor:" />
+                                            <h:inputText value="#{manillaFormBean.datosCrearManilla.minor}" 
+                                                         required="true"
+                                                         requiredMessage="Se requiere valor MINOR"/>
+
+                                            <h:outputText value="TxPower:" />
+                                            <h:inputText value="#{manillaFormBean.datosCrearManilla.txPower}" 
+                                                         required="true"
+                                                         requiredMessage="Se requiere valor TX_POWER"/>
+                                        </h:panelGrid>
+                                    </p:panelGrid>
+                                </p:fieldset>
+
+                                <p:fieldset legend="Eddystone" style="margin-bottom:20px" toggleable="true" toggleSpeed="500">
+                                    <p:panelGrid columns="3" style="border: 0">
+                                        <f:facet name="header">
+                                            <p:graphicImage library="image/" height="21%" name="eddystone.jpg" />
+                                            <h:panelGrid columns="2" cellpadding="5">
+                                                <h:outputText value="Mac:" />
+                                                <h:inputText value="#{manillaFormBean.datosCrearManilla.eddystone}" 
+                                                             required="true"
+                                                             requiredMessage="Se requiere MAC Eddystone"/>
+                                            </h:panelGrid>
+                                        </f:facet>
+
+                                        <p:spacer height="0"/>
+                                        <h:outputText value="Minimo" />
+                                        <h:outputText value="maximo" />
+
+                                        <h:outputText value="Temperatura: " />
+                                        <h:inputText value="#{manillaFormBean.datosCrearManilla.minTemp}" 
+                                                     required="true"
+                                                     requiredMessage="Se requiere valor MINIMO TEMPERATURA"/>
+                                        <h:inputText value="#{manillaFormBean.datosCrearManilla.maxTemp}" 
+                                                     required="true"
+                                                     requiredMessage="Se requiere valor MAXIMO TEMPERATURA"/>
+
+                                        <h:outputText value="Cardio " />
+                                        <h:inputText value="#{manillaFormBean.datosCrearManilla.minCardio}"  
+                                                     required="true"
+                                                     requiredMessage="Se requiere valor MINIMO CARDIO"/>
+                                        <h:inputText value="#{manillaFormBean.datosCrearManilla.maxCardio}" 
+                                                     required="true"
+                                                     requiredMessage="Se requiere valor MAXIMO CARDIO"/>
+                                    </p:panelGrid>                 
+                                </p:fieldset>
+
+                                <p:panelGrid columns="1" style="border: 0">
+                                    <p:commandButton 
+                                        value="Validar" 
+                                        update=":msgs;pestanaCrear" 
+                                        ajax="False"
+                                        action="#{manillaFormBean.buttonValidar()}" 
+                                        style="margin-right:20px; padding: 10px;"  />
+
+                                    <p:commandButton 
+                                        id="botonGuardar"
+                                        value="Guardar" 
+                                        update=":msgs; :tablaManillasRegistradas; :pestanaCrear" 
+                                        ajax="False"
+                                        disabled="#{manillaFormBean.botonGuardarHabilitado}"
+                                        action="#{manillaFormBean.buttonGuardar()}" 
+                                        style="margin-right:20px; padding: 10px;"  />   
+                                </p:panelGrid>
+                            </h:panelGrid>
+                        </p:tab>                        
+                    </p:tabView>
+                </h:form>
+            </ui:define>
+        </ui:composition>
+    </body>
+</html>
