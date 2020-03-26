@@ -1,0 +1,8 @@
+Change Component Designator: OldDesignator=CO1 NewDesignator=CONN1
+Change Component Designator: OldDesignator=CO2 NewDesignator=CONN2
+Change Component Designator: OldDesignator=CO3 NewDesignator=CONN3
+Change Component Designator: OldDesignator=CO4 NewDesignator=CONN4
+Change Component Designator: OldDesignator=CO6 NewDesignator=CONN6
+Change Component Designator: OldDesignator=CO7 NewDesignator=CONN7
+Added Member To Class: ClassName=SensorCaida Member=Component CONN3 Connector
+Added Member To Class: ClassName=PPM Member=Component CONN5 Connector
