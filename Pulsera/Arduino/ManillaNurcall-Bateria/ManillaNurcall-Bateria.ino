@@ -2,6 +2,8 @@
 
 void setup() {
   Serial.begin(9600);
+  analogReference(INTERNAL);
+  delay(10);
   SetupSensoresHSB();
   Serial.println("setup terminado");
 }
@@ -9,6 +11,5 @@ void setup() {
 void loop() {
   mastersensorsfcv.loopBLE();
   ControlSensoresHSB();
-  mastersensorsfcv.setBateria(sbateria);
   delay(1);
 }
