@@ -14,12 +14,15 @@ SensorProximidadFCV sensorproximidadfcv;
 SensorCaidaFCV sensorcaidafcv;
 
 //Variables datos sensores
-float sbateria = 0; //float (1 entero y 1 decimal) ejemplo 5.2
+float sbateria = 0.0; //float (1 entero y 1 decimal) ejemplo 5.2
 int sppm = 0; //int (max 3 decimales) ejemplo 105
 boolean sproximidad = false; //true o false
 boolean scaida = false; //true o false
 float stemperatura = 0; //float (2 entero y 1 decimal) ejemplo 30.2
 boolean cargabateria = false;
+boolean iniciobateria = true;
+int Readbateria = 0;
+int Readbateriaf = 0;
 
 void ServicioBateria() {
   int valor = digitalRead(2);
@@ -45,7 +48,7 @@ unsigned long TMble = 0;
 #define intervaloPPM 30000
 #define intervaloAcel 500
 #define intervaloAcel2 5000
-#define intervaloBAT 3000
+#define intervaloBAT 10000
 #define intervaloble 1000
 
 //Declaración de funciones
@@ -61,7 +64,7 @@ Ticker TikerControlSProx(ControlsensorProximidad, 10, 4, MILLIS);
 Ticker TikerControlSTemp(ControlsensorTemperatura, 10, 4, MILLIS);
 Ticker TikerControlSPPM(ControlsensorPPM, 10, 4, MILLIS);
 Ticker TikerControlSAcel(ControlsensorAcel, 10, 4, MILLIS);
-Ticker TikerControlBat(ControlBat, 1000, 1, MILLIS);
+Ticker TikerControlBat(ControlBat, 10, 10, MILLIS);
 Ticker TikerControlModuloBLE(ControlModuloBLE, 10, 1, MILLIS);
 
 //****************************************
@@ -101,7 +104,7 @@ void ControlsensorProximidad() {
     sensorproximidadfcv.StartSProximidad();
     estabilidadprox = false;
     lecturaprox = true;
-    TikerControlSProx.interval(70);
+    TikerControlSProx.interval(150);
   }
 }
 //*****************************************
@@ -224,11 +227,126 @@ void ControlsensorAcel() {
 //Funcion control publicacion estado de batería
 //*****************************************
 void ControlBat() {
-  int Readbateria = analogRead(A5);
-  float sbateria3 = (Readbateria * 3.3) / 1024; //Se realiza la lectura del voltaje en 10 bits (0-1024) en el puerto A5, luego con la regla de tres calculamos el voltaje actual.
-  float sbateria2 = (sbateria3 * 100) / 3.3;
-  sbateria = (sbateria2 * 4.1) / 100;
-  mastersensorsfcv.setBateria(sbateria);
+  static bool lectura[10] = {true, false, false, false, false, false, false, false, false, false};
+
+  if (lectura[9]) {
+    Readbateria = analogRead(A5);
+    if (Readbateriaf >= Readbateria) {
+      Readbateriaf = Readbateriaf;
+    } else {
+      Readbateriaf = Readbateria;
+    }
+    sbateria = map(Readbateriaf, 0, 1023, 0, 42);
+    sbateria = sbateria / 10;
+    mastersensorsfcv.setBateria(sbateria);
+    lectura[9] = false;
+    lectura[0] = true;
+    TikerControlBat.interval(10);
+  }
+
+  if (lectura[8]) {
+    Readbateria = analogRead(A5);
+    if (Readbateriaf >= Readbateria) {
+      Readbateriaf = Readbateriaf;
+    } else {
+      Readbateriaf = Readbateria;
+    }
+    lectura[9] = true;
+    lectura[8] = false;
+    TikerControlBat.interval(1000);
+  }
+
+  if (lectura[7]) {
+    Readbateria = analogRead(A5);
+    if (Readbateriaf >= Readbateria) {
+      Readbateriaf = Readbateriaf;
+    } else {
+      Readbateriaf = Readbateria;
+    }
+    lectura[8] = true;
+    lectura[7] = false;
+    TikerControlBat.interval(1000);
+  }
+
+  if (lectura[6]) {
+    Readbateria = analogRead(A5);
+    if (Readbateriaf >= Readbateria) {
+      Readbateriaf = Readbateriaf;
+    } else {
+      Readbateriaf = Readbateria;
+    }
+    lectura[7] = true;
+    lectura[6] = false;
+    TikerControlBat.interval(1000);
+  }
+
+  if (lectura[5]) {
+    Readbateria = analogRead(A5);
+    if (Readbateriaf >= Readbateria) {
+      Readbateriaf = Readbateriaf;
+    } else {
+      Readbateriaf = Readbateria;
+    }
+    lectura[6] = true;
+    lectura[5] = false;
+    TikerControlBat.interval(1000);
+  }
+
+  if (lectura[4]) {
+    Readbateria = analogRead(A5);
+    if (Readbateriaf >= Readbateria) {
+      Readbateriaf = Readbateriaf;
+    } else {
+      Readbateriaf = Readbateria;
+    }
+    lectura[5] = true;
+    lectura[4] = false;
+    TikerControlBat.interval(1000);
+  }
+
+  if (lectura[3]) {
+    Readbateria = analogRead(A5);
+    if (Readbateriaf >= Readbateria) {
+      Readbateriaf = Readbateriaf;
+    } else {
+      Readbateriaf = Readbateria;
+    }
+    lectura[4] = true;
+    lectura[3] = false;
+    TikerControlBat.interval(1000);
+  }
+
+  if (lectura[2]) {
+    Readbateria = analogRead(A5);
+    if (Readbateriaf >= Readbateria) {
+      Readbateriaf = Readbateriaf;
+    } else {
+      Readbateriaf = Readbateria;
+    }
+    lectura[3] = true;
+    lectura[2] = false;
+    TikerControlBat.interval(1000);
+  }
+
+  if (lectura[1]) {
+    Readbateria = analogRead(A5);
+    if (Readbateriaf >= Readbateria) {
+      Readbateriaf = Readbateriaf;
+    } else {
+      Readbateriaf = Readbateria;
+    }
+    lectura[2] = true;
+    lectura[1] = false;
+    TikerControlBat.interval(1000);
+  }
+
+  if (lectura[0] && TikerControlBat.counter() == 1) {
+    Readbateria = analogRead(A5);
+    Readbateriaf = Readbateria;
+    lectura[1] = true;
+    lectura[0] = false;
+    TikerControlBat.interval(1000);
+  }
 }
 //*****************************************
 //Funcion control Modulo BLE
@@ -306,9 +424,13 @@ void ControlSensoresHSB() {
     }
 
     //Define el tiempo que se ejecutara la publicacion de la bateria
-    if (millis() > (intervaloBAT + TSBat)) {
-      TSBat = millis();
+    if (millis() > 500 && iniciobateria) {
       TikerControlBat.start();
+      iniciobateria = false;
+    }
+    if (millis() > (intervaloBAT + TSBat)) {
+      TikerControlBat.start();
+      TSBat = millis();
     }
   }
   TikerControlBat.update();
