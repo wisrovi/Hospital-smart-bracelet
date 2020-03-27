@@ -1,7 +1,7 @@
 Protel Design System Design Rule Check
 PCB File : D:\HSB\Hospital-smart-bracelet\Pulsera\PCB\Hospital-Smart-Bracelet\HSB-Version1.PcbDoc
-Date     : 26/03/2020
-Time     : 15:15:53
+Date     : 27/03/2020
+Time     : 16:29:56
 
 Processing Rule : Net Antennae (Tolerance=0mm) (All)
 Rule Violations :0
@@ -217,14 +217,10 @@ Processing Rule : Silk To Solder Mask (Clearance=0.125mm) (IsPad),(All)
 Rule Violations :85
 
 Processing Rule : Minimum Solder Mask Sliver (Gap=0.254mm) (All),(All)
-   Violation between Via (27.402mm,16.891mm) Top Layer to Bottom Layer and 
-                     Pad E1-13(27.402mm,15.044mm)  Top Layer
-   Violation between Via (29.41mm,13.513mm) Top Layer to Bottom Layer and 
-                     Pad E1-11(30.402mm,15.044mm)  Top Layer
-   Violation between Via (39.983mm,40.818mm) Top Layer to Bottom Layer and 
-                     Pad X1-1(42.164mm,39.515mm)  Top Layer
-   Violation between Via (43.666mm,31.623mm) Top Layer to Bottom Layer and 
-                     Pad C4-2(45.363mm,30.734mm)  Top Layer
+   Violation between Via (43.489mm,20.396mm) Top Layer to Bottom Layer and 
+                     Pad R8-1(42.285mm,21.896mm)  Top Layer
+   Violation between Via (41.736mm,33.553mm) Top Layer to Bottom Layer and 
+                     Pad X1-2(42.164mm,35.415mm)  Top Layer
    Violation between Pad U1-2(36.392mm,31.592mm)  Top Layer and 
                      Pad U1-1(37.005mm,32.107mm)  Top Layer
    Violation between Pad U1-3(35.779mm,31.078mm)  Top Layer and 
@@ -241,7 +237,11 @@ Processing Rule : Minimum Solder Mask Sliver (Gap=0.254mm) (All),(All)
                      Pad U1-7(33.328mm,29.021mm)  Top Layer
    Violation between Pad U1-10(33.051mm,25.851mm)  Top Layer and 
                      Pad U1-9(32.537mm,26.464mm)  Top Layer
+   Violation between Via (31.652mm,24.943mm) Top Layer to Bottom Layer and 
+                     Pad U1-9(32.537mm,26.464mm)  Top Layer
    Violation between Pad U1-11(33.565mm,25.238mm)  Top Layer and 
+                     Pad U1-10(33.051mm,25.851mm)  Top Layer
+   Violation between Via (31.652mm,24.943mm) Top Layer to Bottom Layer and 
                      Pad U1-10(33.051mm,25.851mm)  Top Layer
    Violation between Pad U1-12(34.079mm,24.626mm)  Top Layer and 
                      Pad U1-11(33.565mm,25.238mm)  Top Layer
@@ -251,15 +251,19 @@ Processing Rule : Minimum Solder Mask Sliver (Gap=0.254mm) (All),(All)
                      Pad U1-13(34.593mm,24.013mm)  Top Layer
    Violation between Pad U1-15(35.622mm,22.787mm)  Top Layer and 
                      Pad U1-14(35.108mm,23.4mm)  Top Layer
+   Violation between Via (36.3mm,24.689mm) Top Layer to Bottom Layer and 
+                     Pad U1-14(35.108mm,23.4mm)  Top Layer
    Violation between Pad U1-16(36.136mm,22.174mm)  Top Layer and 
                      Pad U1-15(35.622mm,22.787mm)  Top Layer
+   Violation between Via (35.157mm,20.777mm) Top Layer to Bottom Layer and 
+                     Pad U1-16(36.136mm,22.174mm)  Top Layer
    Violation between Pad U1-18(38.792mm,22.51mm)  Top Layer and 
                      Pad U1-17(38.179mm,21.995mm)  Top Layer
    Violation between Pad U1-19(39.405mm,23.024mm)  Top Layer and 
                      Pad U1-18(38.792mm,22.51mm)  Top Layer
+   Violation between Via (39.348mm,21.057mm) Top Layer to Bottom Layer and 
+                     Pad U1-18(38.792mm,22.51mm)  Top Layer
    Violation between Pad U1-20(39.994mm,23.596mm)  Top Layer and 
-                     Pad U1-19(39.405mm,23.024mm)  Top Layer
-   Violation between Via (38.434mm,24.562mm) Top Layer to Bottom Layer and 
                      Pad U1-19(39.405mm,23.024mm)  Top Layer
    Violation between Pad U1-21(40.63mm,24.052mm)  Top Layer and 
                      Pad U1-20(39.994mm,23.596mm)  Top Layer
@@ -271,11 +275,7 @@ Processing Rule : Minimum Solder Mask Sliver (Gap=0.254mm) (All),(All)
                      Pad U1-23(41.856mm,25.081mm)  Top Layer
    Violation between Pad U1-26(42.133mm,28.251mm)  Top Layer and 
                      Pad U1-25(42.648mm,27.638mm)  Top Layer
-   Violation between Via (44.225mm,27.813mm) Top Layer to Bottom Layer and 
-                     Pad U1-25(42.648mm,27.638mm)  Top Layer
    Violation between Pad U1-27(41.619mm,28.864mm)  Top Layer and 
-                     Pad U1-26(42.133mm,28.251mm)  Top Layer
-   Violation between Via (43.428mm,29.352mm) Top Layer to Bottom Layer and 
                      Pad U1-26(42.133mm,28.251mm)  Top Layer
    Violation between Pad U1-28(41.105mm,29.476mm)  Top Layer and 
                      Pad U1-27(41.619mm,28.864mm)  Top Layer
@@ -287,16 +287,12 @@ Processing Rule : Minimum Solder Mask Sliver (Gap=0.254mm) (All),(All)
                      Pad U1-30(40.076mm,30.702mm)  Top Layer
    Violation between Pad U1-32(39.048mm,31.928mm)  Top Layer and 
                      Pad U1-31(39.562mm,31.315mm)  Top Layer
-   Violation between Via (30.662mm,29.413mm) Top Layer to Bottom Layer and 
-                     Pad PB1-1(28.793mm,29.135mm)  Multi-Layer
-   Violation between Via (37.012mm,35.676mm) Top Layer to Bottom Layer and 
-                     Pad CONN2-1(36.957mm,37.465mm)  Multi-Layer
+   Violation between Via (12.805mm,6.528mm) Top Layer to Bottom Layer and 
+                     Pad U4-2(14.023mm,5.273mm)  Multi-Layer
    Violation between Pad U2-2(46.736mm,37.338mm)  Multi-Layer and 
                      Pad U2-3(48.006mm,37.338mm)  Multi-Layer
    Violation between Pad U2-1(45.466mm,37.338mm)  Multi-Layer and 
                      Pad U2-2(46.736mm,37.338mm)  Multi-Layer
-   Violation between Via (50.931mm,34.574mm) Top Layer to Bottom Layer and 
-                     Pad C3-2(50.903mm,32.639mm)  Bottom Layer
    Violation between Pad U3-1(33.195mm,25.56mm)  Bottom Layer and 
                      Pad U3-16(34.287mm,25.465mm)  Bottom Layer
    Violation between Pad U3-15(34.785mm,25.882mm)  Bottom Layer and 
@@ -329,22 +325,26 @@ Processing Rule : Minimum Solder Mask Sliver (Gap=0.254mm) (All),(All)
                      Pad U3-3(32.36mm,26.556mm)  Bottom Layer
    Violation between Pad U3-1(33.195mm,25.56mm)  Bottom Layer and 
                      Pad U3-2(32.777mm,26.058mm)  Bottom Layer
-   Violation between Via (29.849mm,5.055mm) Top Layer to Bottom Layer and 
+   Violation between Via (29.646mm,32.998mm) Top Layer to Bottom Layer and 
+                     Pad R1-2(28.043mm,32.385mm)  Bottom Layer
+   Violation between Via (34.294mm,32.436mm) Top Layer to Bottom Layer and 
+                     Pad R2-1(34.774mm,34.29mm)  Bottom Layer
+   Violation between Via (28.807mm,4.623mm) Top Layer to Bottom Layer and 
                      Pad C6-2(30.513mm,3.181mm)  Bottom Layer
-   Violation between Via (43.235mm,30.048mm) Top Layer to Bottom Layer and 
-                     Via (43.666mm,31.623mm) Top Layer to Bottom Layer
-   Violation between Via (31.83mm,30.683mm) Top Layer to Bottom Layer and 
-                     Via (30.662mm,29.413mm) Top Layer to Bottom Layer
-   Violation between Via (33.263mm,22.682mm) Top Layer to Bottom Layer and 
-                     Via (33.684mm,21.133mm) Top Layer to Bottom Layer
-   Violation between Via (31.576mm,22.952mm) Top Layer to Bottom Layer and 
-                     Via (33.263mm,22.682mm) Top Layer to Bottom Layer
-Rule Violations :61
+   Violation between Via (28.807mm,4.623mm) Top Layer to Bottom Layer and 
+                     Pad C6-1(27.559mm,2.661mm)  Bottom Layer
+   Violation between Via (29.646mm,32.998mm) Top Layer to Bottom Layer and 
+                     Via (30.712mm,31.674mm) Top Layer to Bottom Layer
+   Violation between Via (43.177mm,30.737mm) Top Layer to Bottom Layer and 
+                     Via (41.838mm,31.699mm) Top Layer to Bottom Layer
+   Violation between Via (35.157mm,20.777mm) Top Layer to Bottom Layer and 
+                     Via (33.684mm,20.98mm) Top Layer to Bottom Layer
+   Violation between Via (31.297mm,23.495mm) Top Layer to Bottom Layer and 
+                     Via (31.652mm,24.943mm) Top Layer to Bottom Layer
+Rule Violations :62
 
 Processing Rule : Hole To Hole Clearance (Gap=0.254mm) (All),(All)
-   Violation between Via (43.428mm,29.352mm) Top Layer to Bottom Layer and 
-                     Via (43.235mm,30.048mm) Top Layer to Bottom Layer
-Rule Violations :1
+Rule Violations :0
 
 Processing Rule : Hole Size Constraint (Min=0.025mm) (Max=2.54mm) (All)
    Violation between Hole Size Constraint (3.1mm > 2.54mm) : Pad Free-1(47mm,41.5mm)  Multi-Layer
@@ -361,7 +361,15 @@ Processing Rule : Power Plane Connect Rule(Relief Connect )(Expansion=0.508mm) (
 Rule Violations :0
 
 Processing Rule : Clearance Constraint (Gap=0.2mm) (All),(All)
-Rule Violations :0
+   Violation between Track (35.165mm,28.931mm)(38.993mm,28.931mm)  Bottom Layer and 
+                     Pad U3-11(35.458mm,28.308mm)  Bottom Layer
+   Violation between Track (32.16mm,29.616mm)(33.531mm,29.616mm)  Bottom Layer and 
+                     Pad U3-7(33.033mm,28.982mm)  Bottom Layer
+   Violation between Track (31.322mm,26.441mm)(31.322mm,27.813mm)  Bottom Layer and 
+                     Pad U3-4(31.942mm,27.054mm)  Bottom Layer
+   Violation between Track (31.322mm,26.441mm)(32.245mm,26.441mm)  Bottom Layer and 
+                     Pad U3-4(31.942mm,27.054mm)  Bottom Layer
+Rule Violations :4
 
 Processing Rule : Un-Routed Net Constraint ( (All) )
 Rule Violations :0
@@ -370,5 +378,5 @@ Processing Rule : Short-Circuit Constraint (Allowed=No) (All),(All)
 Rule Violations :0
 
 
-Violations Detected : 166
+Violations Detected : 170
 Time Elapsed        : 00:00:02
