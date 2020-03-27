@@ -81,7 +81,7 @@ void ControlsensorProximidad() {
     sendBleprox = false;
     estabilidadprox = true;
     if (!sproximidad) {
-      Serial.println("No hay proximidad");
+      Serial.println("**CUIDADO: No hay proximidad** -- **CUIDADO: No hay proximidad**");
     }
     TikerControlSProx.interval(10);
   }
