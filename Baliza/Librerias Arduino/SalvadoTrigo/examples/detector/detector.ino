@@ -1,6 +1,3 @@
-
-
-
 String mensajeEnviar = "{'loro':'periquito'}";
 
 #include "ScanHSBFCV.h"
