@@ -5,6 +5,7 @@
   para wifi manager
 
 ***/
+
 #include <DNSServer.h>
 #include <WebServer.h>
 #include <WiFiManager.h>
@@ -18,9 +19,15 @@
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <AsyncElegantOTA.h>
+#include "Arduino.h"
+#include "BalizaHSBFCV.h"
+#include "base64.h"
+
+
 AsyncWebServer server(80);
 
-void enviarMensajePost() {
+
+void ScanHSBFCV::enviarMensajePost() {
   if (WiFi.status() == WL_CONNECTED) { //Check WiFi connection status
     HTTPClient http;    //Declare object of class HTTPClient
     http.begin("http://172.16.66.116:2020/");      //Specify request destination terminal
@@ -39,7 +46,7 @@ void enviarMensajePost() {
   }
 }
 
-void InitSystem() {
+void ScanHSBFCV::InitSystem() {
   WiFiManager wifiManager;
   wifiManager.autoConnect("AutoConnectAP");
   AsyncElegantOTA.begin(&server);    // Start ElegantOTA
@@ -47,6 +54,6 @@ void InitSystem() {
 
 }
 
-void OTA() {
+void ScanHSBFCV::OTA() {
   AsyncElegantOTA.loop();
 }

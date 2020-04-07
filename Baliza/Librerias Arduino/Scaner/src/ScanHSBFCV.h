@@ -1,5 +1,5 @@
-#ifndef SalvadoTrigo_h
-#define SalvadoTrigo_h
+#ifndef ScanHSBFCV_h
+#define ScanHSBFCV_h
 
 #include <HTTPClient.h>
 #include <WiFi.h>
@@ -14,11 +14,12 @@
 #include "base64.h"
 
 
-class SalvadoTrigo
+class ScanHSBFCV
 {
 
   public:
-     void enviarMensajePost();
+  
+    void enviarMensajePost();
     void InitSystem();
     void OTA();
 
