@@ -27,4 +27,4 @@ void loop() {
 //despues de que envie entre y limpie el dato anterior
   }
   scanhsbfcv.OTA();
-}
+}                             
