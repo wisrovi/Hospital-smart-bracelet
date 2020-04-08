@@ -12,13 +12,14 @@
 #include <AsyncElegantOTA.h>
 #include "BalizaHSBFCV.h"
 #include "base64.h"
+#include "Arduino.h"
 
 
 class ScanHSBFCV
 {
 
   public:
-  
+    ScanHSBFCV();
     void enviarMensajePost();
     void InitSystem();
     void OTA();
