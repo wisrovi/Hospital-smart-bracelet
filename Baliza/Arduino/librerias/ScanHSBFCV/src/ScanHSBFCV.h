@@ -1,5 +1,5 @@
-#ifndef SalvadoTrigo_h
-#define SalvadoTrigo_h
+#ifndef ScanHSBFCV_h
+#define ScanHSBFCV_h
 
 #include <HTTPClient.h>
 #include <WiFi.h>
@@ -12,13 +12,15 @@
 #include <AsyncElegantOTA.h>
 #include "BalizaHSBFCV.h"
 #include "base64.h"
+#include "Arduino.h"
 
 
-class SalvadoTrigo
+class ScanHSBFCV
 {
 
   public:
-     void enviarMensajePost();
+    ScanHSBFCV();
+    void enviarMensajePost();
     void InitSystem();
     void OTA();
 

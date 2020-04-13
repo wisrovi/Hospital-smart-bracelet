@@ -1,13 +1,13 @@
 String mensajeEnviar = "{'loro':'periquito'}";
 
-#include "SalvadoTrigo.h"
-#include "BalizaHSBFCV.h"
+#include "ScanHSBFCV.h"
+
 BalizaHSBFCV balizahsbfcv;
-#include "base64.h"
+ScanHSBFCV scanhsbfcv;
 
 void setup() {
   Serial.begin(9600);
-  InitSystem();
+  scanhsbfcv.InitSystem();
   balizahsbfcv.start_at();
 }
 
@@ -19,13 +19,12 @@ void loop() {
     String Beaconsescaneados = balizahsbfcv.Totalbeacons();
     if (Beaconsescaneados.length() > 20) {
       String datos = Beaconsescaneados;
-      datos.replace("\r"," ");
       mensajeEnviar = base64::encode(datos);
       Serial.println(Beaconsescaneados);
       
-      enviarMensajePost();
+      scanhsbfcv.enviarMensajePost();
     }
 //despues de que envie entre y limpie el dato anterior
   }
-  OTA();
-}
+  scanhsbfcv.OTA();
+}                             
