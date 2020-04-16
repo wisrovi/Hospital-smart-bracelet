@@ -1,8 +1,7 @@
 #ifndef ScanBalizaHSBFCV_h
 #define ScanBalizaHSBFCV_h
 
-#include <Arduino.h>
-#include <Ticker.h>
+#include "Arduino.h"
 #include <HTTPClient.h>
 #include <WiFi.h>
 
