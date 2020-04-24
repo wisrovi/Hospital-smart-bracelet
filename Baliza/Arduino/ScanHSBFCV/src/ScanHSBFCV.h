@@ -1,9 +1,7 @@
-#ifndef BalizaHSBFCV_h
-#define BalizaHSBFCV_h
-
+#ifndef ScanHSBFCV_h
+#define ScanHSBFCV_h
+/*
 #include "Arduino.h"
-#include <ArduinoJson.h>
-
 #include <HTTPClient.h>
 #include <WiFi.h>
 #include <DNSServer.h>
@@ -13,17 +11,18 @@
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include <AsyncElegantOTA.h>
+#include "BalizaHSBFCV.h"
+#include "base64.h"
+*/
 
-class BalizaHSBFCV
+
+class ScanHSBFCV
 {
 
   public:
-    void start_at();
-    void loopScanear();
-    String Totalbeacons();
     void enviarMensajePost();
-	  void InitSystem();
-	  void OTA();
+    void InitSystem();
+    void OTA();
 
 	private:
 
