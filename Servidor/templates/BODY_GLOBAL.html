@@ -1,0 +1,30 @@
+{% extends 'BASE_GLOBAL.html' %}
+
+{% block body %}
+
+    <body class="hold-transition layout-top-nav">
+    <div class="wrapper">
+        <!-- Header -->
+        {% include 'HEADER_GLOBAL.html' %}
+    </div>
+
+    <!-- Content -->
+    {% block content %}
+
+    {% endblock %}
+
+    <div class="wrapper">
+        <footer class="main-footer text-center">
+            <strong>Copyright &copy; 2020-2021 <a href="https://adminlte.io">AlgoriSoft</a>.</strong><br>
+            Todos los derechos reservados.
+        </footer>
+    </div>
+
+    {% block scrips_JS %}
+    {% endblock %}
+
+    {% block javascript %}
+
+    {% endblock %}
+    </body>
+{% endblock %}

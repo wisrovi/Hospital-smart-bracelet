@@ -1,0 +1,225 @@
+{% load static %}
+{% load socialaccount %}
+{% providers_media_js %}
+
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <title>Login V4</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="images/icons/favicon.ico"/>
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/font-awesome-4.7.0/css/font-awesome.min.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'fonts/iconic/css/material-design-iconic-font.min.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/animate/animate.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/css-hamburgers/hamburgers.min.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/animsition/css/animsition.min.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/select2/select2.min.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'vendor/daterangepicker/daterangepicker.css' %}">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/util.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+    <!--===============================================================================================-->
+</head>
+<body>
+
+<div class="container-login100" style="background-image: url({% static 'images/bg-01.jpg' %})">
+    <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+        {% if user.has_usable_password %}
+            {% if status == 'creteDestinations' %}
+                <span class="login100-form-title p-b-49">
+					    User successfully created
+                </span>
+                <div class="flex-c-m">
+                    <label type="text"> &nbsp;&nbsp;&nbsp; </label>
+                    <label type="text" style="color: #555353;">
+                        Congratulations {{ user }}, your account has been created successfully,
+                        but you do not have recipient emails to log in during the business day.
+                    </label>
+                </div>
+
+                <br/>
+                <br/>
+                <br/>
+                <!--  boton crear destinatarios  -->
+                <div class="container-login100-form-btn">
+                    <div class="wrap-login100-form-btn">
+                        <div class="login100-form-bgbtn"></div>
+                        <a href="{% url 'atmosferia:task_create' %}" type="button" class="login100-form-btn">
+                            Create Destinations
+                        </a>
+                    </div>
+                </div>
+            {% else %}
+                <div class="m-b-23">
+                    <h2>Welcome {{ request.user }}!</h2>
+                    <span class="focus-input100" data-symbol="&#xf206;"></span>
+                </div>
+                <div class="m-b-23">
+                    <h5>Name: {{ request.user.first_name }} {{ request.user.last_name }}</h5>
+                    <span class="focus-input100" data-symbol="&#xf206;"></span>
+                </div>
+                <div class="m-b-23">
+                    <h5>Email: {{ request.user.email }}</h5>
+                    <span class="focus-input100" data-symbol="&#xf206;"></span>
+                </div>
+                <div class="m-b-23">
+                    <a href="{% url 'atmosferia:task_start' %}" class="btn btn-primary">Iniciar Jornada Laboral</a>
+                    <span class="focus-input100" data-symbol="&#xf206;"></span>
+                </div>
+            {% endif %}
+
+            <div class="flex-c-m">
+                <br/>
+                <br/>
+                <br/>
+                <a href="{% url 'signout' %}">Logout</a>
+            </div>
+        {% else %}
+            <form id="completeRegister" class="login100-form validate-form" method="POST">
+                {% csrf_token %}
+                <span class="login100-form-title p-b-49">
+					Complete User Data
+				</span>
+
+                <div class="flex-c-m">
+                    <label type="text" style="font-size: larger;"> Username:</label>
+                    <label type="text"> &nbsp;&nbsp;&nbsp; </label>
+                    <label type="text" style="color: #555353;"> {{ user }} </label>
+                </div>
+
+                <br/>
+
+                <div class="flex-c-m">
+                    <div class="wrap-input100 validate-input m-b-23" data-validate="Email is reauired">
+                        <span class="label-input100">Email</span>
+                        <input class="input100" type="email" name="email" placeholder="Email">
+                    </div>
+                </div>
+
+                {% if not user.has_usable_password %}
+                    <div class="wrap-input100 validate-input" data-validate="Password is required">
+                        <span class="label-input100">Password</span>
+                        <input id="pass1" class="input100" type="password" name="pass" placeholder="Type your password">
+                        {{ form.password }}
+                    </div>
+
+                    <br/>
+
+                    <div class="wrap-input100 validate-input" data-validate="Password is required">
+                        <span class="label-input100">Confirm assword</span>
+                        <input id="pass2" class="input100" type="password" name="conf-pass"
+                               placeholder="Type your password again">
+                        {{ form.confirm_password }}
+                    </div>
+                {% endif %}
+
+                <br/>
+                <br/>
+
+                <div class="container-login100-form-btn">
+                    <div class="wrap-login100-form-btn">
+                        <div class="login100-form-bgbtn"></div>
+                        <button type="submit" class="login100-form-btn">
+                            Complete Register
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex-c-m">
+                    <br/>
+                    <br/>
+                    <br/>
+                    <a href="{% url 'signout' %}">Logout</a>
+                </div>
+
+            </form>
+        {% endif %}
+    </div>
+</div>
+
+<!--===============================================================================================-->
+<script src="{% static 'vendor/jquery/jquery-3.2.1.min.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'vendor/animsition/js/animsition.min.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'vendor/bootstrap/js/popper.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'vendor/select2/select2.min.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'vendor/daterangepicker/moment.min.js' %}"></script>
+<script src="{% static 'vendor/daterangepicker/daterangepicker.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'vendor/countdowntime/countdowntime.js' %}"></script>
+<!--===============================================================================================-->
+<script src="{% static 'js/main.js' %}"></script>
+
+<script>
+    $('#completeRegister').on('submit', function (e) {
+        e.preventDefault();
+        var parameters = $(this).serializeArray();
+        var pass1 = document.getElementById('pass1').value;
+        var pass2 = document.getElementById('pass2').value;
+        if (pass1 !== pass2) {
+            alert('Error: Passwords do not match.');
+        } else {
+            console.log(parameters)
+            $.ajax({
+                url: window.location.pathname,
+                type: 'POST',
+                data: parameters,
+                dataType: 'json'
+            }).done(function (data) {
+                console.log("OK");
+
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                //alert(textStatus + ': ' + errorThrown);
+                console.log("ERROR");
+            }).always(function (data) {
+                location.reload();
+            });
+        }
+    });
+
+    $('#creteDestinations').on('submit', function (e) {
+        e.preventDefault();
+        var parameters = $(this).serializeArray();
+        var pass1 = document.getElementById('pass1').value;
+        var pass2 = document.getElementById('pass2').value;
+        if (pass1 !== pass2) {
+            alert('Error: Passwords do not match.');
+        } else {
+            console.log(parameters)
+            $.ajax({
+                url: window.location.pathname,
+                type: 'POST',
+                data: parameters,
+                dataType: 'json'
+            }).done(function (data) {
+                console.log("OK");
+
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                //alert(textStatus + ': ' + errorThrown);
+                console.log("ERROR");
+            }).always(function (data) {
+                location.reload();
+            });
+        }
+    });
+
+
+</script>
+</body>
+</html>

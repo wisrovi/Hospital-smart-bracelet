@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    {% if user.is_authenticated %}
+        <form method="post" action=".">
+            <div class="container-login100" style="background-image: url({% static 'images/bg-01.jpg' %})">
+                <div class="wrap-login100 p-l-55 p-r-55 p-t-65 p-b-54">
+                    <br/>
+
+                    <div class="callout callout-info">
+                        <h4>¡Bienvenido {{ usuarioLogeado.first_name }}!</h4>
+                        <br/>
+                        <div class="container-login100-form-btn">
+                            <div class="m-b-23">
+                                <div class="btn-group">
+                                    {% if form.errors %}
+                                        <p>Se ha presentado un error</p>
+                                    {% else %}
+                                        <input type="hidden" name="action" value="{{ action }}">
+                                        <input type="text" value="Proyecto: ">
+                                        {{ form.project }}
+                                        <br/>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="m-b-23">
+                        <button type="submit" class="btn btn-primary">
+                            Iniciar jornada laboral
+                        </button>
+                        <span class="focus-input100" data-symbol="&#xf206;"></span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    {% else %}
+
+    {% endif %}
+{% endblock %}
+
+{% block javascript %}
+    <script>
+        $('form').on('submit', function (e) {
+            e.preventDefault();
+            var parameters = $(this).serializeArray();
+            console.log(parameters)
+            $.ajax({
+                url: window.location.pathname,
+                type: 'POST',
+                data: parameters,
+                dataType: 'json'
+            }).done(function (data) {
+                console.log("OK");
+            }).fail(function (jqXHR, textStatus, errorThrown) {
+                //alert(textStatus + ': ' + errorThrown);
+                console.log("ERROR");
+            }).always(function (data) {
+
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,16 @@
+# https://medium.com/@whizzoe/in-5-mins-set-up-google-login-to-sign-up-users-on-django-e71d5c38f5d5
+
+# Google
+# Name: Google-login
+# ClientId = 158752860216-88ujsh02s6sdivh9pv492in3j0ccah7s.apps.googleusercontent.com
+# KeySecret = uJTEIHLMQR7Hz7AIaheS7JqO
+
+# Facebook:
+# Name: Facebook-login
+# ClientId = 231783191493241
+# KeySecret = 2765073d45a635d2eee74d402be69e54
+
+# Twitter:
+# Name: Twitter-login
+# ClientId = e9v4kjMgqN2npk7dH3yhoq2Kb
+# KeySecret = V1Pw6s058jn6wytmJy1hNwLYadm8csp1BDGBAsdx2M5OSGJAMC
