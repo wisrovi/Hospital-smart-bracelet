@@ -1,0 +1,31 @@
+
+#######################################
+# Syntax Coloring PULSO CARDIACO FCV
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+BalizaHSBFCV	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+start_at	KEYWORD2
+loopScanear	KEYWORD2
+Totalbeacons	KEYWORD2
+enviarMensajePost	KEYWORD2
+InitSystem	KEYWORD2
+OTA	KEYWORD2
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+

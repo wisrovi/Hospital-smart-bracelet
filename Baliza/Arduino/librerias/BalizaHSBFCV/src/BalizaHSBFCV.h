@@ -3,7 +3,6 @@
 
 #include "Arduino.h"
 #include <ArduinoJson.h>
-
 #include <HTTPClient.h>
 #include <WiFi.h>
 #include <DNSServer.h>
@@ -22,8 +21,8 @@ class BalizaHSBFCV
     void loopScanear();
     String Totalbeacons();
     void enviarMensajePost();
-	  void InitSystem();
-	  void OTA();
+	void InitSystem();
+	void OTA();
 
 	private:
 
