@@ -1,0 +1,7 @@
+Added Component: Designator=C7(C1206-1.25)
+Add component. Clean all parameters for all variants
+Add component (AddParameter): Name = "Value"; Value = "0.1uF"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=GND Pin=C7-1
+Added Pin To Net: NetName=AREF Pin=C7-2
+Added Member To Class: ClassName=Atmega328P Member=Component C7 C2
+Added Member To Class: ClassName=PPM Member=Component CONN5 Connector
