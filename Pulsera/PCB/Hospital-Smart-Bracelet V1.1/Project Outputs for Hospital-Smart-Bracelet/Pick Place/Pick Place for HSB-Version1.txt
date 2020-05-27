@@ -1,0 +1,35 @@
+Altium Designer Pick and Place Locations
+E:\GitHub\Hospital-smart-bracelet\Pulsera\PCB\Hospital-Smart-Bracelet V1.1\Project Outputs for Hospital-Smart-Bracelet\Pick Place\Pick Place for HSB-Version1.txt
+
+========================================================================================================================
+File Design Information:
+
+Date:       27/05/20
+Time:       16:04
+Revision:   Not in VersionControl
+Variant:    No variations
+Units used: mil
+
+Designator Comment       Layer       Footprint                Center-X(mil) Center-Y(mil) Rotation Description                                                                                     
+U2         DS18B20       BottomLayer Z03A                     1013.426      940.000       90       "Precision Centigrade Temperature Sensor, 3-pin TO-92, Pb-Free"                                 
+R8         R             TopLayer    R1206-0.55               883.425       370.000       40       "Resistor, generic"                                                                             
+R7         R             TopLayer    R1206-0.55               1063.424      494.999       270      "Resistor, generic"                                                                             
+CN3        Connector     TopLayer    1x5x2.54_Pin_Header_TH_V 1208.424      650.000       270      ""                                                                                              
+R4         R             TopLayer    R1206-0.55               806.613       1146.654      180      "Resistor, generic"                                                                             
+U1         ATMEGA328P-AU TopLayer    TQFP80P900X900X120-32N   653.425       535.000       310      "Microchip Technology ATMEGA328P-AN, 8bit AVR Microcontroller, 20MHz, 32 kB Flash, 32-Pin TQFP" 
+CONN2      Connector     TopLayer    1x3x2.54_Pin_Header_TH_V 628.424       1045.000      90       "Rx / Tx"                                                                                       
+CONN1      Connector     TopLayer    1x4x2.54_Pin_Header_TH_V 693.426       175.000       360      Header                                                                                          
+C4         C1            TopLayer    C1206-1.25               1018.425      680.000       180      "Capacitor, generic"                                                                            
+C5         C2            TopLayer    C1206-1.25               1018.425      815.000       180      "Capacitor, generic"                                                                            
+P1         "Header 3X2"  TopLayer    HDR2X3                   223.424       420.000       180      "Header, 3-Pin, Dual row"                                                                       
+PB1        "Push Button" TopLayer    Tack_Switch_6x6_1mm_TH   218.424       744.999       270      "Push Button"                                                                                   
+R1         R             BottomLayer R1206-0.55               218.427       744.996       0        "Resistor, generic"                                                                             
+R2         R             BottomLayer R1206-0.55               483.423       820.000       180      "Resistor, generic"                                                                             
+X1         XTAL          TopLayer    2-SMD                    833.424       945.000       270      "Crystal, Generic"                                                                              
+R5         R             TopLayer    R1206-0.55               1028.424      115.000       360      "Resistor, generic"                                                                             
+R6         R             BottomLayer R1206-0.55               1153.424      115.000       180      "Resistor, generic"                                                                             
+CONN6      Connector     TopLayer    1x1x2.54_Pin_Header_TH_V 328.424       1145.000      90       "Sen Batery"                                                                                    
+CONN7      Connector     TopLayer    1x2x2.54_Pin_Header_TH_V 138.424       1145.000      360      "Con Batery"                                                                                    
+U4         QRD1114       BottomLayer *ONS_QRD1114             1142.362      271.063       270      "Sensor óptico reflectante 0.050 _1.27 mm_ radial - 4 conductores"                             
+CONN5      Connector     BottomLayer SEN0203                  198.424       240.000       90       "Con PPM"                                                                                       
+C7         C2            BottomLayer C1206-1.25               743.424       340.000       90       "Capacitor, generic"                                                                            
