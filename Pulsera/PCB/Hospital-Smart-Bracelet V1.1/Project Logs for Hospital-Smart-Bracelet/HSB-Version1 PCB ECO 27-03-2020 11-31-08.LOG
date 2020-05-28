@@ -1,0 +1,13 @@
+Removed Pin From Net: NetName=GND Pin=CONN1-1
+Removed Pin From Net: NetName=D3 Pin=CONN1-2
+Removed Pin From Net: NetName=D4 Pin=CONN1-3
+Added Pin To Net: NetName=D3 Pin=CONN1-1
+Added Pin To Net: NetName=D4 Pin=CONN1-2
+Added Pin To Net: NetName=GND Pin=CONN1-3
+Added Room: Name=Atmega328P
+Added Room: Name=BLE-HM10
+Added Room: Name=CargaInalambrica
+Added Room: Name=PPM
+Added Room: Name=Proximidad
+Added Room: Name=SensorCaida
+Added Room: Name=Temperatura

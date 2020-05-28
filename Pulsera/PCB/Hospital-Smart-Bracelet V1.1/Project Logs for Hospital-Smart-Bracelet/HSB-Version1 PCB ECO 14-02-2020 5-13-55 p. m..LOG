@@ -1,0 +1,14 @@
+Removed Pin From Net: NetName=A4 Pin=C1-1
+Removed Pin From Net: NetName=A3 Pin=C2-1
+Removed Pin From Net: NetName=A2 Pin=C3-1
+Change Component DesignItemId : Designator=U3 Old DesignItemId=ADXL325BCPZ-RL New DesignItemId=ADXL335
+Change Component Comment : Designator=U3 Old Comment=ADXL325BCPZ-RL New Comment=ADXL335
+Change Component Description : Designator=U3 Old Description=Small, Low Power, 3-Axis +/-5 g Accelerometer with Analog Output, 1.6 KHz BW, Industrial, 16-pin QFN, Reel New Description=Acelerómetro X, Y, Eje Z ± 3g 1.6kHz _X, Y_, 550Hz _Z_ 16-LFCSP-LQ _4x4_
+Change Component Library : Designator=U3 Old Library=Analog Devices MEMS Inertial Sensors.IntLib New Library=ADXL335.SchLib
+Added Component: Designator=CONN4(1x1x2.54 Pin Header TH V)
+Added Pin To Net: NetName=A2 Pin=C1-1
+Added Pin To Net: NetName=A4 Pin=C3-1
+Added Pin To Net: NetName=NetCONN4_1 Pin=CONN4-1
+Added Pin To Net: NetName=NetCONN4_1 Pin=U3-2
+Added Net: Name=NetCONN4_1
+Added Member To Class: ClassName=SensorCaida Member=Component CONN4 Connector

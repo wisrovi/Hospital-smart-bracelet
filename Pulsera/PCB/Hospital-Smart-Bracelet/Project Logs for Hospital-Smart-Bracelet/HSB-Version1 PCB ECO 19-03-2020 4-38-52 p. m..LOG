@@ -1,6 +1,0 @@
-Added Component: Designator=C7(C1206-1.25)
-Added Pin To Net: NetName=GND Pin=C7-1
-Added Pin To Net: NetName=AREF Pin=C7-2
-Added Pin To Net: NetName=AREF Pin=U1-20
-Added Net: Name=AREF
-Added Member To Class: ClassName=Atmega328P Member=Component C7 C2

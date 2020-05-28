@@ -1,0 +1,3 @@
+Change Component Designator: OldDesignator=CONN? NewDesignator=CONN2
+Added Pin To Net: NetName=A2 Pin=CONN2-2
+Added Pin To Net: NetName=A3 Pin=CONN2-3

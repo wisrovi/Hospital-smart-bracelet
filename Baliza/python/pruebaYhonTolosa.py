@@ -50,6 +50,6 @@ def email():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, host='172.16.66.116', port=2020)
+    app.run(debug=True, host='192.168.1.1', port=2020)
 
 

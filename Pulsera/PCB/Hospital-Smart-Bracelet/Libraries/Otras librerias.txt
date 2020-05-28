@@ -1,2 +1,0 @@
-https://github.com/ryankurte/altium-library/tree/master/footprints
-https://github.com/ryankurte/altium-library/tree/master/symbols

@@ -1,6 +1,6 @@
 from bottle import run, request, post
  
-@post('/')
+@post('/esp32')
 def index():
     data = request.body.read()
     print(data) 

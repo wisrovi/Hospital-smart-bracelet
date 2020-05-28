@@ -1,8 +1,0 @@
-Change Component Designator: OldDesignator=CONN? NewDesignator=CONN5
-Added Component: Designator=CONN6(1x1x2.54 Pin Header TH V)
-Change Net Name : Old Net Name=RX New Net Name=D0
-Change Net Name : Old Net Name=TX New Net Name=D1
-Added Pin To Net: NetName=C_BAT Pin=CONN6-1
-Added Pin To Net: NetName=C_BAT Pin=U1-32
-Added Net: Name=C_BAT
-Added Member To Class: ClassName=Atmega328P Member=Component CONN6 Connector

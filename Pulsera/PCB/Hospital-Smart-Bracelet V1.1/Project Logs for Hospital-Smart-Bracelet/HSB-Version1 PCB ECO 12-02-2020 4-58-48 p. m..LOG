@@ -1,0 +1,5 @@
+Removed Member From Class: ClassName=SensorCaida Member=C4
+Removed Member From Class: ClassName=SensorCaida Member=C5
+Added Pin To Net: NetName=GND Pin=C4-1
+Added Member To Class: ClassName=SensorCaida Member=Component C1 C
+Added Member To Class: ClassName=SensorCaida Member=Component C2 C

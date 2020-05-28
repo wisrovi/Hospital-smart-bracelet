@@ -1,9 +1,0 @@
-Removed Pin From Net: NetName=GND Pin=CONN2-3
-Change Component DesignItemId : Designator=CONN2 Old DesignItemId=Header 1x3 New DesignItemId=Header 1x5
-Change Component Footprint: Designator=CONN2 Old Footprint=1x3x2.54 Pin Header TH V New Footprint=1x5x2.54 Pin Header TH V
-Added Component: Designator=CONN2(1x3x2.54 Pin Header TH V)
-Added Pin To Net: NetName=A2 Pin=CONN2-2
-Added Pin To Net: NetName=A3 Pin=CONN2-3
-Added Pin To Net: NetName=GND Pin=CONN2-3
-Added Member To Class: ClassName=Atmega328P Member=Component CONN2 Connector
-Added Member To Class: ClassName=SensorCaida Member=Component CONN2 Connector

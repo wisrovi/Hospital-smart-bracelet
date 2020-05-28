@@ -1,0 +1,2 @@
+Change Component Designator: OldDesignator=R1 NewDesignator=R2
+Added Member To Class: ClassName=Atmega328P Member=Component R2 R

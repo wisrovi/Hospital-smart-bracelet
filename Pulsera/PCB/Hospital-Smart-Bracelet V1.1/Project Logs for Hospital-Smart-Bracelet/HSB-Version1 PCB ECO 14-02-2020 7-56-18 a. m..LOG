@@ -1,0 +1,7 @@
+Removed Pin From Net: NetName=3.3V Pin=U?-1
+Removed Pin From Net: NetName=A1 Pin=U?-2
+Added Component: Designator=E1(26.9X13X2.2_BOARD)
+Added Pin To Net: NetName=3.3V Pin=U?-1
+Added Pin To Net: NetName=A1 Pin=U?-2
+Added Pin To Net: NetName=GND Pin=U?-3
+Added Member To Class: ClassName=BLE-HM10 Member=Component E1 HM Bluetooth module use TI CC2540 or CC2541, Master and slave roles in one, transmission version and remote control version and PIO state acquisition functions in one, Support the AT command modify module parameters, Convenient and flexible.

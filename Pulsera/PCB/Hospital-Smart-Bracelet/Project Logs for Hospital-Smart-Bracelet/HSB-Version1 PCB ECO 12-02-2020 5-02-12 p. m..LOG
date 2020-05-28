@@ -1,3 +1,0 @@
-Added Pin To Net: NetName=MOSI Pin=U1-15
-Added Pin To Net: NetName=MISO Pin=U1-16
-Added Member To Class: ClassName=Atmega328P Member=Component R1 R
