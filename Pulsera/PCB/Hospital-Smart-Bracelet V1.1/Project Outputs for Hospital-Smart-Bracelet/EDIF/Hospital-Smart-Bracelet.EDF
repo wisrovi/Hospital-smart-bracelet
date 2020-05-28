@@ -6,7 +6,7 @@
   )
   (status
     (written
-      (timeStamp 2020 5 27 16 4 29)
+      (timeStamp 2020 5 28 16 17 41)
       (program "Altium Designer - EDIF For PCB"
         (version "1.0.0")
       )
@@ -609,7 +609,7 @@
             (Property PCB3D (String "" ))
             (Property (rename Signal_Integrity "Signal Integrity") (String "" ))
             (Property Simulation (String "" ))
-            (Property Value (String "800" ))
+            (Property Value (String "680" ))
             (Property Footprint (String "R1206-0.55" ))
             (Property Description (String "Resistor, generic" ))
             (Property UniqueId (String "\TJLPBNYO" ))

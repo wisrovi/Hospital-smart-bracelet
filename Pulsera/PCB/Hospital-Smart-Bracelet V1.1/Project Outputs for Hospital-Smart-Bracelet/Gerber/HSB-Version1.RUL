@@ -1,5 +1,5 @@
-DRC Rules Export File for PCB: D:\HSB\Hospital-smart-bracelet\Pulsera\PCB\Hospital-Smart-Bracelet\HSB-Version1.PcbDoc
-RuleKind=ShortCircuit|RuleName=ShortCircuit|Scope=Board|Allowed=0
-RuleKind=Clearance|RuleName=Clearance|Scope=Board|Minimum=7.87
-RuleKind=Width|RuleName=Width|Scope=Board|Minimum=10.00
+DRC Rules Export File for PCB: E:\GitHub\Hospital-smart-bracelet\Pulsera\PCB\Hospital-Smart-Bracelet V1.1\HSB-Version1.PcbDoc
 RuleKind=SolderMaskExpansion|RuleName=SolderMaskExpansion|Scope=Board|Minimum=4.00
+RuleKind=Width|RuleName=Width|Scope=Board|Minimum=10.00
+RuleKind=Clearance|RuleName=Clearance|Scope=Board|Minimum=7.87
+RuleKind=ShortCircuit|RuleName=ShortCircuit|Scope=Board|Allowed=0

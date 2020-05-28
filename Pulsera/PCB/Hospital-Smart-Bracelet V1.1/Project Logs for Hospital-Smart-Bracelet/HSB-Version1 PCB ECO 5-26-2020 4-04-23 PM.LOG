@@ -1,6 +1,0 @@
-Removed Pin From Net: NetName=D5 Pin=U2-1
-Removed Pin From Net: NetName=GND Pin=U2-3
-Change Component Comment : Designator=U2 Old Comment=LM35CAZ/NOPB New Comment=DS18B20
-Added Pin To Net: NetName=GND Pin=U2-1
-Added Pin To Net: NetName=D5 Pin=U2-3
-Added Member To Class: ClassName=Proximidad Member=Component U4 QRD1114

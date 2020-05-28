@@ -1,0 +1,5 @@
+Change Component Designator: OldDesignator=CN3 NewDesignator=CONN3
+Change component parameters: Designator = "R8"; Footprint = "R1206-0.55"; UniqueID = "\TJLPBNYO"
+Change component parameters. Clean all parameters for all variants
+Change component parameters (AddParameter): Name = "Value"; Value = "680"; VariantName = "[No Variations]"
+Added Member To Class: ClassName=Atmega328P Member=Component CONN2 Connector
