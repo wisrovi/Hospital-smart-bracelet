@@ -54,7 +54,7 @@ OutputDocumentPath2=
 OutputVariantName2=
 OutputEnabled2=1
 OutputEnabled2_OutputMedium1=0
-OutputEnabled2_OutputMedium2=2
+OutputEnabled2_OutputMedium2=3
 OutputEnabled2_OutputMedium3=0
 OutputEnabled2_OutputMedium4=0
 OutputDefault2=0
@@ -68,7 +68,7 @@ OutputDocumentPath3=
 OutputVariantName3=
 OutputEnabled3=1
 OutputEnabled3_OutputMedium1=0
-OutputEnabled3_OutputMedium2=3
+OutputEnabled3_OutputMedium2=4
 OutputEnabled3_OutputMedium3=0
 OutputEnabled3_OutputMedium4=0
 OutputDefault3=0
@@ -204,9 +204,9 @@ OutputName10=Bill of Materials
 OutputCategory10=Report
 OutputDocumentPath10=
 OutputVariantName10=
-OutputEnabled10=1
+OutputEnabled10=0
 OutputEnabled10_OutputMedium1=0
-OutputEnabled10_OutputMedium2=4
+OutputEnabled10_OutputMedium2=0
 OutputEnabled10_OutputMedium3=5
 OutputEnabled10_OutputMedium4=0
 OutputDefault10=0
@@ -222,9 +222,37 @@ OutputEnabled11_OutputMedium2=0
 OutputEnabled11_OutputMedium3=6
 OutputEnabled11_OutputMedium4=0
 OutputDefault11=0
+OutputType12=PCB 3D Video
+OutputName12=PCB 3D Video
+OutputCategory12=Documentation
+OutputDocumentPath12=HSB-Version1.PcbDoc
+OutputVariantName12=
+OutputEnabled12=0
+OutputEnabled12_OutputMedium1=0
+OutputEnabled12_OutputMedium2=0
+OutputEnabled12_OutputMedium3=0
+OutputEnabled12_OutputMedium4=1
+OutputDefault12=0
+PageOptions12=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=1.00|XCorrection=1.00|YCorrection=1.00|PrintKind=1|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-3|MediaType=1|DitherType=10|PrintScaleMode=1|PaperKind=Letter|PaperIndex=1
+Configuration12_Name1=OutputConfigurationParameter1
+Configuration12_Item1=Record=Pcb3DVideoRenderer|ShowFloorShadow=True|ViewConfigType=.config_3d|ViewConfig= |CurrentPCB3DVideoID=0
+OutputType13=PDF3D
+OutputName13=PDF3D
+OutputCategory13=Documentation
+OutputDocumentPath13=HSB-Version1.PcbDoc
+OutputVariantName13=
+OutputEnabled13=1
+OutputEnabled13_OutputMedium1=0
+OutputEnabled13_OutputMedium2=2
+OutputEnabled13_OutputMedium3=0
+OutputEnabled13_OutputMedium4=0
+OutputDefault13=0
+PageOptions13=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=1.00|XCorrection=1.00|YCorrection=1.00|PrintKind=1|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-3|MediaType=1|DitherType=10|PrintScaleMode=1|PaperKind=Letter|PaperIndex=1
+Configuration13_Name1=OutputConfigurationParameter1
+Configuration13_Item1=Record=ExportPDF3DSetting|Version=110|Format=0|Flags=8158|Scheme=0|ViewColorR0=255|ViewColorG0=255|ViewColorB0=255|ViewLignt0=9|ViewColorR1=255|ViewColorG1=255|ViewColorB1=255|ViewLignt1=9|ViewColorR2=255|ViewColorG2=255|ViewColorB2=255|ViewLignt2=9|ViewColorR3=255|ViewColorG3=255|ViewColorB3=255|ViewLignt3=9
 
 [PublishSettings]
-OutputFilePath2=E:\GitHub\Hospital-smart-bracelet\Pulsera\PCB\Hospital-Smart-Bracelet V1.1\Project Outputs for Hospital-Smart-Bracelet\Job1.PDF
+OutputFilePath2=E:\GitHub\Hospital-smart-bracelet\Pulsera\PCB\Hospital-Smart-Bracelet V1.1\Project Outputs for Hospital-Smart-Bracelet\Job5.PDF
 ReleaseManaged2=1
 OutputBasePath2=Project Outputs for Hospital-Smart-Bracelet
 OutputPathMedia2=
@@ -232,7 +260,7 @@ OutputPathMediaValue2=
 OutputPathOutputer2=[Output Type]
 OutputPathOutputerPrefix2=
 OutputPathOutputerValue2=
-OutputFileName2=Job5.PDF
+OutputFileName2=PDF_3D.PDF
 OutputFileNameMulti2=
 UseOutputNameForMulti2=0
 OutputFileNameSpecial2=
@@ -303,7 +331,7 @@ WmvVideoCodecName4=Windows Media Video V7
 WmvQuality4=80
 
 [GeneratedFilesSettings]
-RelativeOutputPath2=E:\GitHub\Hospital-smart-bracelet\Pulsera\PCB\Hospital-Smart-Bracelet V1.1\Project Outputs for Hospital-Smart-Bracelet\Job1.PDF
+RelativeOutputPath2=E:\GitHub\Hospital-smart-bracelet\Pulsera\PCB\Hospital-Smart-Bracelet V1.1\Project Outputs for Hospital-Smart-Bracelet\Job5.PDF
 OpenOutputs2=1
 RelativeOutputPath3=
 OpenOutputs3=1

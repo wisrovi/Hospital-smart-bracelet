@@ -28,7 +28,7 @@ DItemRevisionGUID=
 ReportSuppressedErrorsInMessages=0
 FSMCodingStyle=eFMSDropDownList_OneProcess
 FSMEncodingStyle=eFMSDropDownList_OneHot
-OutputPath=Project Outputs for Hospital-Smart-Bracelet
+OutputPath=
 LogFolderPath=
 ManagedProjectGUID=
 LinkedManagedProjectGUID=
@@ -523,10 +523,6 @@ DItemRevisionGUID=
 DocumentPath=Project Outputs for Hospital-Smart-Bracelet\Pick Place\Pick Place for HSB-Version1.txt
 DItemRevisionGUID=
 
-[GeneratedDocument33]
-DocumentPath=C:\Users\compr\AppData\Local\Temp\Pro4705.xls
-DItemRevisionGUID=
-
 [Configuration1]
 Name=Default Configuration
 ParameterCount=0
@@ -574,7 +570,7 @@ SCH_HasExpandLogicalToPhysicalSheets=-1
 SaveSettingsToOutJob=-1
 
 [Generic_EDE]
-OutputDir=Project Outputs for Hospital-Smart-Bracelet
+OutputDir=
 
 [OutputGroup1]
 Name=Netlist Outputs
