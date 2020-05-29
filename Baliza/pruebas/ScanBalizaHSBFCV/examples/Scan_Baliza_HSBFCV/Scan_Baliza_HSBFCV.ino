@@ -22,20 +22,8 @@ void loop() {
     String Beaconsescaneados = balizahsbfcv.Totalbeacons();
     if (Beaconsescaneados.length() > 20) {
       String datos = Beaconsescaneados;
-      mensajeEnviar = base64::encode(datos);
-   /*   
- String stringBeaconsescaneados = "<html><head><body>";
-  Serial.println(stringBeaconsescaneados);
-  // replace() changes all instances of one substring with another:
-  // first, make a copy of the original string:
-  String stringTwo = stringBeaconsescaneados;
-  // then perform the replacements:
-  stringTwo.replace("<", "</");
-  // print the original:
-  Serial.println("Original string: " + stringBeaconsescaneados);
-  // and print the modified string:
-  Serial.println("Modified string: " + stringTwo);*/
-
+    // mensajeEnviar = base64::encode(datos);
+  
       scanbalizahsbfcv.enviarMensajePost();
     }
 
