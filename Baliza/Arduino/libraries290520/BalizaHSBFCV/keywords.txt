@@ -1,0 +1,35 @@
+
+#######################################
+# Syntax Coloring PULSO CARDIACO FCV
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+BalizaHSBFCV	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+start_at	KEYWORD2
+loopScanear	KEYWORD2
+Datosede	KEYWORD2
+Datomac	KEYWORD2
+Datorssi	KEYWORD2
+Datoppm	KEYWORD2
+Datoproximidad	KEYWORD2
+Datocaida	KEYWORD2
+Datobateria	KEYWORD2
+Datotemperatura	KEYWORD2	
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+
