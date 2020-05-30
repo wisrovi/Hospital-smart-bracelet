@@ -22,7 +22,7 @@ AsyncWebServer server(80);
 void enviarMensajePost() {
   if (WiFi.status() == WL_CONNECTED) { //Check WiFi connection status
     HTTPClient http;    //Declare object of class HTTPClient
-    http.begin("http://192.168.1.1:2020/"); //Specify request destination
+    http.begin("http://192.168.1.2:2020/"); //Specify request destination
     http.header("POST / HTTP/1.1");
     http.header("Host: server_name");
     http.header("Accept: */*");
