@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    # Libs
+
+    # apps
     'baliza.apps.BalizaConfig',
 ]
 
@@ -119,10 +122,13 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
 
+LOGIN_REDIRECT_URL = '/login'
 
 import ServerDjango.Config.ConfigMail as ConfigEmail
-
 EMAIL_BACKEND = ConfigEmail.EMAIL_BACKEND
 EMAIL_HOST = ConfigEmail.EMAIL_HOST
 EMAIL_PORT = ConfigEmail.EMAIL_PORT

@@ -1,4 +1,5 @@
-"""ServerDjango URL Configuration
+"""
+ServerDjango URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/3.0/topics/http/urls/
@@ -19,4 +20,5 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('baliza/', include('baliza.urls')),
+    path('login/', include('login.urls')),
 ]
