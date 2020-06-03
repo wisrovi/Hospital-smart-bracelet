@@ -54,6 +54,7 @@ def getPackStringBaliza(request):
                             for i in todasPulserasRegistradas:
                                 if i.macDispositivo == macPulsera_complete:
                                     pulseraEncontrada = i
+                                    break
 
                             if pulseraEncontrada is not None:
                                 histBraceSensors = HistorialBraceletSensors()
@@ -65,39 +66,33 @@ def getPackStringBaliza(request):
                                 histBraceSensors.temperatura_sensor = int(sensores["temperatura"])
                                 histBraceSensors.rssi_signal = int(distancia["rssi"])
 
-                                isRegisterSave = False
-                                if len(HistorialBraceletSensors.objects.all()) > 0:
-                                    ultimoRegistroParaEstaMac = None
-                                    try:
-                                        ultimoRegistroParaEstaMac = HistorialBraceletSensors.objects.get(
-                                            id=pulseraEncontrada.id)
-                                    except:
-                                        pass
-
-                                    if ultimoRegistroParaEstaMac is not None \
-                                            and ultimoRegistroParaEstaMac.ppm_sensor == histBraceSensors.ppm_sensor \
-                                            and ultimoRegistroParaEstaMac.caida_sensor == histBraceSensors.caida_sensor \
-                                            and ultimoRegistroParaEstaMac.proximidad_sensor == histBraceSensors.proximidad_sensor \
-                                            and ultimoRegistroParaEstaMac.temperatura_sensor == histBraceSensors.temperatura_sensor \
-                                            and ultimoRegistroParaEstaMac.rssi_signal == histBraceSensors.rssi_signal \
-                                            and ultimoRegistroParaEstaMac.nivel_bateria == histBraceSensors.nivel_bateria:
+                                registroYaExiste = False
+                                todosRegistros = HistorialBraceletSensors.objects.all().filter(id=pulseraEncontrada.id)
+                                for esteRegistro in todosRegistros:
+                                    if esteRegistro.rssi_signal == histBraceSensors.rssi_signal \
+                                            and esteRegistro.caida_sensor == histBraceSensors.caida_sensor \
+                                            and esteRegistro.proximidad_sensor == histBraceSensors.proximidad_sensor \
+                                            and esteRegistro.temperatura_sensor == histBraceSensors.temperatura_sensor \
+                                            and esteRegistro.nivel_bateria == histBraceSensors.nivel_bateria \
+                                            and esteRegistro.ppm_sensor == histBraceSensors.ppm_sensor:
                                         print("Registro ya existe")
-                                    else:
-                                        isRegisterSave = True
-                                        histBraceSensors.save()
-                                else:
-                                    isRegisterSave = True
-                                    histBraceSensors.save()
+                                        registroYaExiste = True
+                                        break
 
-                                if len(listBracelets) > 0 and isRegisterSave:
-                                    send_mail(
-                                        "asunto prueba",
-                                        "Hola mundo",
-                                        "WISROVI",
-                                        ["wisrovi.rodriguez@gmail.com"],
-                                        fail_silently=False,
-                                    )
-                                    return HttpResponseRedirect('../receivedOK')
+                                if registroYaExiste == False:
+                                    histBraceSensors.save()
+                                    print("Registro Guardado")
+
+                                # if len(listBracelets) > 0 and isRegisterSave:
+                                # send_mail(
+                                #     "asunto prueba",
+                                #     "Hola mundo",
+                                #     "WISROVI",
+                                #     ["wisrovi.rodriguez@gmail.com"],
+                                #     fail_silently=False,
+                                # )
+                                # return HttpResponseRedirect('../receivedOK')
+                                # pass
     else:
         form = PackBracelet()
     return render(request, "receivedBaliza.html", {'form': form})
