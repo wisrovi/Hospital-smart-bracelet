@@ -27,6 +27,11 @@ def getPackStringBaliza(request):
 
                     if string_data:
                         # vamos a procesar los datos recibidos
+                        listaCorreosDestinatarios = list()
+                        # listaCorreosDestinatarios.append("ditpruebasfcv@gmail.com")
+                        # listaCorreosDestinatarios.append("Imartolo86@gmail.com")
+                        # listaCorreosDestinatarios.append("cesarfigueroa@fcv.org")
+                        listaCorreosDestinatarios.append("wisrovi.rodriguez@gmail.com")
 
                         # Paso 1:
                         # Leer todos los datos de los sensores
@@ -57,7 +62,7 @@ def getPackStringBaliza(request):
                             distancia = dict()
                             distancia["rssi"] = bracelet.RSI
 
-                            print("*****************************************************")
+                            #print("*****************************************************")
                             if macPulsera_complete in macEncontradasPaquete:
                                 pass
                             else:
@@ -98,6 +103,49 @@ def getPackStringBaliza(request):
                                             and dato_ppm_int > 0 \
                                             and dato_temperatura_int > 0 \
                                             and dato_rssi_int > 0:
+
+                                        if bracelet.CAI == "1":
+                                            diccionarioDatos = dict()
+                                            diccionarioDatos['ADMIN'] = str('Admin Server')
+                                            diccionarioDatos['BALIZA'] = str(baliza)
+                                            diccionarioDatos['MAC'] = str(macPulsera_complete)
+                                            diccionarioDatos['PROJECT'] = str('Hospital Smart Bracelet')
+                                            diccionarioDatos['FIRMA'] = str('WISROVI')
+                                            html_message = render_to_string('email/bracelet_alerta_persona_caida.html',
+                                                                            diccionarioDatos)
+                                            asunto = "Alerta, persona caida (" + macPulsera_complete + ")"
+                                            firmaResumenRemitente = "Hospital Smart Bracelet"
+                                            send_mail(
+                                                asunto,
+                                                strip_tags(html_message),
+                                                firmaResumenRemitente,
+                                                listaCorreosDestinatarios,
+                                                fail_silently=False,
+                                                html_message=html_message
+                                            )
+                                            print(macPulsera_complete + " - Persona caida")
+
+                                        if not bracelet.PRO == "1":
+                                            diccionarioDatos = dict()
+                                            diccionarioDatos['ADMIN'] = str('Admin Server')
+                                            diccionarioDatos['BALIZA'] = str(baliza)
+                                            diccionarioDatos['MAC'] = str(macPulsera_complete)
+                                            diccionarioDatos['PROJECT'] = str('Hospital Smart Bracelet')
+                                            diccionarioDatos['FIRMA'] = str('WISROVI')
+                                            html_message = render_to_string('email/bracelet_alerta_persona_seQuitoPulsera.html',
+                                                                            diccionarioDatos)
+                                            asunto = "Alerta, persona se quitó el bracelet (" + macPulsera_complete + ")"
+                                            firmaResumenRemitente = "Hospital Smart Bracelet"
+                                            send_mail(
+                                                asunto,
+                                                strip_tags(html_message),
+                                                firmaResumenRemitente,
+                                                listaCorreosDestinatarios,
+                                                fail_silently=False,
+                                                html_message=html_message
+                                            )
+                                            print(macPulsera_complete + " - Persona se quitó el bracelet")
+
                                         histBraceSensors = HistorialBraceletSensors()
                                         histBraceSensors.bracelet = pulseraEncontrada
                                         histBraceSensors.ppm_sensor = dato_ppm_int
@@ -134,8 +182,6 @@ def getPackStringBaliza(request):
                                     else:
                                         # Datos invalidos, se reporta en correo de que el bracelet esta enviando datos invalidos
 
-                                        listaCorreosDestinatarios = list()
-                                        listaCorreosDestinatarios.append("wisrovi.rodriguez@gmail.com")
                                         diccionarioDatos = dict()
                                         diccionarioDatos['ADMIN'] = str('Admin Server')
                                         diccionarioDatos['BALIZA'] = str(baliza)
@@ -144,7 +190,7 @@ def getPackStringBaliza(request):
                                         diccionarioDatos['FIRMA'] = str('WISROVI')
                                         html_message = render_to_string('email/bracelet_report_bad_sensors.html',
                                                                         diccionarioDatos)
-                                        asunto = "Nuevo Bracelet por registrar"
+                                        asunto = "Nuevo Bracelet por registrar (" + macPulsera_complete + ")"
                                         firmaResumenRemitente = "Hospital Smart Bracelet"
                                         send_mail(
                                             asunto,
@@ -161,16 +207,14 @@ def getPackStringBaliza(request):
                                     # donde se reemplazan los datos en la plantilla y con esto se envia el correo
                                     # a los correos destinatarios y el asunto estipulado
 
-                                    listaCorreosDestinatarios = list()
-                                    listaCorreosDestinatarios.append("wisrovi.rodriguez@gmail.com")
                                     diccionarioDatos = dict()
                                     diccionarioDatos['ADMIN'] = str('Admin Server')
                                     diccionarioDatos['BALIZA'] = str(baliza)
                                     diccionarioDatos['MAC'] = str(macPulsera_complete)
                                     diccionarioDatos['PROJECT'] = str('Hospital Smart Bracelet')
                                     diccionarioDatos['FIRMA'] = str('WISROVI')
-                                    html_message = render_to_string('email/nueva_baliza.html', diccionarioDatos)
-                                    asunto = "Nuevo Bracelet por registrar"
+                                    html_message = render_to_string('email/nuevo_bracelet_encontrado.html', diccionarioDatos)
+                                    asunto = "Nuevo Bracelet por registrar (" + macPulsera_complete + ")"
                                     firmaResumenRemitente = "Hospital Smart Bracelet"
                                     send_mail(
                                         asunto,
