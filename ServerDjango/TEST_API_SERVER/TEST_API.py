@@ -1,4 +1,4 @@
-listaMacs = [ "90E202048AE8", "90E202048AE9" ]
+listaMacs = [ "90E202048AE7", "90E202048AE8", "90E202048AE9" ]
 semilla = ["0000"]
 balizas = ["80:E2:02:04:8A:E9"]
 
@@ -7,19 +7,19 @@ import json
 pulsera1 = {
     "SED" : semilla[0],
     "MAC" : listaMacs[1],
-    "BAT" : str(40),
+    "BAT" : str(35),
     "PPM" : str(95),
     "CAI" : str(int(False)),
-    "TEM" : str(328),
+    "TEM" : str(366),
     "RSI" : str(72),
-    "PRO" : str(int(True))
+    "PRO" : str(int(False))
 }
 
 pulsera2 = {
     "SED" : semilla[0],
     "MAC" : listaMacs[0],
-    "BAT" : str(40),
-    "PPM" : str(95),
+    "BAT" : str(38),
+    "PPM" : str(78),
     "CAI" : str(int(False)),
     "TEM" : str(327),
     "RSI" : str(72),
@@ -28,23 +28,12 @@ pulsera2 = {
 
 pulsera3 = {
     "SED" : semilla[0],
-    "MAC" : listaMacs[1],
-    "BAT" : str(40),
-    "PPM" : str(95),
+    "MAC" : listaMacs[2],
+    "BAT" : str(38),
+    "PPM" : str(78),
     "CAI" : str(int(False)),
-    "TEM" : str(328),
-    "RSI" : str(72),
-    "PRO" : str(int(False))
-}
-
-pulsera4 = {
-    "SED" : semilla[0],
-    "MAC" : listaMacs[1],
-    "BAT" : str(33),
-    "PPM" : str(75),
-    "CAI" : str(int(False)),
-    "TEM" : str(328),
-    "RSI" : str(72),
+    "TEM" : str(357),
+    "RSI" : str(55),
     "PRO" : str(int(True))
 }
 
@@ -52,12 +41,13 @@ listadoPulseras = list()
 listadoPulseras.append(pulsera1)
 listadoPulseras.append(pulsera2)
 listadoPulseras.append(pulsera3)
-listadoPulseras.append(pulsera4)
 
 paqueteEnviar = {
     "beacons" : listadoPulseras,
     "baliza" : balizas[0]
 }
+
+#print(paqueteEnviar)
 
 import requests 
 URL = "http://localhost:8000/baliza/received/"
