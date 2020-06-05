@@ -1,7 +1,7 @@
 
 listaMacs = ["90E202048AE8", "90E202048AE9", "90E202048AE7", ]
 semilla = ["0000"]
-balizas = ["80:E2:02:04:8A:E9"]
+balizas = ["80:E2:02:04:8A:E7"]
 
 import json 
 

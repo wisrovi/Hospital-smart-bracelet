@@ -26,7 +26,7 @@ class RolUsuario(models.Model):
         ordering = ['id']
 
 
-class Usuario(models.Model):
+class UsuarioRol(models.Model):
     usuario = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuario')
     rolUsuario = models.ForeignKey(RolUsuario, on_delete=models.CASCADE, verbose_name='Rol Usuario')
 
@@ -225,6 +225,7 @@ class HistorialBraceletSensors(models.Model):
     temperatura_sensor = models.PositiveIntegerField(verbose_name="Temperatura persona")
     nivel_bateria = models.PositiveIntegerField(verbose_name="Porcentaje nivel Bateria")
     rssi_signal = models.IntegerField(verbose_name="Intensidad señal BLE (RSSI)")
+    baliza = models.ForeignKey(Baliza, on_delete=models.CASCADE, verbose_name="Baliza")
 
     fechaRegistro = models.DateTimeField(auto_now_add=True, verbose_name='Fecha Registro', null=False,
                                          blank=False)
