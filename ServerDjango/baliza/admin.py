@@ -2,11 +2,11 @@ from django.contrib import admin
 
 # Register your models here.
 from baliza.models import HistorialUbicacion, InstalacionBaliza, BraceletPatienHospital, HistorialBraceletSensors, \
-    BraceletUmbrals, Usuario, Bracelet, Area, Baliza, Piso, Sede, RolUsuario
+    BraceletUmbrals, UsuarioRol, Bracelet, Area, Baliza, Piso, Sede, RolUsuario
 
 
 admin.site.register(RolUsuario)
-admin.site.register(Usuario)
+admin.site.register(UsuarioRol)
 admin.site.register(HistorialUbicacion)
 admin.site.register(InstalacionBaliza)
 admin.site.register(BraceletPatienHospital)
