@@ -9,7 +9,7 @@ void setup() {
   Serial.begin(9600);
   InitSystem();
   balizahsbfcv.start_at();
-  Serial.println("finaliza setup");
+  Serial.println("setup finalizado");
 }
 
 long timeScanBeacon = 0;
@@ -19,6 +19,7 @@ void loop() {
     balizahsbfcv.loopScanear();
     Serial.println("escaneando.");
     String Beaconsescaneados = balizahsbfcv.Totalbeacons();
+    enviarMensajePost();
   }
   OTA();
 }

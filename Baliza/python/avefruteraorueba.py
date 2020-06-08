@@ -6,4 +6,4 @@ def index():
     print(data) 
     return "OK"
  
-run(host='localhost', port=2020)
+run(host='192.168.1.1', port=2020)
