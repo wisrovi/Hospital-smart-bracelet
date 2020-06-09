@@ -52,7 +52,7 @@ paqueteEnviar = {
 
 import requests 
 #URL = "http://192.168.1.3:5000/baliza/received/"
-URL = "http://localhost:8000/baliza/received/"
+URL = "http://localhost:8000/bracelet/baliza/received/"
 PARAMS = {    
     'key': "ESP32",
     "string_pack" : json.dumps(paqueteEnviar)

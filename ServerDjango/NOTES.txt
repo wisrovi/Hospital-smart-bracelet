@@ -1,3 +1,2 @@
-# Para lanzar el servidor en CMD, dentro de la carpeta del forder de los archivos del server, se debe digitar en una consola:
-
-python manage.py runserver 0.0.0.0:5000
+Descargada la plantilla de:
+https://github.com/sajib1066/django-authentication
