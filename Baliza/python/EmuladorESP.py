@@ -1,6 +1,6 @@
 import requests
 
-URL = "http://localhost:2020/esp32"
+URL = "http://192.168.1.1:2020/esp32"
 
 PARAMS = {
     "Data" : "Probando emulador de Yhon"
@@ -11,3 +11,5 @@ r = requests.post(url=URL, data=PARAMS)
 
 
 print(r.text)
+
+

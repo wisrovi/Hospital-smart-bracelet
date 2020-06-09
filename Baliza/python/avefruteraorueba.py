@@ -4,6 +4,6 @@ from bottle import run, request, post
 def index():
     data = request.body.read()
     print(data) 
-    return "Pajarito"
-
-run(host='localhost', port=2020)
+    return "OK"
+ 
+run(host='192.168.1.1', port=2020)
