@@ -23,7 +23,7 @@ base_name_project = Preferences.NAME_APP
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home, name='home'),
+    path(base_name_project + '', home, name='home'),
     path(base_name_project + '/auth/', include('apps.authapp.urls')),
     path(base_name_project + '/baliza/', include('apps.baliza.urls')),
 ]

@@ -1,26 +1,13 @@
-from django.core.mail import send_mail
-from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login, logout, update_session_auth_hash
+from django.contrib.auth.forms import PasswordChangeForm
 from django.contrib.auth.models import User
-from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
+from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
-from django.utils.html import strip_tags
 
+import apps.Util_apps.Util_braceletBLE as Utilities
 import authentication.PREFERENCES as Preferences
-
-from .forms import LoginForm, RegistrationForm
-
-
-def sendMail(asunto, html, firma, correo):
-    send_mail(
-        asunto,
-        strip_tags(html),
-        firma,
-        [correo],
-        fail_silently=False,
-        html_message=html
-    )
-    pass
+from apps.authapp.forms import LoginForm, RegistrationForm
 
 
 def signin(request):
@@ -46,8 +33,8 @@ def signin(request):
                 firmaResumenRemitente = Preferences.NAME_APP
 
                 import threading
-                x = threading.Thread(target=sendMail,
-                                     args=(asunto, html_message, firmaResumenRemitente, request.user.email,))
+                x = threading.Thread(target=Utilities.sendMail,
+                                     args=(asunto, html_message, firmaResumenRemitente, request.user.email, request,))
                 x.start()
 
                 data['redirec'] = 'ok'
@@ -113,8 +100,9 @@ def signup_confirm_email(request):
                         firmaResumenRemitente = Preferences.NAME_APP
 
                         import threading
-                        x = threading.Thread(target=sendMail,
-                                             args=(asunto, html_message, firmaResumenRemitente, parametros['email'],))
+                        x = threading.Thread(target=Utilities.sendMail,
+                                             args=(asunto, html_message, firmaResumenRemitente, parametros['email'],
+                                                   request,))
                         x.start()
                     else:
                         data[
@@ -180,8 +168,8 @@ def signup(request):
                     firmaResumenRemitente = Preferences.NAME_APP
 
                     import threading
-                    x = threading.Thread(target=sendMail,
-                                         args=(asunto, html_message, firmaResumenRemitente, email,))
+                    x = threading.Thread(target=Utilities.sendMail,
+                                         args=(asunto, html_message, firmaResumenRemitente, email, request,))
                     x.start()
 
                     User.objects.create_user(username=username, password=password, email=email, first_name=firstname,
@@ -207,3 +195,12 @@ def signup(request):
 def signout(request):
     logout(request)
     return redirect('signin')
+
+
+
+def password_change(request):
+    if request.method == 'POST':
+        form = PasswordChangeForm(user=request.user, data=request.POST)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)

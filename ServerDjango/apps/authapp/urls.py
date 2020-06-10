@@ -1,6 +1,5 @@
 from django.urls import path
-from .views import signin, signup, signout, signup_confirm_email
-import authentication.PREFERENCES as Preferences
+from apps.authapp.views import signin, signup, signout, signup_confirm_email
 
 # app_name = Preferences.NAME_APP
 

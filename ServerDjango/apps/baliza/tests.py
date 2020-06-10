@@ -1,8 +1,6 @@
-from django.test import TestCase
-
 # Create your tests here.
 
-import apps.baliza.Util_braceletBLE as BALIZ
+import apps.Util_apps.Util_braceletBLE as BALIZ
 
 EXAMPLE = '{"beacons":[{"SED":"0000","MAC":"90E202048AE9","BAT":"40","PPM":"095","CAI":"1","TEM":"328","RSI":"075","PRO":"1"},{"SED":"0000","MAC":"90E202048AE9","BAT":"40","PPM":"095","CAI":"1","TEM":"328","RSI":"075","PRO":"1"},{"SED":"0000","MAC":"90E202048AE9","BAT":"40","PPM":"095","CAI":"1","TEM":"328","RSI":"075","PRO":"1"},{"SED":"0000","MAC":"90E202048AE9","BAT":"40","PPM":"095","CAI":"1","TEM":"328","RSI":"075","PRO":"1"},{"SED":"0000","MAC":"90E202048AE9","BAT":"40","PPM":"095","CAI":"1","TEM":"328","RSI":"075","PRO":"1"}]}'
 
