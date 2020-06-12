@@ -1,0 +1,16 @@
+Instalar Python y marcar la opcion de configurar las variables locales del equipo
+Abrir Windows Power Shell
+Escribir el comando python -V para conocer la versión instalada
+Ir a la ubicación del archivo get-pip.py y ejecutarlo con el siguiente comando
+
+python .\get-pip.py
+
+Instalar el paquete bottle con el siguiente comando
+
+pip install bottle
+
+Luego editar el archivo avefruteraorueba.py con la ip del equipo local y luego lo ejecutamos
+
+python .\avefruteraorueba.py
+
+Ya con eso inicia el servicio que nos permite realizar la comunicacion o envío de datos.
