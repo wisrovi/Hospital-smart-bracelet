@@ -123,8 +123,8 @@ class Sede(models.Model):
 
 class Piso(models.Model):
     sede = models.ForeignKey(Sede, on_delete=models.CASCADE, verbose_name='Sede')
-    piso = models.PositiveIntegerField(blank=False, null=False, verbose_name='Piso')
-    descripcion = models.CharField(max_length=100, blank=False, null=False, verbose_name='Descripción Piso')
+    piso = models.PositiveIntegerField(blank=False, null=False, verbose_name='piso')
+    descripcion = models.CharField(max_length=100, blank=False, null=False, verbose_name='Descripción piso')
 
     usuarioRegistra = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuario que realiza el registro')
     indHabilitado = models.BooleanField(default=True, verbose_name="Indicador Habilitado")
@@ -139,7 +139,7 @@ class Piso(models.Model):
         return item
 
     class Meta:
-        verbose_name = 'Piso'
+        verbose_name = 'piso'
         verbose_name_plural = 'Pisos'
         ordering = ['id']
 
@@ -152,7 +152,7 @@ class Area(models.Model):
     yInicial = models.PositiveIntegerField(verbose_name="Posición Y cartesiana (punto inicial)")
     yFinal = models.PositiveIntegerField(verbose_name="Posición Y cartesiana (punto final)")
     descripcion = models.CharField(max_length=100, blank=False, null=False, verbose_name='Descripción Area')
-    piso = models.ForeignKey(Piso, on_delete=models.CASCADE, verbose_name='Piso')
+    piso = models.ForeignKey(Piso, on_delete=models.CASCADE, verbose_name='piso')
 
     usuarioRegistra = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuario que realiza el registro')
     indHabilitado = models.BooleanField(default=True, verbose_name="Indicador Habilitado")
@@ -177,7 +177,7 @@ class InstalacionBaliza(models.Model):
     baliza = models.ForeignKey(Baliza, on_delete=models.CASCADE, verbose_name='Baliza')
     instalacionX = models.PositiveIntegerField(verbose_name="Posición X cartesiana (punto instalación)")
     instalacionY = models.PositiveIntegerField(verbose_name="Posición Y cartesiana (punto instalación)")
-    piso = models.ForeignKey(Piso, on_delete=models.CASCADE, verbose_name='Piso')
+    piso = models.ForeignKey(Piso, on_delete=models.CASCADE, verbose_name='piso')
 
     usuarioRegistra = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name='Usuario que realiza el registro')
     indHabilitado = models.BooleanField(default=True, verbose_name="Indicador Habilitado")

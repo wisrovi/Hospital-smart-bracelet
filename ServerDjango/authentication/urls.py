@@ -16,14 +16,14 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from .views import home
-
-import authentication.PREFERENCES as Preferences
+import authentication.Config.PREFERENCES as Preferences
 
 base_name_project = Preferences.NAME_APP
+# app_name = Preferences.NAME_APP
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path(base_name_project + '', home, name='home'),
-    path(base_name_project + '/auth/', include('apps.authapp.urls')),
-    path(base_name_project + '/baliza/', include('apps.baliza.urls')),
+    path('', home, name='home'),
+    path('/auth/', include('apps.authapp.urls')),
+    path(base_name_project + '/', include('apps.baliza.urls')),
 ]

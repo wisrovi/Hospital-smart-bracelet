@@ -24,9 +24,18 @@
                            aria-expanded="false"
                            class="nav-link dropdown-toggle"><i class="fas fa-folder-open"></i> Mantenimientos</a>
                         <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                            <li><a href="#" class="dropdown-item"><i class="fas fa-truck-loading"></i> Balizas</a></li>
-                            <li><a href="#" class="dropdown-item"><i class="fas fa-boxes"></i> Bracelets</a></li>
-                            <li><a href="#" class="dropdown-item"><i class="fas fa-users"></i> Ubicaciones</a></li>
+                            <li><a href="{% url 'project:form_readlist_sede' %}" class="dropdown-item"><i class="fas fa-hospital"></i> Sedes</a></li>
+                            <li><a href="{% url 'project:form_readlist_piso' %}" class="dropdown-item"><i class="fas fa-map-marked-alt"></i> Pisos por sede</a></li>
+                            <li><a href="{% url 'project:form_readlist_area' %}" class="dropdown-item"><i class="fas fa-vector-square"></i> Areas por piso en sede</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="false"
+                           class="nav-link dropdown-toggle"><i class="fas fa-folder-open"></i> Hardware</a>
+                        <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+                            <li><a href="#" class="dropdown-item"><i class="fas fa-heartbeat"></i> Bracelets</a></li>
+                            <li><a href="#" class="dropdown-item"><i class="fas fa-broadcast-tower"></i> Balizas</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -34,9 +43,9 @@
                            aria-expanded="false"
                            class="nav-link dropdown-toggle"><i class="fas fa-folder-open"></i> Reportes</a>
                         <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
-                            <li><a href="#" class="dropdown-item"><i class="fas fa-truck-loading"></i> Historial
+                            <li><a href="{% url 'project:form_read_historial_ubicacion' %}" class="dropdown-item"><i class="fas fa-satellite-dish"></i> Historial
                                 Ubicaciones</a></li>
-                            <li><a href="#" class="dropdown-item"><i class="fas fa-shopping-cart"></i> Historial
+                            <li><a href="{% url 'project:form_read_historial_sensores' %}" class="dropdown-item"><i class="fas fa-hospital-user"></i> Historial
                                 sensores</a></li>
                         </ul>
                     </li>

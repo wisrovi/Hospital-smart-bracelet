@@ -1,14 +1,11 @@
-from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import render
-from django.template.loader import render_to_string
-from django.views.decorators.csrf import csrf_exempt
 
-import authentication.PREFERENCES as Preferences
-import apps.Util_apps.Util_braceletBLE as Utilities
-from apps.baliza.forms import CreateBalizaForm
+from django.contrib.auth.decorators import login_required
+
+from apps.baliza.views.baliza.forms import CreateBalizaForm
 from apps.baliza.models import Piso
-
+import authentication.Config.PREFERENCES as Preferences
 
 @login_required(login_url='signin')
 def createBaliza(request):

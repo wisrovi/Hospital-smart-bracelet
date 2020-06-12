@@ -114,18 +114,18 @@ class Migration(migrations.Migration):
             },
         ),
         migrations.CreateModel(
-            name='Piso',
+            name='piso',
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('piso', models.PositiveIntegerField(verbose_name='Piso')),
-                ('descripcion', models.CharField(max_length=100, verbose_name='Descripción Piso')),
+                ('piso', models.PositiveIntegerField(verbose_name='piso')),
+                ('descripcion', models.CharField(max_length=100, verbose_name='Descripción piso')),
                 ('indHabilitado', models.BooleanField(default=True, verbose_name='Indicador Habilitado')),
                 ('fechaRegistro', models.DateTimeField(auto_now_add=True, verbose_name='Fecha Registro')),
                 ('sede', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='baliza.Sede', verbose_name='Sede')),
                 ('usuarioRegistra', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Usuario que realiza el registro')),
             ],
             options={
-                'verbose_name': 'Piso',
+                'verbose_name': 'piso',
                 'verbose_name_plural': 'Pisos',
                 'ordering': ['id'],
             },
@@ -139,7 +139,7 @@ class Migration(migrations.Migration):
                 ('indHabilitado', models.BooleanField(default=True, verbose_name='Indicador Habilitado')),
                 ('fechaRegistro', models.DateTimeField(auto_now_add=True, verbose_name='Fecha Registro')),
                 ('baliza', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='baliza.Baliza', verbose_name='Baliza')),
-                ('piso', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='baliza.Piso', verbose_name='Piso')),
+                ('piso', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='baliza.piso', verbose_name='piso')),
                 ('usuarioRegistra', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, verbose_name='Usuario que realiza el registro')),
             ],
             options={
@@ -219,7 +219,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='area',
             name='piso',
-            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='baliza.Piso', verbose_name='Piso'),
+            field=models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='baliza.piso', verbose_name='piso'),
         ),
         migrations.AddField(
             model_name='area',

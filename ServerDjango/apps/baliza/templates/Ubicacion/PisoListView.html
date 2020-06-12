@@ -1,0 +1,39 @@
+{% extends 'LIST.html' %}
+{% load static %}
+
+{% block columns %}
+    <tr>
+        <th scope="col" style="width: 10%;">Nro</th>
+        <th scope="col" style="width: 20%;">Sede</th>
+        <th scope="col" style="width: 20%;">Número Piso</th>
+        <th scope="col" style="width: 50%;">Descripción</th>
+        <th scope="col" style="width: 20%;">Opciones</th>
+    </tr>
+{% endblock %}
+
+{% block rows %}
+    {% for object in object_list %}
+        <tr>
+            <td>
+                {{ object.id }}
+            </td>
+            <td>
+                {{ object.sede }}
+            </td>
+            <td>
+                {{ object.piso }}
+            </td>
+            <td>
+                {{ object.descripcion }}
+            </td>
+            <td>
+                <button type="button" class="btn btn-warning btn-xs btn-flat">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button type="button" class="btn btn-danger btn-xs btn-flat">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock %}

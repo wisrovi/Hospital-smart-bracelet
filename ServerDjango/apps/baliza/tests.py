@@ -1,13 +1,23 @@
 # Create your tests here.
+from django.contrib.auth.models import User
 
-import apps.Util_apps.Util_braceletBLE as BALIZ
+from apps.baliza.models import Sede
 
-EXAMPLE = '{"beacons":[{"SED":"0000","MAC":"90E202048AE9","BAT":"40","PPM":"095","CAI":"1","TEM":"328","RSI":"075","PRO":"1"},{"SED":"0000","MAC":"90E202048AE9","BAT":"40","PPM":"095","CAI":"1","TEM":"328","RSI":"075","PRO":"1"},{"SED":"0000","MAC":"90E202048AE9","BAT":"40","PPM":"095","CAI":"1","TEM":"328","RSI":"075","PRO":"1"},{"SED":"0000","MAC":"90E202048AE9","BAT":"40","PPM":"095","CAI":"1","TEM":"328","RSI":"075","PRO":"1"},{"SED":"0000","MAC":"90E202048AE9","BAT":"40","PPM":"095","CAI":"1","TEM":"328","RSI":"075","PRO":"1"}]}'
+data = list()
+data.append('HIC')
+data.append('CTE')
+data.append('ICV')
+data.append('Cañaveral')
+data.append('Florida')
+data.append('Giron')
+data.append('Bucaramanga')
+data.append('Piedecuesta')
+data.append('Santa Marta')
+data.append('bogota')
+data.append('Cali')
 
-objetos = BALIZ.UnZipPackBracelets()
-listBracelets = objetos.setString(EXAMPLE)
-#print(listBracelets[0].MAC)
-print(listBracelets)
-print(objetos.convertList())
-
+for i in data:
+    sed = Sede(nombreSede=i, descripcion="", usuarioRegistra=User.objects.all()[0])
+    sed.save()
+    print("Guardando registro N°{}, con valor de {}".format(sed.id, i))
 

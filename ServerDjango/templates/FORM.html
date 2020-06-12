@@ -3,6 +3,17 @@
 {% block content %}
     <form action=".." method="post">
         <div class="card card-primary">
+            <div class="card-header">
+                <h3 class="card-title">
+                    {% if action == 'add' %}
+                        <i class="fas fa-plus"></i>
+                    {% else %}
+                        <i class="fas fa-edit"></i>
+                    {% endif %}
+
+                    {{ title }}
+                </h3>
+            </div>
             <div class="card-body">
                 {% csrf_token %}
                 {% if error %}
@@ -24,6 +35,7 @@
                         </ul>
                     </div>
                 {% endif %}
+                <input type="hidden" name="action" value="{{ action }}">
                 {% for field in form.visible_fields %}
                     <div class="form-group">
                         {% if field.errors %}
@@ -35,12 +47,16 @@
                 {% endfor %}
             </div>
             <div class="card-footer">
-                <button type="submit" class="btn btn-primary btn-flat">
+                <button href="{{ create_url }}" type="submit" class="btn btn-primary btn-flat" style="border-radius: 5px;">
                     <i class="fas fa-save"></i> Guardar
                 </button>
             </div>
         </div>
     </form>
+
+{% endblock %}
+
+{% block javascript %}
     <script type="text/javascript">
         $('form').on('submit', function (e) {
             e.preventDefault();
@@ -52,9 +68,14 @@
                 dataType: 'json'
             }).done(function (data) {
                 console.log(data);
-                if (!data.hasOwnProperty('error')) {
+                if (data.hasOwnProperty('error')) {
                     MensajeError(data['error']);
                     return false;
+                }else {
+                    if (data.hasOwnProperty('redirec')) {
+                        window.location.href = data['redirec'];
+                        return false;
+                    }
                 }
             }).fail(function (jqXHR, textStatus, errorThrown) {
                 alert(textStatus + ': ' + errorThrown);

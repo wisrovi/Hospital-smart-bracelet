@@ -6,9 +6,8 @@ from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 
 import apps.Util_apps.Util_braceletBLE as Utilities
-import authentication.PREFERENCES as Preferences
 from apps.authapp.forms import LoginForm, RegistrationForm
-
+import authentication.Config.PREFERENCES as Preferences
 
 def signin(request):
     forms = LoginForm()

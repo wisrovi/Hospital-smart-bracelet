@@ -4,10 +4,9 @@ from django.template.loader import render_to_string
 from django.views.decorators.csrf import csrf_exempt
 
 import apps.Util_apps.Util_braceletBLE as Utilities
-import authentication.PREFERENCES as Preferences
-from apps.baliza.forms import PackBracelet
+from apps.baliza.views.baliza.forms import PackBracelet
 from apps.baliza.models import Bracelet, HistorialBraceletSensors, Baliza, UsuarioRol, RolUsuario
-
+import authentication.Config.PREFERENCES as Preferences
 
 # Create your views here.
 
