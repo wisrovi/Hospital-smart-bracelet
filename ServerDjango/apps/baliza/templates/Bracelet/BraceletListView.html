@@ -1,0 +1,54 @@
+{% extends 'LIST.html' %}
+{% load static %}
+
+{% block columns %}
+    <tr>
+        <th scope="col" style="width: 6%;">Nro</th>
+        <th scope="col" style="width: 24%;">Bracelet</th>
+        <th scope="col" style="width: 11%;">Temp (min)</th>
+        <th scope="col" style="width: 11%;">Temp (max)</th>
+        <th scope="col" style="width: 11%;">PPM (min)</th>
+        <th scope="col" style="width: 11%;">PPM (max)</th>
+        <th scope="col" style="width: 16%;">Opciones</th>
+    </tr>
+{% endblock %}
+
+{% block rows %}
+    {% for object in object_list %}
+        <tr>
+            <td>
+                {{ object.id }}
+            </td>
+            <td>
+                {{ object.bracelet }}
+            </td>
+            <td>
+                {{ object.minimaTemperatura }}
+            </td>
+            <td>
+                {{ object.maximaTemperatura }}
+            </td>
+            <td>
+                {{ object.minimoPulsoCardiaco }}
+            </td>
+            <td>
+                {{ object.maximaPulsoCardiaco }}
+            </td>
+            <td>
+                {{ object.descripcion }}
+            </td>
+            <td>
+                <button type="button" class="btn btn-warning btn-xs btn-flat">
+                    <i class="fas fa-edit"></i>
+                </button>
+                <button type="button" class="btn btn-danger btn-xs btn-flat">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}

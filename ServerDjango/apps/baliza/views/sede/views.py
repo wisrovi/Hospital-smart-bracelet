@@ -10,7 +10,7 @@ from apps.baliza.models import Sede
 from apps.baliza.views.sede.forms import SedeForm
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(login_required(login_url='signin'), name='dispatch')
 # @method_decorator(csrf_exempt, name='dispatch')
 class SedeListView(ListView):
     model = Sede
@@ -39,7 +39,7 @@ class SedeListView(ListView):
         return context
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(login_required(login_url='signin'), name='dispatch')
 class SedeCreateView(CreateView):
     model = Sede
     form_class = SedeForm

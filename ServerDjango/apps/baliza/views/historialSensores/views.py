@@ -6,7 +6,7 @@ from django.utils.decorators import method_decorator
 from apps.baliza.models import HistorialBraceletSensors
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(login_required(login_url='signin'), name='dispatch')
 class HistorialSensoresListView(ListView):
     model = HistorialBraceletSensors
     template_name = 'Historial/HistorialSensoresListView.html'

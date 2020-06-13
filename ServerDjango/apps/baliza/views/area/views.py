@@ -9,7 +9,7 @@ from apps.baliza.models import Area, Piso
 from apps.baliza.views.area.forms import AreaForm
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(login_required(login_url='signin'), name='dispatch')
 class AreaListView(ListView):
     model = Area
     template_name = 'Ubicacion/AreaListView.html'
@@ -23,7 +23,7 @@ class AreaListView(ListView):
         return context
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(login_required(login_url='signin'), name='dispatch')
 class AreaCreateView(CreateView):
     model = Area
     form_class = AreaForm

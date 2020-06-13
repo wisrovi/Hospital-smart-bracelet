@@ -8,7 +8,7 @@ from apps.baliza.models import Piso, Sede
 from apps.baliza.views.piso.forms import PisoForm
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(login_required(login_url='signin'), name='dispatch')
 class PisoListView(ListView):
     model = Piso
     template_name = 'Ubicacion/PisoListView.html'
@@ -22,7 +22,7 @@ class PisoListView(ListView):
         return context
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(login_required(login_url='signin'), name='dispatch')
 class PisoCreateView(CreateView):
     model = Piso
     form_class = PisoForm

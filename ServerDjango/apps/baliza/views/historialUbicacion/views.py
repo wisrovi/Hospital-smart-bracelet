@@ -6,7 +6,7 @@ from django.utils.decorators import method_decorator
 from apps.baliza.models import HistorialUbicacion
 
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(login_required(login_url='signin'), name='dispatch')
 class HistorialUbicacionListView(ListView):
     model = HistorialUbicacion
     template_name = 'Historial/HistorialUbicacionListView.html'

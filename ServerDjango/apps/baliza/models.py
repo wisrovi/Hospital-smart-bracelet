@@ -85,7 +85,8 @@ class Bracelet(models.Model):
                                          blank=False)
 
     def __str__(self):
-        return "{} - {}".format(self.macDispositivo, self.descripcion)
+        return "[mac={}] - [name={}] [Coordenada=({}, {})] [Tx={}]".format(self.macDispositivo, self.descripcion, self.minor, self.major,
+                                               self.txPower)
 
     def toJSON(self):
         item = model_to_dict(self)
@@ -160,7 +161,8 @@ class Area(models.Model):
                                          blank=False)
 
     def __str__(self):
-        return "{} ({} [({},{}),({},{})])".format(self.area, self.piso, self.xInicial, self.yInicial, self.xFinal, self.yFinal)
+        return "{} ({} [({},{}),({},{})])".format(self.area, self.piso, self.xInicial, self.yInicial, self.xFinal,
+                                                  self.yFinal)
 
     def toJSON(self):
         item = model_to_dict(self)
@@ -221,7 +223,8 @@ class HistorialBraceletSensors(models.Model):
     bracelet = models.ForeignKey(Bracelet, on_delete=models.CASCADE, verbose_name='Bracelet')
     ppm_sensor = models.PositiveIntegerField(verbose_name="Pulso cardiaco persona")
     caida_sensor = models.BooleanField(verbose_name="Detección caídas de la persona")
-    proximidad_sensor = models.BooleanField(default=True, verbose_name="Sensor proximidad para detectar ManillaPuesta en la persona")
+    proximidad_sensor = models.BooleanField(default=True,
+                                            verbose_name="Sensor proximidad para detectar ManillaPuesta en la persona")
     temperatura_sensor = models.PositiveIntegerField(verbose_name="Temperatura persona")
     nivel_bateria = models.PositiveIntegerField(verbose_name="Porcentaje nivel Bateria")
     rssi_signal = models.IntegerField(verbose_name="Intensidad señal BLE (RSSI)")
@@ -286,4 +289,3 @@ class BraceletPatienHospital(models.Model):
         verbose_name = 'Bracelet Patien Hospital'
         verbose_name_plural = 'Bracelet Patiens Hospital'
         ordering = ['id']
-
