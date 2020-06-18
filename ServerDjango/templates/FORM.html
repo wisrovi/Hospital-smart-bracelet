@@ -47,9 +47,13 @@
                 {% endfor %}
             </div>
             <div class="card-footer">
-                <button href="{{ create_url }}" type="submit" class="btn btn-primary btn-flat" style="border-radius: 5px;">
+                <button href="{{ create_url }}" type="submit" class="btn btn-primary btn-flat"
+                        style="border-radius: 5px;">
                     <i class="fas fa-save"></i> Guardar
                 </button>
+                {% block botonesAdicionales %}
+
+                {% endblock %}
             </div>
         </div>
     </form>
@@ -71,14 +75,14 @@
                 if (data.hasOwnProperty('error')) {
                     MensajeError(data['error']);
                     return false;
-                }else {
+                } else {
                     if (data.hasOwnProperty('redirec')) {
                         window.location.href = data['redirec'];
                         return false;
                     }
                 }
             }).fail(function (jqXHR, textStatus, errorThrown) {
-                alert(textStatus + ': ' + errorThrown);
+                MensajeError(textStatus + ': ' + errorThrown);
             }).always(function (data) {
 
             });

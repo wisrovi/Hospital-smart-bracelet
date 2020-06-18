@@ -1,9 +1,7 @@
 from django import forms
 
-from apps.baliza.models import Piso
 
-
-class PackBracelet(forms.Form):
+class PackBraceletForm(forms.Form):
     key = forms.CharField(
         label='Key',
         max_length=5000,
@@ -16,4 +14,3 @@ class PackBracelet(forms.Form):
         widget=forms.TextInput(
             attrs={'class': 'form-control', 'type': 'text', 'name': 'y_position_baliza',
                    'placeholder': 'Escribe un value', 'autocomplete': 'off'}))
-

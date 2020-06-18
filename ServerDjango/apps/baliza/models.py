@@ -85,8 +85,9 @@ class Bracelet(models.Model):
                                          blank=False)
 
     def __str__(self):
-        return "[mac={}] - [name={}] [Coordenada=({}, {})] [Tx={}]".format(self.macDispositivo, self.descripcion, self.minor, self.major,
-                                               self.txPower)
+        return "[mac={}] - [name={}] [Serial=({}/{})] [Tx={}]".format(self.macDispositivo, self.descripcion, self.minor,
+                                                                      self.major,
+                                                                      self.txPower)
 
     def toJSON(self):
         item = model_to_dict(self)
@@ -219,6 +220,26 @@ class HistorialUbicacion(models.Model):
         ordering = ['id']
 
 
+class HistorialRSSI(models.Model):
+    bracelet = models.ForeignKey(Bracelet, on_delete=models.CASCADE, verbose_name='Bracelet')
+    baliza = models.ForeignKey(Baliza, on_delete=models.CASCADE, verbose_name="Baliza")
+    rssi_signal = models.IntegerField(verbose_name="Intensidad señal BLE (RSSI)")
+    fechaRegistro = models.DateTimeField(auto_now_add=True, verbose_name='Fecha Registro', null=False,
+                                         blank=False)
+
+    def __str__(self):
+        return "{}  ------->  {}  ====== {} (RSSI)".format(self.bracelet, self.baliza, self.rssi_signal)
+
+    def toJSON(self):
+        item = model_to_dict(self)
+        return item
+
+    class Meta:
+        verbose_name = 'Historial RSSI'
+        verbose_name_plural = 'Historials RRSI'
+        ordering = ['-id']
+
+
 class HistorialBraceletSensors(models.Model):
     bracelet = models.ForeignKey(Bracelet, on_delete=models.CASCADE, verbose_name='Bracelet')
     ppm_sensor = models.PositiveIntegerField(verbose_name="Pulso cardiaco persona")
@@ -227,9 +248,7 @@ class HistorialBraceletSensors(models.Model):
                                             verbose_name="Sensor proximidad para detectar ManillaPuesta en la persona")
     temperatura_sensor = models.PositiveIntegerField(verbose_name="Temperatura persona")
     nivel_bateria = models.PositiveIntegerField(verbose_name="Porcentaje nivel Bateria")
-    rssi_signal = models.IntegerField(verbose_name="Intensidad señal BLE (RSSI)")
     baliza = models.ForeignKey(Baliza, on_delete=models.CASCADE, verbose_name="Baliza")
-
     fechaRegistro = models.DateTimeField(auto_now_add=True, verbose_name='Fecha Registro', null=False,
                                          blank=False)
 
@@ -243,7 +262,7 @@ class HistorialBraceletSensors(models.Model):
     class Meta:
         verbose_name = 'Historial Bracelet Sensors'
         verbose_name_plural = 'Historials Bracelet Sensors'
-        ordering = ['id']
+        ordering = ['-id']
 
 
 ## Configuración Bracelet

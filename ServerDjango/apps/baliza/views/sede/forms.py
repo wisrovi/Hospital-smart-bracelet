@@ -1,3 +1,4 @@
+from attr import fields
 from django.forms import ModelForm, TextInput, Textarea
 
 from apps.baliza.models import Sede
@@ -25,3 +26,15 @@ class SedeForm(ModelForm):
                 attrs={'placeholder': 'Escribe un descripción para la sede'}
             ),
         }
+
+    def save(self, commit=True):
+        data = dict()
+        form = super()
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return data

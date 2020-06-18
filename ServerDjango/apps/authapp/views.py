@@ -69,8 +69,8 @@ def signup_confirm_email(request):
                     import base64
                     import json
                     import gzip
-                    paquete = gzip.compress(bytes(json.dumps(paquete), 'utf-8'))
-                    paquete = base64.b64encode(paquete).decode('utf-8')
+                    # paquete = gzip.compress(bytes(json.dumps(paquete), 'utf-8'))
+                    paquete = base64.urlsafe_b64encode(bytes(json.dumps(paquete), 'utf-8')).decode('utf-8')
 
                     data = dict()
                     data['redirec'] = paquete
@@ -135,8 +135,8 @@ def signup(request):
         import base64
         import gzip
         import json
-        datosRecibidos = base64.b64decode(datosRecibidos)
-        datosRecibidos = gzip.decompress(datosRecibidos).decode('utf-8')
+        datosRecibidos = base64.urlsafe_b64decode(datosRecibidos)
+        # datosRecibidos = gzip.decompress(datosRecibidos).decode('utf-8')
         datosRecibidos = json.loads(datosRecibidos)
         context['firstname'] = datosRecibidos['firstname']
         context['lastname'] = datosRecibidos['lastname']
