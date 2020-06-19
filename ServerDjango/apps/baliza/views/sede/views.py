@@ -4,7 +4,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from apps.baliza.models import Sede
 from apps.baliza.views.sede.forms import SedeForm
@@ -77,3 +77,65 @@ class SedeCreateView(CreateView):
         context['entity'] = 'Crear Sede'
         return context
 
+
+@method_decorator(login_required(login_url='signin'), name='dispatch')
+class SedeUpdateView(UpdateView):
+    model = Sede
+    form_class = SedeForm
+    template_name = 'FORM.html'
+    success_url = reverse_lazy('project:form_readlist_sede')
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = dict()
+        try:
+            action = request.POST['action']
+            if action == 'edit':
+                form = self.get_form()
+                data = form.save()
+                print(data)
+                data['redirec'] = reverse_lazy('project:form_readlist_sede')
+            else:
+                data['error'] = 'No ha ingresado a ninguna opción'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Edición de una Sede'
+        context['action'] = 'edit'
+        context['entity'] = 'Editar Sede'
+        return context
+
+
+@method_decorator(login_required(login_url='signin'), name='dispatch')
+class SedeDeleteView(DeleteView):
+    model = Sede
+    form_class = SedeForm
+    template_name = 'DELETE.html'
+    success_url = reverse_lazy('project:form_readlist_sede')
+
+    def dispatch(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return super().dispatch(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        data = dict()
+        try:
+            self.object.delete()
+            data['redirec'] = reverse_lazy('project:form_readlist_sede')
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Eliminación de una Sede'
+        context['entity'] = 'Sedes'
+        context['textoMostrar'] = self.object.nombreSede
+        context['list_url'] = reverse_lazy('project:form_readlist_sede')
+        return context

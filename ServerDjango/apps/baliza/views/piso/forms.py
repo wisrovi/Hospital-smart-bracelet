@@ -21,9 +21,21 @@ class PisoForm(ModelForm):
         exclude = ['fechaRegistro', 'usuarioRegistra', 'indHabilitado']
         widgets = {
             'piso': TextInput(
-                attrs={'placeholder': 'Escribe un descripción para la Piso'}
+                attrs={'placeholder': 'Escribe un número para el Piso'}
             ),
             'descripcion': Textarea(
                 attrs={'placeholder': 'Escribe un descripción para la Piso'}
             ),
         }
+
+    def save(self, commit=True):
+        data = dict()
+        form = super()
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return data

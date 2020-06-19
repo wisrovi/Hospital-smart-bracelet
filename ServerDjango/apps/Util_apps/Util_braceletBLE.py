@@ -12,10 +12,8 @@ class UnZipPackBracelets:
     listBracelets = list()
     listConvert = list()
 
-    def setString(self, string):
-        if string is not None:
-            import json
-            contenidoJson = json.loads(string)
+    def setString(self, contenidoJson):
+        if contenidoJson is not None:
 
             for beacon in contenidoJson['beacons']:
                 bracelec = Bracelet()
@@ -31,6 +29,10 @@ class UnZipPackBracelets:
             return self.listBracelets
         else:
             return None
+
+    def LimpiarListas(self):
+        self.listBracelets = list()
+        self.listConvert = list()
 
     def convertList(self):
         import json

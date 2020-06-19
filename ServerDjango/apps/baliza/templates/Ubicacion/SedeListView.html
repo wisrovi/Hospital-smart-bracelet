@@ -23,12 +23,12 @@
                 {{ object.descripcion }}
             </td>
             <td>
-                <button type="button" class="btn btn-warning btn-xs btn-flat">
+                <a href="{% url 'project:form_update_sede' object.id %} " class="btn btn-warning btn-xs btn-flat">
                     <i class="fas fa-edit"></i>
-                </button>
-                <button type="button" class="btn btn-danger btn-xs btn-flat">
+                </a>
+                <a href="{% url 'project:form_delete_sede' object.id %}" class="btn btn-danger btn-xs btn-flat">
                     <i class="fas fa-trash-alt"></i>
-                </button>
+                </a>
             </td>
         </tr>
     {% endfor %}
@@ -37,3 +37,14 @@
 {% block javascript %}
 
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+

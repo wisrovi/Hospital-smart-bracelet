@@ -35,11 +35,13 @@
                     </tbody>
                 </table>
             </div>
-            <div class="card-footer">
-                <a href="{{ create_url }}" class="btn btn-primary btn-flat btnTest" style="border-radius: 5px;">
-                    <i class="fas fa-plus"></i> Nuevo registro
-                </a>
-            </div>
+            {% block botonCrear %}
+                <div class="card-footer">
+                    <a href="{{ create_url }}" class="btn btn-primary btn-flat btnTest" style="border-radius: 5px;">
+                        <i class="fas fa-plus"></i> Nuevo registro
+                    </a>
+                </div>
+            {% endblock %}
         </div>
     {% endif %}
     <script type="application/javascript">

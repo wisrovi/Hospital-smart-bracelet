@@ -43,3 +43,15 @@ class AreaForm(ModelForm):
                 attrs={'placeholder': 'Escribe un descripción para el Area'}
             ),
         }
+
+    def save(self, commit=True):
+        data = dict()
+        form = super()
+        try:
+            if form.is_valid():
+                form.save()
+            else:
+                data['error'] = form.errors
+        except Exception as e:
+            data['error'] = str(e)
+        return data
