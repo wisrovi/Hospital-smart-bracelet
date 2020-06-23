@@ -16,6 +16,7 @@ String caidaBeacon = "";
 String temperaturaBeacon = "";
 String voltajeBateria = "";
 String totalbeacons = "";
+String macBaliza = "";
 
 //****************************
 //Detecta HM10
@@ -43,8 +44,8 @@ void BalizaHSBFCV::start_at() {
 //Imprime los datos recibidos
 //****************************************
 
-DynamicJsonDocument ProcesarDatos(String sedeBeacon, String voltajeBateria, String ppmBeacon, String proximidadBeacon, String caidaBeacon, String temperaturaBeacon, String rssiBeacon, String macBeacon) {
-  DynamicJsonDocument ibeacon(180);
+DynamicJsonDocument ProcesarDatos(String sedeBeacon, String voltajeBateria, String ppmBeacon, String proximidadBeacon, String caidaBeacon, String temperaturaBeacon, String rssiBeacon, String macBeacon, String macBaliza) {
+  DynamicJsonDocument ibeacon(220);
   ibeacon["SED"] = sedeBeacon;
   ibeacon["MAC"] = macBeacon;
   ibeacon["BAT"] = voltajeBateria;
@@ -53,6 +54,7 @@ DynamicJsonDocument ProcesarDatos(String sedeBeacon, String voltajeBateria, Stri
   ibeacon["TEM"] = temperaturaBeacon;
   ibeacon["RSI"] = rssiBeacon;
   ibeacon["PRO"] = proximidadBeacon;
+  ibeacon["MAB"] = macBaliza;
   return ibeacon;
 }
 
@@ -115,9 +117,10 @@ void BalizaHSBFCV::loopScanear() {
                 caidaBeacon = lineaEncontrada.substring(28, 29);
                 temperaturaBeacon = lineaEncontrada.substring(29, 32 );
                 rssiBeacon =  lineaEncontrada.substring(58);
+				macBaliza= "B07E11FE901C";
                 rssiBeacon.replace("\r","");
 				
-                DynamicJsonDocument ibea = ProcesarDatos(sedeBeacon, voltajeBateria, ppmBeacon, proximidadBeacon, caidaBeacon, temperaturaBeacon, rssiBeacon, macBeacon);
+                DynamicJsonDocument ibea = ProcesarDatos(sedeBeacon, voltajeBateria, ppmBeacon, proximidadBeacon, caidaBeacon, temperaturaBeacon, rssiBeacon, macBeacon, macBaliza);
 				
 				data.add(ibea);
               }
