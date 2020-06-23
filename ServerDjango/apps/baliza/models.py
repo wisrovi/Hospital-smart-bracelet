@@ -236,8 +236,8 @@ class HistorialRSSI(models.Model):
 
     class Meta:
         verbose_name = 'Historial RSSI'
-        verbose_name_plural = 'Historials RRSI'
-        ordering = ['-id']
+        verbose_name_plural = 'Historials RSSI'
+        ordering = ['-fechaRegistro']
 
 
 class HistorialBraceletSensors(models.Model):

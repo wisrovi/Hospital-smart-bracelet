@@ -1,8 +1,12 @@
+from time import time
+
 from django.template.loader import render_to_string
 
-from apps.baliza.models import Baliza, RolUsuario, UsuarioRol, Bracelet, BraceletUmbrals, HistorialRSSI
-import apps.Util_apps.Util_braceletBLE as Utilities
-from apps.baliza.test.LibraryRSSItoMts import CalcularDistancia
+from apps.baliza.models import Baliza, RolUsuario, UsuarioRol, Bracelet, BraceletUmbrals, HistorialRSSI, \
+    InstalacionBaliza
+import apps.baliza.views.server.Util_braceletBLE as Utilities
+from apps.baliza.test.LibraryTriangulacionTriliteracion import BalizaInstalada, Ubicacion, CalcularPosicion
+from apps.baliza.views.server.LibraryRSSItoMts import CalcularDistancia
 
 
 def getDestinatariosCorreos():
@@ -275,5 +279,135 @@ def ProcesarUbicacion(baliza, macPulsera, rssi):
         histoRssi.save()
 
     print("Baliza:", baliza, ", Pulsera:", macPulsera, ", metros:", distancia)
+
+
+def DeterminarPocision(pulsera):
+    ConstanteSegundosMaximosSeparacionRegistros = 15
+
+    for i in range(1):
+        tiempo_inicial = time()
+        listadoBalizas = list()
+
+
+        # print(pulsera.macDispositivo)
+        # print(pulsera.major)
+        # print(pulsera.minor)
+        # print(pulsera.txPower)
+        # print(pulsera.descripcion)
+
+        lastDate = None
+        datosEstaPulsera = HistorialRSSI.objects.filter(bracelet=pulsera).order_by('-fechaRegistro')
+        macBalizasProcesadas = list()
+
+        for dato in datosEstaPulsera:
+            if lastDate is None:
+                lastDate = dato.fechaRegistro
+            else:
+                diferencia = lastDate- dato.fechaRegistro
+                diferencia = diferencia.seconds
+                if diferencia < ConstanteSegundosMaximosSeparacionRegistros:
+                    baliza = dato.baliza
+                    if not baliza.macDispositivoBaliza in macBalizasProcesadas:
+                        macBalizasProcesadas.append(baliza.macDispositivoBaliza)
+
+                        datosInstalacionBaliza = InstalacionBaliza.objects.get(baliza=baliza)
+                        pisoInstalacion = datosInstalacionBaliza.piso
+
+                        # puntoInstalacion = (datosInstalacionBaliza.instalacionX, datosInstalacionBaliza.instalacionY)
+                        # print(pulsera.descripcion, "--->", puntoInstalacion, "--->",
+                        #       CalcularDistancia(pulsera.txPower, dato.rssi_signal), "mt", pisoInstalacion)
+
+                        listadoBalizas.append(
+                            BalizaInstalada(
+                                ubi=Ubicacion(
+                                    x=datosInstalacionBaliza.instalacionX,
+                                    y=datosInstalacionBaliza.instalacionY),
+                                nombre=baliza.macDispositivoBaliza,
+                                dist=CalcularDistancia(pulsera.txPower, dato.rssi_signal))
+                        )
+
+        print('El tiempo de extraer datos para enviar a procesar ubicacion es de: {} seconds'.format(time()-tiempo_inicial))
+
+        if len(listadoBalizas) >= 3:
+            for bali in listadoBalizas:
+                balizaInstalada = bali
+                print("(", balizaInstalada.ubicacion.x, ",", balizaInstalada.ubicacion.y, ")", "distancia=", balizaInstalada.distancia)
+
+            CartesianoFinal, idsBalizasUsadas = CalcularPosicion(listadoBalizas, opcion1=True)
+            constantePresicion = 6
+            print("El valor estimado de ubicación (x,y) es", CartesianoFinal, "+-", constantePresicion)
+            print("Para este bracelet se usaron las siguientes balizas: ")
+            for i in idsBalizasUsadas:
+                print(listadoBalizas[i].nombre)
+
+            tiempo_final = time()
+            tiempo_ejecucion = tiempo_final - tiempo_inicial
+            print('El tiempo total de ejecucion fue: {} seconds'.format(tiempo_ejecucion))
+
+
+
+
+def DeterminarPocision2(pulsera):
+    ConstanteSegundosMaximosSeparacionRegistros = 15
+
+    for i in range(1):
+        tiempo_inicial = time()
+        listadoBalizas = list()
+
+
+        # print(pulsera.macDispositivo)
+        # print(pulsera.major)
+        # print(pulsera.minor)
+        # print(pulsera.txPower)
+        # print(pulsera.descripcion)
+
+        lastDate = None
+        datosEstaPulsera = HistorialRSSI.objects.filter(bracelet=pulsera).order_by('-fechaRegistro')
+        macBalizasProcesadas = list()
+
+        for dato in datosEstaPulsera:
+            if lastDate is None:
+                lastDate = dato.fechaRegistro
+            else:
+                diferencia = lastDate- dato.fechaRegistro
+                diferencia = diferencia.seconds
+                if diferencia < ConstanteSegundosMaximosSeparacionRegistros:
+                    baliza = dato.baliza
+                    if not baliza.macDispositivoBaliza in macBalizasProcesadas:
+                        macBalizasProcesadas.append(baliza.macDispositivoBaliza)
+
+                        datosInstalacionBaliza = InstalacionBaliza.objects.get(baliza=baliza)
+                        pisoInstalacion = datosInstalacionBaliza.piso
+
+                        # puntoInstalacion = (datosInstalacionBaliza.instalacionX, datosInstalacionBaliza.instalacionY)
+                        # print(pulsera.descripcion, "--->", puntoInstalacion, "--->",
+                        #       CalcularDistancia(pulsera.txPower, dato.rssi_signal), "mt", pisoInstalacion)
+
+                        listadoBalizas.append(
+                            BalizaInstalada(
+                                ubi=Ubicacion(
+                                    x=datosInstalacionBaliza.instalacionX,
+                                    y=datosInstalacionBaliza.instalacionY),
+                                nombre=baliza.macDispositivoBaliza,
+                                dist=CalcularDistancia(pulsera.txPower, dato.rssi_signal))
+                        )
+
+        print('El tiempo de extraer datos para enviar a procesar ubicacion es de: {} seconds'.format(time()-tiempo_inicial))
+
+        if len(listadoBalizas) >= 3:
+            for bali in listadoBalizas:
+                balizaInstalada = bali
+                print("(", balizaInstalada.ubicacion.x, ",", balizaInstalada.ubicacion.y, ")", "distancia=", balizaInstalada.distancia)
+
+            CartesianoFinal, idsBalizasUsadas = CalcularPosicion(listadoBalizas, opcion1=False)
+            constantePresicion = 6
+            print("El valor estimado de ubicación (x,y) es", CartesianoFinal, "+-", constantePresicion)
+            print("Para este bracelet se usaron las siguientes balizas: ")
+            for i in idsBalizasUsadas:
+                print(listadoBalizas[i].nombre)
+
+            tiempo_final = time()
+            tiempo_ejecucion = tiempo_final - tiempo_inicial
+            print('El tiempo total de ejecucion fue: {} seconds'.format(tiempo_ejecucion))
 
 # fin clase

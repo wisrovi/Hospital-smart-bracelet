@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 
-import apps.Util_apps.Util_braceletBLE as Utilities
+import apps.baliza.views.server.Util_braceletBLE as Utilities
 from apps.authapp.forms import LoginForm, RegistrationForm
 import authentication.Config.PREFERENCES as Preferences
 
@@ -68,7 +68,6 @@ def signup_confirm_email(request):
 
                     import base64
                     import json
-                    import gzip
                     # paquete = gzip.compress(bytes(json.dumps(paquete), 'utf-8'))
                     paquete = base64.urlsafe_b64encode(bytes(json.dumps(paquete), 'utf-8')).decode('utf-8')
 
@@ -133,7 +132,6 @@ def signup(request):
         parametros = request.GET
         datosRecibidos = parametros['D']
         import base64
-        import gzip
         import json
         datosRecibidos = base64.urlsafe_b64decode(datosRecibidos)
         # datosRecibidos = gzip.decompress(datosRecibidos).decode('utf-8')
