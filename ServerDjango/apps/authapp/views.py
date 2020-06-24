@@ -5,7 +5,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 
-import apps.baliza.views.server.Util_braceletBLE as Utilities
+import apps.baliza.views.server.Libraries.Util_braceletBLE as Utilities
 from apps.authapp.forms import LoginForm, RegistrationForm
 import authentication.Config.PREFERENCES as Preferences
 

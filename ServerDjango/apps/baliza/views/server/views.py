@@ -1,24 +1,33 @@
 from time import time
 
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import render
-from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
 from django.views.generic import FormView, ListView
 
-import apps.baliza.views.server.Util_braceletBLE as Utilities
-from apps.baliza.models import Bracelet, HistorialBraceletSensors, Baliza, UsuarioRol, RolUsuario, HistorialRSSI
-import authentication.Config.PREFERENCES as Preferences
+from apps.baliza.models import Bracelet, HistorialBraceletSensors, Baliza, HistorialRSSI, \
+    InstalacionBaliza
 
 # Create your views here.
-from apps.baliza.views.server.ProcessSensorsData import ValidarExisteBaliza, ValidarExisteBracelet, ExtractMac, \
+from apps.baliza.views.server.Libraries.ProcessSensorsData import ValidarExisteBaliza, ValidarExisteBracelet, ExtractMac, \
     ValidarCaida, ValidadProximidad, ValidarTemperatura, ValidarPPM, DeterminarIgualdad_o_cercano, ValidarNivelBateria, \
-    ProcesarUbicacion, DeterminarPocision, DeterminarPocision2
-from apps.baliza.views.server.forms import PackBraceletForm
+    ProcesarUbicacion, DeterminarPocisionPulsera
+from apps.baliza.views.server.forms import PackBraceletForm, FiltrarGrafica
 
+
+class FiltrarGraficaUbicacion(FormView):
+    form_class = FiltrarGrafica
+    template_name = 'Server/Graph.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Grafica Ubicaciones'
+        context['todasPulseras'] = list()
+        context['todasBalizas'] = list()
+        return context
 
 @method_decorator(csrf_exempt, name='dispatch')
 class ServerReceivedCreateView(FormView):
@@ -122,17 +131,60 @@ class ServerReceivedCreateView(FormView):
         return context
 
 
-def graficar(request):
-    todasLasPulseras = Bracelet.objects.all()
-    pulsera = todasLasPulseras[0]
-    DeterminarPocision(pulsera)
-    return render(request, 'Server/Graph.html', {})
+class DatoGraficaBubble:
+    name = str()
+    x = int()
+    y = int()
+    tipo = str()
 
-def graficar2(request):
+    def __init__(self, name:str, x:int, y:int, tipo:str):
+        self.name = name
+        self.x = x
+        self.y = y
+        self.tipo = tipo
+
+
+
+def graficar(request):
+    inicio = time()
+    ubicacionesBalizasPlano = list()
+    tipoBaliza = "Baliza"
+    todasLasBalizas = Baliza.objects.all()
+    for baliza in todasLasBalizas:
+        instalacion = InstalacionBaliza.objects.filter(baliza=baliza)
+
+        datosBaliza = DatoGraficaBubble(name=baliza.macDispositivoBaliza,
+                                        x=instalacion[0].instalacionX,
+                                        y=instalacion[0].instalacionY,
+                                        tipo=tipoBaliza)
+        ubicacionesBalizasPlano.append(datosBaliza)
+
+    ubicacionesPulserasPlano = list()
+    tipoPulsera = "Manilla"
     todasLasPulseras = Bracelet.objects.all()
-    pulsera = todasLasPulseras[0]
-    DeterminarPocision2(pulsera)
-    return render(request, 'Server/Graph.html', {})
+    for pulsera in todasLasPulseras:
+        CartesianoFinal, idsBalizasUsadas = DeterminarPocisionPulsera(pulsera)
+        if CartesianoFinal is not None:
+            constantePresicion = 6
+            print("El valor estimado de ubicación (x,y) es", CartesianoFinal[0], CartesianoFinal[1], "+-", constantePresicion)
+
+            datosPulsera = DatoGraficaBubble(name=pulsera.macDispositivo,
+                                             x=CartesianoFinal[0],
+                                             y=CartesianoFinal[1],
+                                             tipo=tipoPulsera)
+            ubicacionesPulserasPlano.append(datosPulsera)
+
+            # print("Para este bracelet se usaron las siguientes balizas: ")
+            for i in idsBalizasUsadas:
+                # print(listadoBalizas[i].nombre)
+                pass
+    print("Tiempo final = {}".format(time() - inicio))
+
+    context = dict()
+    context['todasPulseras'] = ubicacionesPulserasPlano
+    context['todasBalizas'] = ubicacionesBalizasPlano
+    context['title'] = 'Grafica Ubicaciones'
+    return render(request, 'Server/Graph.html', context)
 
 
 def setReceivedOK(request):

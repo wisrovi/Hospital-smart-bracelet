@@ -1,10 +1,27 @@
-Output: Export STEP
-Type  : ExportSTEP
+Project Outputs Generation Report
+---------------------------------
+Start Output Generation At 4:34:18 PM On 6/24/2020
+
+Output: Gerber Files
+Type  : Gerber
 From  : Variant [[No Variations]] of PCB Document [HSB-Version1.PcbDoc]
-   Generated File[HSB-Version1.step]
+   Generated File[HSB-Version1.GTL]
+   Generated File[HSB-Version1.GBL]
+   Generated File[HSB-Version1.GTO]
+   Generated File[HSB-Version1.GTP]
+   Generated File[HSB-Version1.GTS]
+   Generated File[HSB-Version1.GBS]
+   Generated File[HSB-Version1.GBP]
+   Generated File[HSB-Version1.GBO]
+   Generated File[HSB-Version1.GKO]
+   Generated File[HSB-Version1.GM1]
+   Generated File[HSB-Version1.GM13]
+   Generated File[HSB-Version1.RUL]
+   Generated File[HSB-Version1.EXTREP]
+   Generated File[HSB-Version1.REP]
 
 
-Files Generated   : 1
+Files Generated   : 14
 Documents Printed : 0
 
-Finished Output Generation At 5:03:57 PM On 6/17/2020
+Finished Output Generation At 4:34:22 PM On 6/24/2020
