@@ -19,21 +19,22 @@ class PackBraceletForm(forms.Form):
 
 
 class FiltrarGrafica(forms.Form):
+    # select2 es una clase que se pone en una lista desplegable para que este haga update a otras listas, select anidados
     sede = forms.ModelChoiceField(
         queryset=Sede.objects.all(),
         widget=forms.Select(
             attrs={
-                'class': 'form-control',
+                'class': 'form-control select2',
                 'name': 'Sede'
             }
         )
     )
 
     ubicacion = forms.ModelChoiceField(
-        queryset=Piso.objects.all(),
+        queryset=Piso.objects.none(),
         widget=forms.Select(
             attrs={
-                'class': 'form-control',
+                'class': 'form-control select2',
                 'name': 'Piso',
                 'disable': 'true'
             }

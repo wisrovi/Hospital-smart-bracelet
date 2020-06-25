@@ -279,7 +279,7 @@ def ProcesarUbicacion(baliza, macPulsera, rssi):
 
 
 # @count_elapsed_time
-def DeterminarPocisionPulsera(pulsera):
+def DeterminarPocisionPulsera(pulsera, pisoDeseado = None):
     ConstanteSegundosMaximosSeparacionRegistros = 15
 
     listadoBalizas = list()
@@ -306,15 +306,34 @@ def DeterminarPocisionPulsera(pulsera):
                         # print(pulsera.descripcion, "--->", puntoInstalacion, "--->",
                         #       CalcularDistancia(pulsera.txPower, dato.rssi_signal), "mt", pisoInstalacion)
 
-                        listadoBalizas.append(
-                            BalizaInstalada(
-                                ubi=Ubicacion(
-                                    x=datosInstalacionBaliza.instalacionX,
-                                    y=datosInstalacionBaliza.instalacionY),
-                                nombre=baliza.macDispositivoBaliza,
-                                dist=CalcularDistancia(pulsera.txPower, dato.rssi_signal))
-                        )
+                        if pisoDeseado is not None:
+                            puntoInstalacionBaliza = InstalacionBaliza.objects.filter(baliza=baliza)
+                            for puntito in puntoInstalacionBaliza:
+                                pisitoPuntito = puntito.piso
+                                puntitoDeseado = pisoDeseado[0]
+                                if pisitoPuntito == puntitoDeseado:
+                                    listadoBalizas.append(
+                                        BalizaInstalada(
+                                            ubi=Ubicacion(
+                                                x=datosInstalacionBaliza.instalacionX,
+                                                y=datosInstalacionBaliza.instalacionY),
+                                            nombre=baliza.macDispositivoBaliza,
+                                            dist=CalcularDistancia(pulsera.txPower, dato.rssi_signal))
+                                    )
+                        else:
+                            listadoBalizas.append(
+                                BalizaInstalada(
+                                    ubi=Ubicacion(
+                                        x=datosInstalacionBaliza.instalacionX,
+                                        y=datosInstalacionBaliza.instalacionY),
+                                    nombre=baliza.macDispositivoBaliza,
+                                    dist=CalcularDistancia(pulsera.txPower, dato.rssi_signal))
+                            )
+
+
+
 
         if len(listadoBalizas) >= 3:
-            return CalcularPosicion(listadoBalizas)
-    return None, None
+            CartesianoFinal, idsBalizasUsadas = CalcularPosicion(listadoBalizas)
+            return CartesianoFinal, idsBalizasUsadas, pisoDeseado
+    return None, None, None

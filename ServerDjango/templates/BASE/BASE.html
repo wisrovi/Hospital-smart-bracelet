@@ -16,27 +16,34 @@
 <body class="hold-transition layout-top-nav">
 <div class="wrapper">
 
-    <!-- Header -->
-    {% include 'HEADER_FOOTER/HEADER.html' %}
+
+    {% block Header %}
+        <!-- Header -->
+        {% include 'HEADER_FOOTER/HEADER.html' %}
+    {% endblock %}
+
     <!-- Content -->
     <div class="content-wrapper">
-        {% if user.is_authenticated %}
-            <div class="content-header">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-sm-6">
-{#                            <h1 class="m-0 text-dark"> Bienvenido {{ user }} </h1>#}
-                        </div>
-                        <div class="col-sm-6">
-                            <ol class="breadcrumb float-sm-right">
-                                <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
-                                <li class="breadcrumb-item"><a href="{{ list_url }}">{{ entity }}</a></li>
-                            </ol>
+        {% block cabecero %}
+            {% if user.is_authenticated %}
+                <div class="content-header">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                {#                            <h1 class="m-0 text-dark"> Bienvenido {{ user }} </h1>#}
+                            </div>
+                            <div class="col-sm-6">
+                                <ol class="breadcrumb float-sm-right">
+                                    <li class="breadcrumb-item"><a href="{% url 'home' %}">Home</a></li>
+                                    <li class="breadcrumb-item"><a href="{{ list_url }}">{{ entity }}</a></li>
+                                </ol>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        {% endif %}
+            {% endif %}
+        {% endblock %}
+
         <div class="content">
             <div class="container">
                 {% block content %}

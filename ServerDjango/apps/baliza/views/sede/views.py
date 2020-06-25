@@ -135,7 +135,7 @@ class SedeDeleteView(DeleteView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Eliminación de una Sede'
-        context['entity'] = 'Sedes'
         context['textoMostrar'] = self.object.nombreSede
+        context['entity'] = 'Sedes'
         context['list_url'] = reverse_lazy('project:form_readlist_sede')
         return context

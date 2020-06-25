@@ -6,28 +6,148 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import FormView, ListView
+from django.views.generic import FormView, ListView, TemplateView
 
 from apps.baliza.models import Bracelet, HistorialBraceletSensors, Baliza, HistorialRSSI, \
-    InstalacionBaliza
+    InstalacionBaliza, Piso
 
 # Create your views here.
-from apps.baliza.views.server.Libraries.ProcessSensorsData import ValidarExisteBaliza, ValidarExisteBracelet, ExtractMac, \
+from apps.baliza.views.server.Libraries.ProcessSensorsData import ValidarExisteBaliza, ValidarExisteBracelet, \
+    ExtractMac, \
     ValidarCaida, ValidadProximidad, ValidarTemperatura, ValidarPPM, DeterminarIgualdad_o_cercano, ValidarNivelBateria, \
     ProcesarUbicacion, DeterminarPocisionPulsera
 from apps.baliza.views.server.forms import PackBraceletForm, FiltrarGrafica
 
 
-class FiltrarGraficaUbicacion(FormView):
-    form_class = FiltrarGrafica
+class DatoGraficaBubble:
+    name = None
+    x = None
+    y = None
+    tipo = None
+
+    def __init__(self, name, x, y, tipo):
+        self.name = name
+        self.x = x
+        self.y = y
+        self.tipo = tipo
+
+
+@method_decorator(login_required(login_url='signin'), name='dispatch')
+class VerPiso(TemplateView):
     template_name = 'Server/Graph.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        datos = self.request.GET
+        id = int(datos['id'])
+        piso = Piso.objects.filter(pk=id)
+
+        ubicacionesBalizasPlano = list()
+        ubicacionesPulserasPlano = list()
+        if len(piso) > 0:
+            tipoBaliza = "Baliza"
+            todasLasBalizas = Baliza.objects.all()
+            for baliza in todasLasBalizas:
+                instalacion = InstalacionBaliza.objects.filter(baliza=baliza)
+                for instal in instalacion:
+                    pis = instal.piso
+                    if pis == piso[0]:
+                        datosBaliza = DatoGraficaBubble(name=baliza.macDispositivoBaliza,
+                                                        x=instalacion[0].instalacionX,
+                                                        y=instalacion[0].instalacionY,
+                                                        tipo=tipoBaliza)
+                        ubicacionesBalizasPlano.append(datosBaliza)
+
+            tipoPulsera = "Manilla"
+            todasLasPulseras = Bracelet.objects.all()
+            for pulsera in todasLasPulseras:
+                CartesianoFinal, idsBalizasUsadas, pisoDeseado = DeterminarPocisionPulsera(pulsera,
+                                                                                           pisoDeseado=piso)
+                if CartesianoFinal is not None:
+                    datosPulsera = DatoGraficaBubble(name=pulsera.macDispositivo,
+                                                     x=int(CartesianoFinal[0]),
+                                                     y=int(CartesianoFinal[1]),
+                                                     tipo=tipoPulsera)
+                    ubicacionesPulserasPlano.append(datosPulsera)
+
+            context['title'] = 'Grafica ' + piso[0].__str__()
+            context['todasPulseras'] = ubicacionesPulserasPlano
+            context['todasBalizas'] = ubicacionesBalizasPlano
+            return context
+
+
+@method_decorator(login_required(login_url='signin'), name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
+class FiltrarGraficaUbicacion(TemplateView):
+    template_name = 'Server/GraphFilter.html'
+
+    def post(self, request, *args, **kwargs):
+        data = dict()
+        try:
+            action = request.POST['action']
+            if action == 'graph_ubicacion':
+                id = request.POST['id']
+                piso = Piso.objects.filter(pk=id)
+
+                ubicacionesBalizasPlano = list()
+                tipoBaliza = "Baliza"
+                todasLasBalizas = Baliza.objects.all()
+                for baliza in todasLasBalizas:
+                    instalacion = InstalacionBaliza.objects.filter(baliza=baliza)
+                    for instal in instalacion:
+                        pis = instal.piso
+                        if pis == piso[0]:
+                            elemento = list()
+                            elemento.append(baliza.macDispositivoBaliza)
+                            elemento.append(instalacion[0].instalacionX)
+                            elemento.append(instalacion[0].instalacionY)
+                            elemento.append(tipoBaliza)
+                            ubicacionesBalizasPlano.append(elemento)
+
+                ubicacionesPulserasPlano = list()
+                tipoPulsera = "Manilla"
+                todasLasPulseras = Bracelet.objects.all()
+                for pulsera in todasLasPulseras:
+                    CartesianoFinal, idsBalizasUsadas, pisoDeseado = DeterminarPocisionPulsera(pulsera,
+                                                                                               pisoDeseado=piso)
+                    if CartesianoFinal is not None:
+                        constantePresicion = 6
+                        print("El valor estimado de ubicación (x,y) es", CartesianoFinal[0], CartesianoFinal[1], "+-",
+                              constantePresicion)
+                        elemento = list()
+                        elemento.append(pulsera.macDispositivo)
+                        elemento.append(CartesianoFinal[0])
+                        elemento.append(CartesianoFinal[1])
+                        elemento.append(tipoPulsera)
+                        ubicacionesPulserasPlano.append(elemento)
+
+                data['todasBalizas'] = ubicacionesBalizasPlano
+                data['todasPulseras'] = ubicacionesPulserasPlano
+                data['idPiso'] = piso[0].id
+            elif action == 'search_ubicacion':
+                data = list()
+                elemento = dict()
+                elemento['id'] = 0
+                elemento['text'] = "-----------------"
+                data.append(elemento)
+
+                for i in Piso.objects.filter(sede_id=request.POST['id']):
+                    elemento = dict()
+                    elemento['id'] = i.id
+                    elemento['text'] = i.__str__()
+                    data.append(elemento)
+            else:
+                data['error'] = 'Ha ocurrido un error'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data, safe=False)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
         context['title'] = 'Grafica Ubicaciones'
-        context['todasPulseras'] = list()
-        context['todasBalizas'] = list()
+        context['form'] = FiltrarGrafica()
         return context
+
 
 @method_decorator(csrf_exempt, name='dispatch')
 class ServerReceivedCreateView(FormView):
@@ -131,62 +251,6 @@ class ServerReceivedCreateView(FormView):
         return context
 
 
-class DatoGraficaBubble:
-    name = str()
-    x = int()
-    y = int()
-    tipo = str()
-
-    def __init__(self, name:str, x:int, y:int, tipo:str):
-        self.name = name
-        self.x = x
-        self.y = y
-        self.tipo = tipo
-
-
-
-def graficar(request):
-    inicio = time()
-    ubicacionesBalizasPlano = list()
-    tipoBaliza = "Baliza"
-    todasLasBalizas = Baliza.objects.all()
-    for baliza in todasLasBalizas:
-        instalacion = InstalacionBaliza.objects.filter(baliza=baliza)
-
-        datosBaliza = DatoGraficaBubble(name=baliza.macDispositivoBaliza,
-                                        x=instalacion[0].instalacionX,
-                                        y=instalacion[0].instalacionY,
-                                        tipo=tipoBaliza)
-        ubicacionesBalizasPlano.append(datosBaliza)
-
-    ubicacionesPulserasPlano = list()
-    tipoPulsera = "Manilla"
-    todasLasPulseras = Bracelet.objects.all()
-    for pulsera in todasLasPulseras:
-        CartesianoFinal, idsBalizasUsadas = DeterminarPocisionPulsera(pulsera)
-        if CartesianoFinal is not None:
-            constantePresicion = 6
-            print("El valor estimado de ubicación (x,y) es", CartesianoFinal[0], CartesianoFinal[1], "+-", constantePresicion)
-
-            datosPulsera = DatoGraficaBubble(name=pulsera.macDispositivo,
-                                             x=CartesianoFinal[0],
-                                             y=CartesianoFinal[1],
-                                             tipo=tipoPulsera)
-            ubicacionesPulserasPlano.append(datosPulsera)
-
-            # print("Para este bracelet se usaron las siguientes balizas: ")
-            for i in idsBalizasUsadas:
-                # print(listadoBalizas[i].nombre)
-                pass
-    print("Tiempo final = {}".format(time() - inicio))
-
-    context = dict()
-    context['todasPulseras'] = ubicacionesPulserasPlano
-    context['todasBalizas'] = ubicacionesBalizasPlano
-    context['title'] = 'Grafica Ubicaciones'
-    return render(request, 'Server/Graph.html', context)
-
-
 def setReceivedOK(request):
     return render(request, 'Server/receivedOK.html', {})
 
@@ -199,7 +263,6 @@ class HistorialRssi_ListView(ListView):
 
     def dispatch(self, request, *args, **kwargs):
         # todo lo que sucede antes que se cargue la web por primera vez
-        # por ejemplo, comprobar que el rol del user le permite ver la lista
         print(request.user)
         return super().dispatch(request, *args, **kwargs)
 

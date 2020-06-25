@@ -3,7 +3,7 @@ from django.urls import path
 from apps.baliza.views.Bracelet.views import BraceletListView, BraceletCreateView, BraceletDeleteView, \
     BraceletUpdateView, BraceletUmbralsUpdateView
 from apps.baliza.views.server.views import setReceivedOK, ServerReceivedCreateView, \
-    HistorialRssi_ListView, graficar, FiltrarGraficaUbicacion
+    HistorialRssi_ListView, FiltrarGraficaUbicacion, VerPiso
 from apps.baliza.views.baliza.views import BalizaListView, BalizaCreateView, BalizaDeleteView, BalizaUpdateView, \
     BalizaInstalacionUpdateView
 
@@ -17,9 +17,8 @@ app_name = 'project'
 
 urlpatterns = [
     # Server
-    #path('DeterminarPosicion/', graficar, name='graph_posicion'),
-    path('DeterminarPosicion/', FiltrarGraficaUbicacion.as_view(), name='graph_posicion'),
-    path('Graficar/', FiltrarGraficaUbicacion.as_view(), name='filtro-graph_posicion'),
+    path('DeterminarPosicion/', FiltrarGraficaUbicacion.as_view(), name='filtro_graph_posicion'),
+    path('GraficarPiso/', VerPiso.as_view(), name='graph_piso'),
 
     path('received/', ServerReceivedCreateView.as_view(), name='form_received_baliza2'),
     path('rssi/', HistorialRssi_ListView.as_view(), name='form_readlist_rssi'),
