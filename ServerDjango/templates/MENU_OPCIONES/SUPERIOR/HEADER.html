@@ -114,24 +114,36 @@
 
 <script type="text/javascript">
     $('#cerrar_sesion').click(function () {
-        swal({
-            title: "¿Esta seguro?",
-            text: "Cerrar sesión en su cuenta",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
+        const swalWithBootstrapButtons = Swal.mixin({
+            customClass: {
+                confirmButton: 'btn btn-success',
+                cancelButton: 'btn btn-danger'
+            },
+            buttonsStyling: false
         })
-            .then((value) => {
-                if (value) {
-                    window.location.href = '{% url 'signout' %}';
-                } else {
-                    Swal.fire({
-                        title: 'Información!',
-                        text: `Su cuenta permanecerá abierta`,
-                        type: 'info',
-                        timer: 2500
-                    });
-                }
-            });
+
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+                window.location.href = '{% url 'signout' %}';
+            } else if (
+                /* Read more about handling dismissals below */
+                result.dismiss === Swal.DismissReason.cancel
+            ) {
+                Swal.fire({
+                    title: 'Información!',
+                    text: `Su cuenta permanecerá abierta`,
+                    type: 'info',
+                    timer: 2500
+                });
+            }
+        });
     });
 </script>
