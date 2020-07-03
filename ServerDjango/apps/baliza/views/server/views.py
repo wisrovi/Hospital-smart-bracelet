@@ -1,21 +1,152 @@
+from time import time
+
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import render
-from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views.decorators.csrf import csrf_exempt
-from django.views.generic import FormView
+from django.views.generic import FormView, ListView, TemplateView
 
-import apps.Util_apps.Util_braceletBLE as Utilities
-from apps.baliza.models import Bracelet, HistorialBraceletSensors, Baliza, UsuarioRol, RolUsuario, HistorialRSSI
-import authentication.Config.PREFERENCES as Preferences
+from apps.baliza.models import Bracelet, HistorialBraceletSensors, Baliza, HistorialRSSI, \
+    InstalacionBaliza, Piso
 
 # Create your views here.
-from apps.baliza.views.server.ProcessSensorsData import ValidarExisteBaliza, ValidarExisteBracelet, ExtractMac, \
+from apps.baliza.views.server.Libraries.ProcessSensorsData import ValidarExisteBaliza, ValidarExisteBracelet, \
+    ExtractMac, \
     ValidarCaida, ValidadProximidad, ValidarTemperatura, ValidarPPM, DeterminarIgualdad_o_cercano, ValidarNivelBateria, \
-    ProcesarUbicacion
-from apps.baliza.views.server.forms import PackBraceletForm
+    ProcesarUbicacion, DeterminarPocisionPulsera
+from apps.baliza.views.server.forms import PackBraceletForm, FiltrarGrafica
+
+
+class DatoGraficaBubble:
+    name = None
+    x = None
+    y = None
+    tipo = None
+
+    def __init__(self, name, x, y, tipo):
+        self.name = name
+        self.x = x
+        self.y = y
+        self.tipo = tipo
+
+
+@method_decorator(login_required(login_url='signin'), name='dispatch')
+class VerPiso(TemplateView):
+    template_name = 'Server/Graph.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        datos = self.request.GET
+        id = int(datos['id'])
+        piso = Piso.objects.filter(pk=id)
+
+        ubicacionesBalizasPlano = list()
+        ubicacionesPulserasPlano = list()
+        if len(piso) > 0:
+            tipoBaliza = "Baliza"
+            todasLasBalizas = Baliza.objects.all()
+            for baliza in todasLasBalizas:
+                instalacion = InstalacionBaliza.objects.filter(baliza=baliza)
+                for instal in instalacion:
+                    pis = instal.piso
+                    if pis == piso[0]:
+                        datosBaliza = DatoGraficaBubble(name=baliza.macDispositivoBaliza,
+                                                        x=instalacion[0].instalacionX,
+                                                        y=instalacion[0].instalacionY,
+                                                        tipo=tipoBaliza)
+                        ubicacionesBalizasPlano.append(datosBaliza)
+
+            tipoPulsera = "Manilla"
+            todasLasPulseras = Bracelet.objects.all()
+            for pulsera in todasLasPulseras:
+                CartesianoFinal, idsBalizasUsadas, pisoDeseado = DeterminarPocisionPulsera(pulsera,
+                                                                                           pisoDeseado=piso)
+                if CartesianoFinal is not None:
+                    datosPulsera = DatoGraficaBubble(name=pulsera.macDispositivo,
+                                                     x=int(CartesianoFinal[0]),
+                                                     y=int(CartesianoFinal[1]),
+                                                     tipo=tipoPulsera)
+                    ubicacionesPulserasPlano.append(datosPulsera)
+
+            context['title'] = 'Grafica ' + piso[0].__str__()
+            context['todasPulseras'] = ubicacionesPulserasPlano
+            context['todasBalizas'] = ubicacionesBalizasPlano
+            return context
+
+
+@method_decorator(login_required(login_url='signin'), name='dispatch')
+@method_decorator(csrf_exempt, name='dispatch')
+class FiltrarGraficaUbicacion(TemplateView):
+    template_name = 'Server/GraphFilter.html'
+
+    def post(self, request, *args, **kwargs):
+        data = dict()
+        try:
+            action = request.POST['action']
+            if action == 'graph_ubicacion':
+                id = request.POST['id']
+                piso = Piso.objects.filter(pk=id)
+
+                ubicacionesBalizasPlano = list()
+                tipoBaliza = "Baliza"
+                todasLasBalizas = Baliza.objects.all()
+                for baliza in todasLasBalizas:
+                    instalacion = InstalacionBaliza.objects.filter(baliza=baliza)
+                    for instal in instalacion:
+                        pis = instal.piso
+                        if pis == piso[0]:
+                            elemento = list()
+                            elemento.append(baliza.macDispositivoBaliza)
+                            elemento.append(instalacion[0].instalacionX)
+                            elemento.append(instalacion[0].instalacionY)
+                            elemento.append(tipoBaliza)
+                            ubicacionesBalizasPlano.append(elemento)
+
+                ubicacionesPulserasPlano = list()
+                tipoPulsera = "Manilla"
+                todasLasPulseras = Bracelet.objects.all()
+                for pulsera in todasLasPulseras:
+                    CartesianoFinal, idsBalizasUsadas, pisoDeseado = DeterminarPocisionPulsera(pulsera,
+                                                                                               pisoDeseado=piso)
+                    if CartesianoFinal is not None:
+                        constantePresicion = 6
+                        print("El valor estimado de ubicación (x,y) es", CartesianoFinal[0], CartesianoFinal[1], "+-",
+                              constantePresicion)
+                        elemento = list()
+                        elemento.append(pulsera.macDispositivo)
+                        elemento.append(CartesianoFinal[0])
+                        elemento.append(CartesianoFinal[1])
+                        elemento.append(tipoPulsera)
+                        ubicacionesPulserasPlano.append(elemento)
+
+                data['todasBalizas'] = ubicacionesBalizasPlano
+                data['todasPulseras'] = ubicacionesPulserasPlano
+                data['idPiso'] = piso[0].id
+            elif action == 'search_ubicacion':
+                data = list()
+                elemento = dict()
+                elemento['id'] = 0
+                elemento['text'] = "-----------------"
+                data.append(elemento)
+
+                for i in Piso.objects.filter(sede_id=request.POST['id']):
+                    elemento = dict()
+                    elemento['id'] = i.id
+                    elemento['text'] = i.__str__()
+                    data.append(elemento)
+            else:
+                data['error'] = 'Ha ocurrido un error'
+        except Exception as e:
+            data['error'] = str(e)
+        return JsonResponse(data, safe=False)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Grafica Ubicaciones'
+        context['form'] = FiltrarGrafica()
+        return context
 
 
 @method_decorator(csrf_exempt, name='dispatch')
@@ -120,243 +251,22 @@ class ServerReceivedCreateView(FormView):
         return context
 
 
-@csrf_exempt
-def getPackStringBaliza(request):
-    form = PackBraceletForm()
-    if request.method == 'POST':
-        form = PackBraceletForm(request.POST)
-        if form.is_valid():
-            objetos = Utilities.UnZipPackBracelets()
-            string_data = form.cleaned_data['string_pack']
-            key = form.cleaned_data['key']
-            if key:
-                if key == "ESP32":
-                    if string_data:
-                        # vamos a procesar los datos recibidos
-
-                        # listamos los correos de los usuario con rol de server
-                        # y se toman los correos para enviar los mensajes si algo sale mal en el proceso siguiente
-                        rolBuscar = 'Server'
-                        listaCorreosDestinatarios = list()
-                        for rol in RolUsuario.objects.all():
-                            if rol.rolUsuario.find(rolBuscar) > 0:
-                                for usuarioRevisar in UsuarioRol.objects.all():
-                                    if usuarioRevisar.rolUsuario == rol:
-                                        listaCorreosDestinatarios.append(usuarioRevisar.usuario.email)
-
-                        # Paso 1:
-                        # Leer todos los datos de los sensores
-                        listBracelets = objetos.setString(string_data)
-                        listBracelets = listBracelets[::-1]
-
-                        todasPulserasRegistradas = Bracelet.objects.all()
-                        macEncontradasPaquete = list()
-                        print("*****************", end="")
-                        from time import gmtime, strftime
-                        showtime = strftime("%Y-%m-%d %H:%M:%S", gmtime())
-                        print(showtime, end="")
-                        print("*****************")
-                        print("Procesando datos de los sensores")
-
-                        import json
-                        baliza = json.loads(string_data)['baliza']
-                        balizaEncontrada = None
-                        for baliz in Baliza.objects.all():
-                            if baliz.macDispositivoBaliza == baliza:
-                                balizaEncontrada = baliz
-                                break
-
-                        if balizaEncontrada is not None:
-                            for bracelet in listBracelets:
-                                # Procesando cada bracelet por separado del paquete recibido
-                                macPulsera_complete = bracelet.MAC[0:2] \
-                                                      + ":" + bracelet.MAC[2:4] \
-                                                      + ":" + bracelet.MAC[4:6] \
-                                                      + ":" + bracelet.MAC[6:8] \
-                                                      + ":" + bracelet.MAC[8:10] \
-                                                      + ":" + bracelet.MAC[10:12]
-
-                                distancia = dict()
-                                distancia["rssi"] = bracelet.RSI
-
-                                # print("*****************************************************")
-                                if macPulsera_complete in macEncontradasPaquete:
-                                    pass
-                                else:
-                                    # Se confirma que no se este procesando un bracelet repetido para este paquete
-                                    macEncontradasPaquete.append(macPulsera_complete)
-
-                                    sensores = dict()
-                                    sensores["temperatura"] = bracelet.TEM
-                                    sensores["ppm"] = bracelet.PPM
-                                    sensores["caidas"] = bracelet.CAI
-                                    sensores["proximidad"] = bracelet.PRO
-                                    otrosDatosPulsera = dict()
-                                    otrosDatosPulsera["bat"] = bracelet.BAT
-                                    otrosDatosPulsera["semilla"] = bracelet.SED
-
-                                    pulseraEncontrada = None
-                                    for i in todasPulserasRegistradas:
-                                        if i.macDispositivo == macPulsera_complete:
-                                            pulseraEncontrada = i
-                                            break
-
-                                    if pulseraEncontrada is not None:
-
-                                        # Paso 1: Procesar datos de  RSSI para determinar la ubicación de los sensores
-
-                                        # Paso 2: Procesar datos de los sensores del bracelet que se reportó en este escaner
-
-                                        dato_ppm_int = int(sensores["ppm"])
-                                        dato_caida_bool = bool(sensores["caidas"])
-                                        dato_proximidad_bool = bool(sensores["proximidad"])
-                                        dato_bateria_int = int(otrosDatosPulsera["bat"])
-                                        dato_temperatura_int = int(sensores["temperatura"])
-                                        dato_rssi_int = int(distancia["rssi"])
-
-                                        if dato_bateria_int > 0 \
-                                                and dato_ppm_int > 0 \
-                                                and dato_temperatura_int > 0 \
-                                                and dato_rssi_int > 0:
-
-                                            if bracelet.CAI == "1":
-                                                diccionarioDatos = dict()
-                                                diccionarioDatos['ADMIN'] = str('Admin Server')
-                                                diccionarioDatos['BALIZA'] = str(baliza)
-                                                diccionarioDatos['MAC'] = str(macPulsera_complete)
-                                                diccionarioDatos['PROJECT'] = str('Hospital Smart Bracelet')
-                                                diccionarioDatos['FIRMA'] = str('WISROVI')
-                                                html_message = render_to_string(
-                                                    'email/bracelet_alerta_persona_caida.html',
-                                                    diccionarioDatos)
-                                                asunto = "Alerta, persona caida (" + macPulsera_complete + ")"
-                                                firmaResumenRemitente = "Hospital Smart Bracelet"
-
-                                                import threading
-                                                x = threading.Thread(target=Utilities.sendMail,
-                                                                     args=(asunto, html_message, firmaResumenRemitente,
-                                                                           listaCorreosDestinatarios, request,))
-                                                x.start()
-                                                print(macPulsera_complete + " - Persona caida")
-
-                                            if not bracelet.PRO == "1":
-                                                diccionarioDatos = dict()
-                                                diccionarioDatos['ADMIN'] = str('Admin Server')
-                                                diccionarioDatos['BALIZA'] = str(baliza)
-                                                diccionarioDatos['MAC'] = str(macPulsera_complete)
-                                                diccionarioDatos['PROJECT'] = str('Hospital Smart Bracelet')
-                                                diccionarioDatos['FIRMA'] = str('WISROVI')
-                                                html_message = render_to_string(
-                                                    'email/bracelet_alerta_persona_seQuitoPulsera.html',
-                                                    diccionarioDatos)
-                                                asunto = "Alerta, persona se quitó el bracelet (" + macPulsera_complete + ")"
-                                                firmaResumenRemitente = "Hospital Smart Bracelet"
-                                                import threading
-                                                x = threading.Thread(target=Utilities.sendMail,
-                                                                     args=(asunto, html_message, firmaResumenRemitente,
-                                                                           listaCorreosDestinatarios, request,))
-                                                x.start()
-                                                print(macPulsera_complete + " - Persona se quitó el bracelet")
-
-                                            histBraceSensors = HistorialBraceletSensors()
-                                            histBraceSensors.bracelet = pulseraEncontrada
-                                            histBraceSensors.ppm_sensor = dato_ppm_int
-                                            histBraceSensors.caida_sensor = dato_caida_bool
-                                            histBraceSensors.proximidad_sensor = dato_proximidad_bool
-                                            histBraceSensors.nivel_bateria = dato_bateria_int
-                                            histBraceSensors.temperatura_sensor = dato_temperatura_int
-                                            histBraceSensors.rssi_signal = dato_rssi_int
-                                            histBraceSensors.baliza = balizaEncontrada
-
-                                            todosRegistros = HistorialBraceletSensors.objects.filter(
-                                                bracelet=pulseraEncontrada.id).order_by('-id')
-                                            print(pulseraEncontrada, end=" ( id=")
-                                            if todosRegistros.count() > 0:
-                                                for esteRegistro in todosRegistros:
-                                                    print(esteRegistro.id, "): ", end="")
-                                                    if histBraceSensors.bracelet == esteRegistro.bracelet \
-                                                            and histBraceSensors.rssi_signal == esteRegistro.rssi_signal \
-                                                            and histBraceSensors.ppm_sensor == esteRegistro.ppm_sensor \
-                                                            and histBraceSensors.caida_sensor == esteRegistro.caida_sensor \
-                                                            and histBraceSensors.temperatura_sensor == esteRegistro.temperatura_sensor \
-                                                            and histBraceSensors.proximidad_sensor == esteRegistro.proximidad_sensor \
-                                                            and histBraceSensors.nivel_bateria == esteRegistro.nivel_bateria:
-                                                        print("Ya existe el registro")
-                                                    else:
-                                                        print("Registro no existe...", end="")
-                                                        histBraceSensors.save()
-                                                        print("Registro Guardado")
-                                                    break
-                                            else:
-                                                print("No existen registros para este bracelet...", end="")
-                                                histBraceSensors.save()
-                                                print("Primer Registro Guardado")
-                                                break
-                                        else:
-                                            # Datos invalidos, se reporta en correo de que el bracelet esta enviando datos invalidos
-
-                                            diccionarioDatos = dict()
-                                            diccionarioDatos['ADMIN'] = str('Admin Server')
-                                            diccionarioDatos['BALIZA'] = str(baliza)
-                                            diccionarioDatos['MAC'] = str(macPulsera_complete)
-                                            diccionarioDatos['PROJECT'] = str('Hospital Smart Bracelet')
-                                            diccionarioDatos['FIRMA'] = str('WISROVI')
-                                            html_message = render_to_string('email/bracelet_report_bad_sensors.html',
-                                                                            diccionarioDatos)
-                                            asunto = "Nuevo Bracelet por registrar (" + macPulsera_complete + ")"
-                                            firmaResumenRemitente = "Hospital Smart Bracelet"
-                                            import threading
-                                            x = threading.Thread(target=Utilities.sendMail,
-                                                                 args=(asunto, html_message, firmaResumenRemitente,
-                                                                       listaCorreosDestinatarios, request,))
-                                            x.start()
-                                    else:
-                                        print(macPulsera_complete, "- No existe el Bracelet")
-
-                                        # como no existe la pulsera, entonces se envia un correo usando una plantilla
-                                        # donde se reemplazan los datos en la plantilla y con esto se envia el correo
-                                        # a los correos destinatarios y el asunto estipulado
-
-                                        diccionarioDatos = dict()
-                                        diccionarioDatos['ADMIN'] = str('Admin Server')
-                                        diccionarioDatos['BALIZA'] = str(baliza)
-                                        diccionarioDatos['MAC'] = str(macPulsera_complete)
-                                        diccionarioDatos['PROJECT'] = str('Hospital Smart Bracelet')
-                                        diccionarioDatos['FIRMA'] = str('WISROVI')
-                                        html_message = render_to_string('email/nuevo_bracelet_encontrado.html',
-                                                                        diccionarioDatos)
-                                        asunto = "Nuevo Bracelet por registrar (" + macPulsera_complete + ")"
-                                        firmaResumenRemitente = "Hospital Smart Bracelet"
-                                        import threading
-                                        x = threading.Thread(target=Utilities.sendMail,
-                                                             args=(asunto, html_message, firmaResumenRemitente,
-                                                                   listaCorreosDestinatarios, request,))
-                                        x.start()
-
-                            print("*****************************************************")
-                            return HttpResponseRedirect('../receivedOK')
-                        else:
-                            diccionarioDatos = dict()
-                            diccionarioDatos['ADMIN'] = str('Admin Server')
-                            diccionarioDatos['BALIZA'] = str(baliza)
-                            diccionarioDatos['PROJECT'] = str('Hospital Smart Bracelet')
-                            diccionarioDatos['FIRMA'] = str('WISROVI')
-                            html_message = render_to_string('email/nuevo_baliza_encontrada.html',
-                                                            diccionarioDatos)
-                            asunto = "Nueva Baliza por registrar (" + baliza + ")"
-                            firmaResumenRemitente = "Hospital Smart Bracelet"
-                            import threading
-                            x = threading.Thread(target=Utilities.sendMail,
-                                                 args=(asunto, html_message, firmaResumenRemitente,
-                                                       listaCorreosDestinatarios, request,))
-                            x.start()
-                            print(baliza + " - Nueva Baliza por registrar")
-                        # Entregar respuesta final
-    context = dict()
-    context['PROJECT'] = Preferences.NAME_APP
-    context['form'] = form
-    return render(request, "FORM.html", context)
-
-
 def setReceivedOK(request):
     return render(request, 'Server/receivedOK.html', {})
+
+
+@method_decorator(login_required(login_url='signin'), name='dispatch')
+# @method_decorator(csrf_exempt, name='dispatch')
+class HistorialRssi_ListView(ListView):
+    model = HistorialRSSI
+    template_name = 'Server/HistorialRssiListView.html'
+
+    def dispatch(self, request, *args, **kwargs):
+        # todo lo que sucede antes que se cargue la web por primera vez
+        print(request.user)
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['title'] = 'Historial RSSI'
+        return context

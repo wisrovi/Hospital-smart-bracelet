@@ -2,7 +2,8 @@ from django.urls import path
 
 from apps.baliza.views.Bracelet.views import BraceletListView, BraceletCreateView, BraceletDeleteView, \
     BraceletUpdateView, BraceletUmbralsUpdateView
-from apps.baliza.views.server.views import getPackStringBaliza, setReceivedOK, ServerReceivedCreateView
+from apps.baliza.views.server.views import setReceivedOK, ServerReceivedCreateView, \
+    HistorialRssi_ListView, FiltrarGraficaUbicacion, VerPiso
 from apps.baliza.views.baliza.views import BalizaListView, BalizaCreateView, BalizaDeleteView, BalizaUpdateView, \
     BalizaInstalacionUpdateView
 
@@ -16,8 +17,11 @@ app_name = 'project'
 
 urlpatterns = [
     # Server
-    path('received/', getPackStringBaliza, name='form_received_baliza'),
-    path('received2/', ServerReceivedCreateView.as_view(), name='form_received_baliza2'),
+    path('DeterminarPosicion/', FiltrarGraficaUbicacion.as_view(), name='filtro_graph_posicion'),
+    path('GraficarPiso/', VerPiso.as_view(), name='graph_piso'),
+
+    path('received/', ServerReceivedCreateView.as_view(), name='form_received_baliza2'),
+    path('rssi/', HistorialRssi_ListView.as_view(), name='form_readlist_rssi'),
     path('receivedOK/', setReceivedOK, name='form_received_baliza_ok'),
 
     # Bracelet
@@ -31,7 +35,8 @@ urlpatterns = [
     path('baliza/list/', BalizaListView.as_view(), name='form_readlist_baliza'),
     path('baliza/create/', BalizaCreateView.as_view(), name='form_create_baliza'),
     path('baliza/edit/<int:pk>/', BalizaUpdateView.as_view(), name='form_update_baliza'),
-    path('baliza/editInstalacion/<int:pk>/', BalizaInstalacionUpdateView.as_view(), name='form_update_baliza_instalacion'),
+    path('baliza/editInstalacion/<int:pk>/', BalizaInstalacionUpdateView.as_view(),
+         name='form_update_baliza_instalacion'),
     path('baliza/delete/<int:pk>/', BalizaDeleteView.as_view(), name='form_delete_baliza'),
 
     # Sedes

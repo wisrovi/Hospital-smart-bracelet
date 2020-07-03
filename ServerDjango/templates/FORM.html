@@ -1,4 +1,4 @@
-{% extends 'BASE/BASE.html' %}
+{% extends 'MENU_OPCIONES/LAYOUT.html' %}
 
 {% block content %}
     <form action=".." method="post">
@@ -58,6 +58,10 @@
         </div>
     </form>
 
+    {% block adicionales %}
+
+    {% endblock %}
+
 {% endblock %}
 
 {% block javascript %}
@@ -88,4 +92,7 @@
             });
         });
     </script>
+    {% block javascript_adicionales %}
+
+    {% endblock %}
 {% endblock %}
