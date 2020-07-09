@@ -1,9 +1,10 @@
 from django.template.loader import render_to_string
-import apps.baliza.views.server.Libraries.Util_braceletBLE as Utilities
+import apps.Util_apps.Util as Utilities
 from apps.baliza.models import Baliza, RolUsuario, UsuarioRol, Bracelet, BraceletUmbrals, HistorialRSSI, \
     InstalacionBaliza
 from apps.baliza.views.server.Libraries.LibraryRSSItoMts import CalcularDistancia
-from apps.baliza.views.server.Libraries.CalculoUbicacion.Library_BLE_location import CalcularPosicion, BalizaInstalada, Ubicacion
+from apps.baliza.views.server.Libraries.CalculoUbicacion.Library_BLE_location import CalcularPosicion, BalizaInstalada, \
+    Ubicacion
 
 
 def getDestinatariosCorreos():
@@ -37,11 +38,8 @@ def ValidarExisteBaliza(baliza, request):
 
     listaDestinatarios = getDestinatariosCorreos()
     if len(listaDestinatarios) > 0:
-        import threading
-        x = threading.Thread(target=Utilities.sendMail,
-                             args=(asunto, html_message, firmaResumenRemitente,
-                                   listaDestinatarios, request,))
-        x.start()
+        Utilities.sendMail(asunto, html_message, firmaResumenRemitente,
+                           listaDestinatarios, request)
         print("Nueva Baliza encontrada")
     return False
 
@@ -67,11 +65,8 @@ def ValidarExisteBracelet(bracelet, baliza, request):
 
     listaDestinatarios = getDestinatariosCorreos()
     if len(listaDestinatarios) > 0:
-        import threading
-        x = threading.Thread(target=Utilities.sendMail,
-                             args=(asunto, html_message, firmaResumenRemitente,
-                                   listaDestinatarios, request,))
-        x.start()
+        Utilities.sendMail(asunto, html_message, firmaResumenRemitente,
+                           listaDestinatarios, request)
         print("Nuevo Bracelet encontrado")
     return False
 
@@ -108,11 +103,8 @@ def ValidarCaida(baliza, macPulsera, caida, request):
 
         listaCorreosDestinatarios = getDestinatariosCorreos()
         if len(listaCorreosDestinatarios) > 0:
-            import threading
-            x = threading.Thread(target=Utilities.sendMail,
-                                 args=(asunto, html_message, firmaResumenRemitente,
-                                       listaCorreosDestinatarios, request,))
-            x.start()
+            Utilities.sendMail(asunto, html_message, firmaResumenRemitente,
+                               listaCorreosDestinatarios, request)
             print("Bracelet alerta caida")
 
 
@@ -132,11 +124,8 @@ def ValidadProximidad(baliza, macPulsera, proximidad, request):
 
         listaCorreosDestinatarios = getDestinatariosCorreos()
         if len(listaCorreosDestinatarios) > 0:
-            import threading
-            x = threading.Thread(target=Utilities.sendMail,
-                                 args=(asunto, html_message, firmaResumenRemitente,
-                                       listaCorreosDestinatarios, request,))
-            x.start()
+            Utilities.sendMail(asunto, html_message, firmaResumenRemitente,
+                               listaCorreosDestinatarios, request)
             print("Bracelet alerta proximidad")
 
 
@@ -168,11 +157,8 @@ def ValidarTemperatura(macPulsera, temperaturaActual, request):
 
     listaCorreosDestinatarios = getDestinatariosCorreos()
     if len(listaCorreosDestinatarios) > 0 and hayAlarma:
-        import threading
-        x = threading.Thread(target=Utilities.sendMail,
-                             args=(asunto, html_message, firmaResumenRemitente,
-                                   listaCorreosDestinatarios, request,))
-        x.start()
+        Utilities.sendMail(asunto, html_message, firmaResumenRemitente,
+                           listaCorreosDestinatarios, request)
         print("Bracelet alerta temperatura")
 
 
@@ -192,11 +178,8 @@ def ValidarNivelBateria(nivelBateria, baliza, macPulsera, request):
 
         listaCorreosDestinatarios = getDestinatariosCorreos()
         if len(listaCorreosDestinatarios) > 0:
-            import threading
-            x = threading.Thread(target=Utilities.sendMail,
-                                 args=(asunto, html_message, firmaResumenRemitente,
-                                       listaCorreosDestinatarios, request,))
-            x.start()
+            Utilities.sendMail(asunto, html_message, firmaResumenRemitente,
+                               listaCorreosDestinatarios, request)
             print("Bracelet alerta bateria baja")
 
 
@@ -227,11 +210,8 @@ def ValidarPPM(macPulsera, ppmActual, request):
 
     listaCorreosDestinatarios = getDestinatariosCorreos()
     if len(listaCorreosDestinatarios) > 0 and hayAlarma:
-        import threading
-        x = threading.Thread(target=Utilities.sendMail,
-                             args=(asunto, html_message, firmaResumenRemitente,
-                                   listaCorreosDestinatarios, request,))
-        x.start()
+        Utilities.sendMail(asunto, html_message, firmaResumenRemitente,
+                           listaCorreosDestinatarios, request)
         print("Bracelet alerta temperatura")
 
 
@@ -279,7 +259,7 @@ def ProcesarUbicacion(baliza, macPulsera, rssi):
 
 
 # @count_elapsed_time
-def DeterminarPocisionPulsera(pulsera, pisoDeseado = None):
+def DeterminarPocisionPulsera(pulsera, pisoDeseado=None):
     ConstanteSegundosMaximosSeparacionRegistros = 15
 
     listadoBalizas = list()
@@ -329,9 +309,6 @@ def DeterminarPocisionPulsera(pulsera, pisoDeseado = None):
                                     nombre=baliza.macDispositivoBaliza,
                                     dist=CalcularDistancia(pulsera.txPower, dato.rssi_signal))
                             )
-
-
-
 
         if len(listadoBalizas) >= 3:
             CartesianoFinal, idsBalizasUsadas = CalcularPosicion(listadoBalizas)

@@ -1,4 +1,8 @@
 from time import time
+import threading
+from multiprocessing import Process
+
+from apps.Util_apps.LogProject import logging
 
 
 def count_elapsed_time(f):
@@ -17,5 +21,52 @@ def count_elapsed_time(f):
         elapsed_time = time() - start_time
         print("Elapsed time: %0.10f seconds." % elapsed_time)
         return ret
+
+    return wrapper
+
+
+def execute_in_thread(name=None, daemon=None, ponerDelay=None):
+    def _execute_in_thread(f):
+        """
+            Decorator.
+            Execute the function in thread.
+        """
+        def wrapper(*args, **kwargs):
+            thread_f = threading.Thread(target=f, args=args, kwargs=kwargs)
+
+            if daemon is not None:
+                thread_f.setDaemon(True)
+
+            if name is not None:
+                thread_f.setName(name)
+                logging.info("Se ha lanzado un nuevo hilo usando el decorador con nombre: '" + name + "'.")
+            else:
+                logging.info("Se ha lanzado un nuevo hilo usando el decorador.")
+
+            thread_f.start()
+
+            if ponerDelay is not None:
+                thread_f.join()
+
+            # logging.info("Hilo terminado")
+            return thread_f
+
+        return wrapper
+    return _execute_in_thread
+
+
+def execute_in_process(f):
+    """
+    Decorator.
+    Execute the function in thread.
+    """
+
+    def wrapper(*args, **kwargs):
+        logging.info("Se ha lanzado un nuevo proceso")
+
+        process_f = Process(target=f, args=args, kwargs=kwargs)
+        process_f.start()
+
+        return process_f
 
     return wrapper

@@ -5,9 +5,10 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from django.template.loader import render_to_string
 
-import apps.baliza.views.server.Libraries.Util_braceletBLE as Utilities
+import apps.Util_apps.Util as Utilities
 from apps.authapp.forms import LoginForm, RegistrationForm
 import authentication.Config.PREFERENCES as Preferences
+
 
 def signin(request):
     forms = LoginForm()
@@ -31,10 +32,7 @@ def signin(request):
                 asunto = "Bienvenido, has iniciado sesion en tu cuenta"
                 firmaResumenRemitente = Preferences.NAME_APP
 
-                import threading
-                x = threading.Thread(target=Utilities.sendMail,
-                                     args=(asunto, html_message, firmaResumenRemitente, request.user.email, request,))
-                x.start()
+                Utilities.sendMail(asunto, html_message, firmaResumenRemitente, request.user.email, request)
 
                 data['redirec'] = 'ok'
             else:
@@ -97,11 +95,8 @@ def signup_confirm_email(request):
                         asunto = "Bienvenido, falta confirmar correo"
                         firmaResumenRemitente = Preferences.NAME_APP
 
-                        import threading
-                        x = threading.Thread(target=Utilities.sendMail,
-                                             args=(asunto, html_message, firmaResumenRemitente, parametros['email'],
-                                                   request,))
-                        x.start()
+                        Utilities.sendMail(asunto, html_message, firmaResumenRemitente, parametros['email'], request)
+
                     else:
                         data[
                             'error'] = 'Por favor digite un correo institucional con extensión: ' + Preferences.CORREO_PERMITIDO + "."
@@ -164,10 +159,7 @@ def signup(request):
                     asunto = "Bienvenido, su cuenta ha sido creada correctamente"
                     firmaResumenRemitente = Preferences.NAME_APP
 
-                    import threading
-                    x = threading.Thread(target=Utilities.sendMail,
-                                         args=(asunto, html_message, firmaResumenRemitente, email, request,))
-                    x.start()
+                    Utilities.sendMail(asunto, html_message, firmaResumenRemitente, email, request)
 
                     User.objects.create_user(username=username, password=password, email=email, first_name=firstname,
                                              last_name=lastname)
@@ -192,7 +184,6 @@ def signup(request):
 def signout(request):
     logout(request)
     return redirect('signin')
-
 
 
 def password_change(request):

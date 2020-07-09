@@ -1,3 +1,6 @@
+from apps.Util_apps.Decoradores import execute_in_thread
+
+
 class Bracelet:
     SED = str()
     MAC = str()
@@ -7,6 +10,7 @@ class Bracelet:
     TEM = str()
     RSI = str()
     PRO = str()
+
 
 class UnZipPackBracelets:
     listBracelets = list()
@@ -43,22 +47,3 @@ class UnZipPackBracelets:
 
 
 
-
-
-
-from django.contrib import messages  # import messages
-from django.core.mail import send_mail
-from django.utils.html import strip_tags
-def sendMail(asunto, html, firma, correo, request):
-    if type(correo) != list:
-        correo = [correo]
-
-    send_mail(
-        asunto,
-        strip_tags(html),
-        firma,
-        correo,
-        fail_silently=False,
-        html_message=html
-    )
-    messages.success(request, "Mensaje enviado")
