@@ -1,4 +1,3 @@
-from apps.Util_apps.LogProject import logging
 from apps.Util_apps.Decoradores import execute_in_thread_timer
 
 

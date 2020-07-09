@@ -31,6 +31,7 @@ def execute_in_thread(name=None, daemon=None, ponerDelay=None):
             Decorator.
             Execute the function in thread.
         """
+
         def wrapper(*args, **kwargs):
             thread_f = threading.Thread(target=f, args=args, kwargs=kwargs)
 
@@ -52,7 +53,29 @@ def execute_in_thread(name=None, daemon=None, ponerDelay=None):
             return thread_f
 
         return wrapper
+
     return _execute_in_thread
+
+
+def execute_in_thread_timer(seconds):
+    def _execute_in_thread_timer(f):
+        """
+            Decorator.
+            Execute the function in thread timer, with out parameters.
+        """
+
+        def wrapper(*args, **kwargs):
+            thread_f = threading.Timer(seconds, f)
+
+            logging.info("Se ha lanzado un nuevo hilo con timer usando el decorador.")
+
+            thread_f.start()
+
+            return thread_f
+
+        return wrapper
+
+    return _execute_in_thread_timer
 
 
 def execute_in_process(f):
