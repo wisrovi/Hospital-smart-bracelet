@@ -452,82 +452,26 @@ DocumentPath=Project Outputs for Hospital-Smart-Bracelet\Gerber\HSB-Version1.EXT
 DItemRevisionGUID=
 
 [GeneratedDocument15]
-DocumentPath=Project Outputs for Hospital-Smart-Bracelet\Gerber\HSB-Version1.GBL
-DItemRevisionGUID=
-
-[GeneratedDocument16]
-DocumentPath=Project Outputs for Hospital-Smart-Bracelet\Gerber\HSB-Version1.GBO
-DItemRevisionGUID=
-
-[GeneratedDocument17]
-DocumentPath=Project Outputs for Hospital-Smart-Bracelet\Gerber\HSB-Version1.GBP
-DItemRevisionGUID=
-
-[GeneratedDocument18]
-DocumentPath=Project Outputs for Hospital-Smart-Bracelet\Gerber\HSB-Version1.GBS
-DItemRevisionGUID=
-
-[GeneratedDocument19]
-DocumentPath=Project Outputs for Hospital-Smart-Bracelet\Gerber\HSB-Version1.GD1
-DItemRevisionGUID=
-
-[GeneratedDocument20]
-DocumentPath=Project Outputs for Hospital-Smart-Bracelet\Gerber\HSB-Version1.GG1
-DItemRevisionGUID=
-
-[GeneratedDocument21]
-DocumentPath=Project Outputs for Hospital-Smart-Bracelet\Gerber\HSB-Version1.GM1
-DItemRevisionGUID=
-
-[GeneratedDocument22]
-DocumentPath=Project Outputs for Hospital-Smart-Bracelet\Gerber\HSB-Version1.GM13
-DItemRevisionGUID=
-
-[GeneratedDocument23]
-DocumentPath=Project Outputs for Hospital-Smart-Bracelet\Gerber\HSB-Version1.GM15
-DItemRevisionGUID=
-
-[GeneratedDocument24]
-DocumentPath=Project Outputs for Hospital-Smart-Bracelet\Gerber\HSB-Version1.GTL
-DItemRevisionGUID=
-
-[GeneratedDocument25]
-DocumentPath=Project Outputs for Hospital-Smart-Bracelet\Gerber\HSB-Version1.GTO
-DItemRevisionGUID=
-
-[GeneratedDocument26]
-DocumentPath=Project Outputs for Hospital-Smart-Bracelet\Gerber\HSB-Version1.GTP
-DItemRevisionGUID=
-
-[GeneratedDocument27]
-DocumentPath=Project Outputs for Hospital-Smart-Bracelet\Gerber\HSB-Version1.GTS
-DItemRevisionGUID=
-
-[GeneratedDocument28]
 DocumentPath=Project Outputs for Hospital-Smart-Bracelet\NC Drill\HSB-Version1.LDP
 DItemRevisionGUID=
 
-[GeneratedDocument29]
+[GeneratedDocument16]
 DocumentPath=HSB-Version1.PcbDoc.htm
 DItemRevisionGUID=
 
-[GeneratedDocument30]
+[GeneratedDocument17]
 DocumentPath=Project Outputs for Hospital-Smart-Bracelet\Gerber\HSB-Version1.REP
 DItemRevisionGUID=
 
-[GeneratedDocument31]
-DocumentPath=Project Outputs for Hospital-Smart-Bracelet\Gerber\HSB-Version1.RUL
-DItemRevisionGUID=
-
-[GeneratedDocument32]
+[GeneratedDocument18]
 DocumentPath=Project Outputs for Hospital-Smart-Bracelet\ExportSTEP\HSB-Version1.step
 DItemRevisionGUID=
 
-[GeneratedDocument33]
+[GeneratedDocument19]
 DocumentPath=Project Outputs for Hospital-Smart-Bracelet\NC Drill\HSB-Version1.TXT
 DItemRevisionGUID=
 
-[GeneratedDocument34]
+[GeneratedDocument20]
 DocumentPath=Project Outputs for Hospital-Smart-Bracelet\Pick Place\Pick Place for HSB-Version1.txt
 DItemRevisionGUID=
 

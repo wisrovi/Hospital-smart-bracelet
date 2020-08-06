@@ -5,6 +5,7 @@ from apps.baliza.models import Baliza, RolUsuario, UsuarioRol, Bracelet, Bracele
 from apps.baliza.views.server.Libraries.LibraryRSSItoMts import CalcularDistancia
 from apps.baliza.views.server.Libraries.CalculoUbicacion.Library_BLE_location import CalcularPosicion, BalizaInstalada, \
     Ubicacion
+from apps.Util_apps.Decoradores import execute_in_thread
 
 
 def getDestinatariosCorreos():
@@ -20,6 +21,7 @@ def getDestinatariosCorreos():
     return listaCorreosDestinatarios
 
 
+@execute_in_thread(name="hilo ValidarExisteBaliza")
 def ValidarExisteBaliza(baliza, request):
     balizasExistentes = Baliza.objects.all()
     for baliz in balizasExistentes:
@@ -44,6 +46,7 @@ def ValidarExisteBaliza(baliza, request):
     return False
 
 
+@execute_in_thread(name="hilo ValidarExisteBracelet")
 def ValidarExisteBracelet(bracelet, baliza, request):
     bracelet = ExtractMac(bracelet)
 
@@ -87,6 +90,7 @@ def getUmbrales(macPulsera):
     return umbrales
 
 
+@execute_in_thread(name="hilo ValidarCaida")
 def ValidarCaida(baliza, macPulsera, caida, request):
     if caida:
         diccionarioDatos = dict()
@@ -108,6 +112,7 @@ def ValidarCaida(baliza, macPulsera, caida, request):
             print("Bracelet alerta caida")
 
 
+@execute_in_thread(name="hilo ValidadProximidad")
 def ValidadProximidad(baliza, macPulsera, proximidad, request):
     if proximidad == False:
         diccionarioDatos = dict()
@@ -129,6 +134,7 @@ def ValidadProximidad(baliza, macPulsera, proximidad, request):
             print("Bracelet alerta proximidad")
 
 
+@execute_in_thread(name="hilo ValidarTemperatura")
 def ValidarTemperatura(macPulsera, temperaturaActual, request):
     umbrales = getUmbrales(macPulsera)
 
@@ -162,6 +168,7 @@ def ValidarTemperatura(macPulsera, temperaturaActual, request):
         print("Bracelet alerta temperatura")
 
 
+@execute_in_thread(name="hilo ValidarNivelBateria")
 def ValidarNivelBateria(nivelBateria, baliza, macPulsera, request):
     if nivelBateria < 30:
         diccionarioDatos = dict()
@@ -183,6 +190,7 @@ def ValidarNivelBateria(nivelBateria, baliza, macPulsera, request):
             print("Bracelet alerta bateria baja")
 
 
+@execute_in_thread(name="hilo ValidarPPM")
 def ValidarPPM(macPulsera, ppmActual, request):
     umbrales = getUmbrales(macPulsera)
 
@@ -232,6 +240,7 @@ def DeterminarIgualdad_o_cercano(valorAnterior, valorActual, variacion):
     return True
 
 
+@execute_in_thread(name="hilo ProcesarUbicacion")
 def ProcesarUbicacion(baliza, macPulsera, rssi):
     macPulsera = ExtractMac(macPulsera)
     pulsera = Bracelet.objects.get(macDispositivo=macPulsera)
