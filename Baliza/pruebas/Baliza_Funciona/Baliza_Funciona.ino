@@ -1,32 +1,10 @@
-String mensajeEnviar = "{'loro':'periquito'}";
-#include "SalvadoTrigo.h"
-#include "BalizaHSBFCV.h"
-BalizaHSBFCV balizahsbfcv;
-
+#include "main/main.h"
 
 void setup() {
-  Serial.begin(9600);
-  InitSystem();
-  balizahsbfcv.start_at();
-  Serial.println(" ");
-  Serial.print("IP address: ");
-  Serial.println(WiFi.localIP());
-  Serial.println("Setup Finalizado");
+  Serial.begin(115200);
+  SETUP_MAIN();
 }
 
-long timeScanBeacon = 0;
 void loop() {
-  if (  (millis() - timeScanBeacon) > 2000  ) {
-    timeScanBeacon = millis();
-    String Beaconsescaneados = balizahsbfcv.Totalbeacons();
-    Beaconsescaneados = balizahsbfcv.Totalbeacons();
-    if (Beaconsescaneados.length() > 20) {
-      mensajeEnviar = Beaconsescaneados;
-      Serial.println(Beaconsescaneados);
-      enviarMensajePost();
-    }
-
-  }
-  OTA();
-  balizahsbfcv.loopScanear();
+  LOOP_MAIN();
 }
