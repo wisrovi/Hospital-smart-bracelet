@@ -1,0 +1,15 @@
+OneWire
+DallasTemperatur
+Ticker
+MasterSensorsFCV
+PulsoCardiacoFCV
+SensorCaidaFCV
+SensorProximidadFCV
+SensorTemperaturaFCV18B20
+ControlBateriaHSB
+
+
+Creación de las librerias de los sensores de pulso cardiaco, proximidad, caída y temperatura para el brasalete HSB
+Creación de la libreria de control de batería para el brasalete HSB
+
+
