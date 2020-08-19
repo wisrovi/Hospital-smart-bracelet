@@ -34,7 +34,7 @@ pulsera3 = {
 }
 
 SetPulseras(pulsera1, pulsera2, pulsera3)
-setURL("http://localhost:8000/hospitalsmartbracelet/received/")
+setURL("http://localhost:5000/hospitalsmartbracelet/received/")
 
 balizas = ["80:E2:02:04:8A:E7"]
 

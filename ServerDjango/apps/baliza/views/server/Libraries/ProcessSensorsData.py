@@ -7,12 +7,16 @@ from apps.baliza.views.server.Libraries.CalculoUbicacion.Library_BLE_location im
     Ubicacion
 from apps.Util_apps.Decoradores import execute_in_thread
 
+from authentication.Config.Constants.Contant import rol_enviar_notificaiones_servidor
+
 
 def getDestinatariosCorreos():
-    rolBuscar = 'Server'
+    rolBuscar = rol_enviar_notificaiones_servidor
     listaCorreosDestinatarios = list()
     for rol in RolUsuario.objects.all():
-        if rol.rolUsuario.find(rolBuscar) > 0:
+        # print(rol.rolUsuario, rolBuscar, )
+        # print(type(rol.rolUsuario), type(rolBuscar))
+        if rol.rolUsuario == rolBuscar:
             for usuarioRevisar in UsuarioRol.objects.all():
                 if usuarioRevisar.rolUsuario == rol:
                     listaCorreosDestinatarios.append(usuarioRevisar.usuario.email)
