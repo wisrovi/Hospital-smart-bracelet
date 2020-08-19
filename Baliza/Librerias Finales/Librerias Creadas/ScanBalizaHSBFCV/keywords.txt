@@ -1,0 +1,30 @@
+
+#######################################
+# Syntax Coloring Scan Baliza HSB FCV
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+ScanBalizaHSBFCV	KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+enviarMensajePostBaliza	KEYWORD2
+InitSystemBaliza	KEYWORD2
+OTABaliza	KEYWORD2
+setMensajeBaliza	KEYWORD2
+
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
+
