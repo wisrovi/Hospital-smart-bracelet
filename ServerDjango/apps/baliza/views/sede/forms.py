@@ -1,4 +1,3 @@
-from attr import fields
 from django.forms import ModelForm, TextInput, Textarea
 
 from apps.baliza.models import Sede

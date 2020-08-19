@@ -96,11 +96,24 @@
                             });
                         }
 
-                        google.charts.load('current', {
-                                'packages': ['corechart']
+                        if(data['todasBalizas'].length > 0 && data['todasPulseras'].length > 0){
+                            google.charts.load('current', {
+                                    'packages': ['corechart']
+                                }
+                            );
+                            google.charts.setOnLoadCallback(drawSeriesChart);
+                        }else{
+                            if(data['todasBalizas'].length === 0 && data['todasPulseras'].length === 0){
+                                MensajeAlerta("No hay Datos para mostrar");
+                            }else{
+                                if(data['todasBalizas'].length === 0){
+                                    MensajeAlerta("No hay Balizas para mostrar");
+                                }
+                                if(data['todasPulseras'].length === 0){
+                                    MensajeAlerta("No hay Pulseras para mostrar.");
+                                }
                             }
-                        );
-                        google.charts.setOnLoadCallback(drawSeriesChart);
+                        }
                         return false;
                     } else {
                         MensajeError(data['error']);
