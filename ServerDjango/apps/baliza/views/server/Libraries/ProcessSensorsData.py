@@ -7,12 +7,16 @@ from apps.baliza.views.server.Libraries.CalculoUbicacion.Library_BLE_location im
     Ubicacion
 from apps.Util_apps.Decoradores import execute_in_thread
 
+from authentication.Config.Constants.Contant import rol_enviar_notificaiones_servidor
+
 
 def getDestinatariosCorreos():
-    rolBuscar = 'Server'
+    rolBuscar = rol_enviar_notificaiones_servidor
     listaCorreosDestinatarios = list()
     for rol in RolUsuario.objects.all():
-        if rol.rolUsuario.find(rolBuscar) > 0:
+        # print(rol.rolUsuario, rolBuscar, )
+        # print(type(rol.rolUsuario), type(rolBuscar))
+        if rol.rolUsuario == rolBuscar:
             for usuarioRevisar in UsuarioRol.objects.all():
                 if usuarioRevisar.rolUsuario == rol:
                     listaCorreosDestinatarios.append(usuarioRevisar.usuario.email)
@@ -23,9 +27,13 @@ def getDestinatariosCorreos():
 
 @execute_in_thread(name="hilo ValidarExisteBaliza")
 def ValidarExisteBaliza(baliza, request):
+    baliza = ExtractMac(baliza[0])
+
     balizasExistentes = Baliza.objects.all()
     for baliz in balizasExistentes:
-        if baliz.macDispositivoBaliza == baliza:
+        valor_comparar_1 = baliz.macDispositivoBaliza
+        valor_comparar_2 = baliza
+        if valor_comparar_1 == valor_comparar_2:
             return True
 
     diccionarioDatos = dict()
@@ -250,7 +258,9 @@ def ProcesarUbicacion(baliza, macPulsera, rssi):
 
     distancia = CalcularDistancia(measuredPower, rssi)
 
-    balizaNow = Baliza.objects.get(macDispositivoBaliza=baliza)
+    macBaliza = ExtractMac(baliza[0])
+
+    balizaNow = Baliza.objects.get(macDispositivoBaliza=macBaliza)
     histoRssi = HistorialRSSI()
     histoRssi.baliza = balizaNow
     histoRssi.bracelet = pulsera
